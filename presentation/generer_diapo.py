@@ -294,32 +294,34 @@ def construire(d: dict):
         f"Contraintes transverses :|{d['ct_steering']} règles communes (RGPD, gel, hébergement, Passerelle…). Une demande qui en enfreint une devient un conflit, jamais une suppression silencieuse.",
     ], size=13.5, largeur=860, ecart=6)
 
-    # 6. Un conflit de bout en bout
-    conf = next(x for x in d["conflits"] if x["id"] == "C02")
-    c = s.page("Un conflit, de la source à la spec", "exemple : C02, seuil de retard")
-    boite(c, 50, 290, 270, 140, fond=GRIS_CLAIR)
-    c.setFont("Sans-B", 14); c.setFillColor(BLEU); c.drawString(66, 405, "Sources")
-    paragraphe(c, 66, 380, "B01-D7 (logistique) : 48 h après la date promise", size=12, largeur=240)
-    paragraphe(c, 66, 340, "B02-D6 (service client) : dès que la date promise est dépassée, J+1 matin", size=12, largeur=240)
-    fleche(c, 326, 360, 366)
-    boite(c, 370, 290, 260, 140, fond=HexColor("#FCEBD9"))
-    c.setFont("Sans-B", 14); c.setFillColor(ACCENT); c.drawString(386, 405, "Analyse")
-    paragraphe(c, 386, 380, f"Conflit {conf['gravite']}, arbitré par la logistique et le service client", size=12, largeur=230)
-    paragraphe(c, 386, 340, "H02 : deux niveaux paramétrables, « à surveiller » à J+1 et « en retard » à 48 h", size=12, largeur=230)
-    fleche(c, 636, 360, 676)
-    boite(c, 680, 290, 230, 140, fond=BLEU_CLAIR)
-    c.setFont("Sans-B", 14); c.setFillColor(BLEU); c.drawString(696, 405, "Spec P01")
-    paragraphe(c, 696, 380, "Critères EARS qui citent B02-D6, B01-D7 et H02 ; seuils dans la table des paramètres", size=12, largeur=200)
-    boite(c, 50, 120, 860, 150, fond=white, bord=HexColor("#D5DDE8"))
-    c.setFont("Sans-B", 13); c.setFillColor(BLEU); c.drawString(70, 245, "Extrait de .kiro/specs/alertes-retards-livraison/requirements.md")
-    c.setFont("Cond", 13); c.setFillColor(GRIS)
-    yy = 218
-    for t in ["2. QUAND le calcul du matin de J+1 constate qu'un colis n'est pas livré,",
-              "    LE SYSTÈME DOIT le passer au niveau `à surveiller`. _Source : B02-D6, H02_",
-              "3. QUAND le calcul du matin de J+2 constate qu'un colis n'est toujours pas livré,",
-              "    LE SYSTÈME DOIT le passer au niveau `en retard`. _Source : B01-D7, H02_"]:
-        c.drawString(70, yy, t); yy -= 22
-    paragraphe(c, 50, 95, "Quand les deux directions trancheront, on change la valeur d'un paramètre, pas le code ni la spec.", font="Sans-B", size=13.5, couleur=VERT)
+    # 6. Démo en direct : un nouveau besoin traité par les 4 agents (débat réel, presentation/debat-demo-live.json)
+    live = json.loads((RACINE / "presentation/debat-demo-live.json").read_text(encoding="utf-8"))
+    c = s.page("Démo en direct : un nouveau besoin", f"débat réel, {round(live['duree_s'])} s")
+    boite(c, 50, 112, 280, 338, fond=GRIS_CLAIR)
+    c.setFont("Sans-B", 14); c.setFillColor(BLEU); c.drawString(66, 425, "Besoin collé dans la page")
+    yy = 400
+    for l in live["besoin"].split("\n"):
+        yy = paragraphe(c, 66, yy, l or " ", font="Cond", size=12, largeur=250, interligne=1.3) - 3
+    agents = [
+        ("E", "Extracteur", HexColor("#2B8FC0"), "3 demandes : D1 SMS à l'expédition · D2 code promo de 10 % · D3 « la semaine prochaine ». Point flou : aucun consentement SMS mentionné."),
+        ("A", "Analyste", ACCENT, "Rattaché à P01, pas de nouveau projet. 3 conflits : D2 contre CT-03 (pas d'offre dans un message de service), D1 contre CT-02 (mobile réservé à la livraison), D3 contre CT-07 (gel)."),
+        ("R", "Rédacteur", VERT, "« PENDANT QUE la DPO n'a pas validé le traitement, LE SYSTÈME NE DOIT PAS envoyer de SMS. » (Source : D1, CT-01, CT-02)"),
+        ("C", "Contrôleur", ROUGE, "3 objections : délai de 5 min sans source, consentement non défini, conflits à numéroter. Le rédacteur et l'analyste corrigent."),
+    ]
+    y = 398
+    for ini, nom, coul, txt in agents:
+        c.setFillColor(coul); c.circle(370, y + 4, 15, fill=1, stroke=0)
+        c.setFillColor(white); c.setFont("Sans-B", 14); c.drawCentredString(370, y - 1, ini)
+        c.setFillColor(coul); c.setFont("Sans-B", 13); c.drawString(395, y + 8, nom)
+        paragraphe(c, 395, y - 9, txt, size=11.5, largeur=515, interligne=1.3)
+        y -= 72
+    boite(c, 350, 50, 560, 62, fond=HexColor("#E3F2E8"), bord=VERT)
+    c.setFillColor(VERT); c.setFont("Sans-B", 15); c.drawString(366, 90, "VERDICT : ACCORD")
+    paragraphe(c, 366, 72, "Code promo exclu (C27), SMS désactivé jusqu'à l'avis DPO (C28), mise en service après le 11/01/2027 (C29). Questions à la DPO, au service client et au marketing.", size=11, largeur=530, couleur=GRIS, interligne=1.25)
+    c.setFillColor(HexColor("#9AA5B1")); c.setFont("Sans", 10)
+    c.drawString(50, 96, "Chaque tour est un vrai appel")
+    c.drawString(50, 83, "à un agent Kiro ; le texte varie")
+    c.drawString(50, 70, "d'une exécution à l'autre.")
 
     # 7. Rédaction et qualité
     c = s.page("Rédaction et contrôle qualité", "rôles C et D")
@@ -360,7 +362,7 @@ def construire(d: dict):
     ], size=14, largeur=860, ecart=10)
     boite(c, 50, 50, 860, 50, fond=BLEU)
     c.setFillColor(white); c.setFont("Sans-B", 15)
-    c.drawCentredString(W / 2, 70, "Démo : demo/index.html  ·  Pipeline : agent orchestrateur ou bash tools/pipeline.sh")
+    c.drawCentredString(W / 2, 70, "Démos : demo/index.html (résultats)  ·  tools/demo_live.py (débat en direct des agents)")
 
     s.fin()
 

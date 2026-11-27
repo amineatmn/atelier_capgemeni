@@ -1,0 +1,43 @@
+{
+ "_commentaire": "Débat réel produit par tools/demo_live.py sur son exemple par défaut, le 27/11/2026. Chaque exécution peut donner un texte différent.",
+ "besoin": "De : Yanis Mercadier, service client\nObjet : SMS d'expédition\n\nBonjour,\nQuand une commande part de l'entrepôt, je veux envoyer un SMS au client pour le prévenir.\nDans ce SMS, on ajoute un code promo de 10 % pour sa prochaine commande.\nÀ mettre en place la semaine prochaine.\nMerci,\nYanis",
+ "duree_s": 66.6,
+ "tours": [
+  {
+   "agent": "extracteur",
+   "t": 9.9,
+   "texte": "Je découpe l'e-mail de Yanis en demandes élémentaires. Je ne les juge pas, je les extrais telles quelles.\n\n- **D1** : envoyer un SMS au client à l'expédition de sa commande. Citation : « Quand une commande part de l'entrepôt, je veux envoyer un SMS au client pour le prévenir. »\n- **D2** : ajouter dans ce SMS un code promo de 10 % pour la prochaine commande. Citation : « Dans ce SMS, on ajoute un code promo de 10 % pour sa prochaine commande. »\n- **D3** : mise en place la semaine suivante. Citation : « À mettre en place la semaine prochaine. »\n\nPoints flous :\n- « La semaine prochaine » n'a pas de date précise. Je la ramène à la semaine du 30/11/2026, mais l'e-mail n'est pas daté.\n- Le mail ne dit pas quel déclencheur utiliser pour « part de l'entrepôt », ni quel système envoie le SMS. Il ne dit pas non plus si le client a consenti à recevoir des SMS.\n\n@Analyste : à toi."
+  },
+  {
+   "agent": "analyste",
+   "t": 21.0,
+   "texte": "Rattachement : ce besoin va dans **P01** (alertes retards, information du client). Il s'agit d'un message de service au client, déclenché par un statut de commande, avec les mêmes exigences d'information du service client. Je ne crée pas de projet. Le message d'expédition est une extension de P01, à marquer V2 tant que le DPO n'a pas répondu.\n\nConflits :\n- **D2 contre CT-03** (établie) : un message de service ne contient pas de code promo. D2 est exclue, comme B05-D7, et renvoyée vers un message marketing distinct. Hypothèse : SMS d'expédition sans offre.\n- **D1 contre CT-02** (établie) : le mobile est collecté pour la livraison, et tout autre usage exige une analyse préalable de la DPO (CT-01). Hypothèse : SMS désactivé par défaut, e-mail possible en attendant.\n- **D3 contre CT-07** : une mise en service la semaine du 30/11 tombe dans le gel du 16/11 au 11/01. Hypothèse : développement possible, mise en production après le 11/01/2027.\n\nIl faut aussi appliquer CT-13 (export et effacement) et CT-14 (le service client modifie lui-même le texte).\n\n@Rédacteur : à toi."
+  },
+  {
+   "agent": "redacteur",
+   "t": 29.9,
+   "texte": "Critères proposés pour le lot « SMS d'expédition » de P01 :\n\n1. QUAND Hangar confirme l'expédition d'une commande via Passerelle, LE SYSTÈME DOIT envoyer une notification de service au client dans un délai de 5 minutes (valeur à paramétrer). _Source : D1, H-déclencheur_\n2. PENDANT QUE la DPO n'a pas validé le traitement, LE SYSTÈME NE DOIT PAS envoyer de SMS et DOIT utiliser l'e-mail. Le canal SMS est désactivé par défaut. _Source : D1, CT-01, CT-02_\n3. LE SYSTÈME NE DOIT PAS inclure de code promo, de remise ni de recommandation dans un message de service. _Source : D2, CT-03_\n4. OÙ le canal SMS est activé, LE SYSTÈME DOIT n'envoyer le SMS qu'aux clients ayant un consentement enregistré. _Source : CT-02, H-consentement_\n5. LE SYSTÈME DOIT permettre au service client de modifier le texte du message sans passer par la DSI, et DOIT exporter et effacer les données d'envoi d'un client. _Source : CT-14, CT-13_\n\nD3 ira en hypothèse : développement dans le gel, aucune mise en service avant le 11/01/2027. _Source : D3, CT-07_\n\n@Contrôleur : qu'en penses-tu ?"
+  },
+  {
+   "agent": "controleur",
+   "t": 39.8,
+   "texte": "**[Contrôleur]** Trois objections.\n\n1. **@Rédacteur, critère 2, canal de repli non spécifié.** « Utiliser l'e-mail » étend le traitement à un autre canal sans que personne l'ait demandé. Pour un e-mail de service, CT-03 et CT-14 s'appliquent aussi. Il faut un critère distinct avec sa propre source, ou une hypothèse H explicite. Sinon la traçabilité est fausse.\n\n2. **@Rédacteur, critère 4, consentement non testable.** « Consentement enregistré » n'a ni définition ni source. B07 ne parle pas de consentement SMS, donc H-consentement doit être une vraie hypothèse numérotée avec une question ouverte à la DPO. Le critère 1 fixe un seuil de 5 minutes, mais ce chiffre ne vient d'aucune source. Il faut le marquer H, pas D1.\n\n3. **@Analyste, D3 et D2.** D3 doit apparaître dans un conflit Cnn avec CT-07, pas seulement dans une hypothèse. L'exclusion de D2 doit citer ce Cnn, comme l'exige le steering. Aucun critère ne couvre non plus CT-01 (revue DPO en première tâche) ni CT-04 (données de test synthétiques)."
+  },
+  {
+   "agent": "redacteur",
+   "t": 46.3,
+   "texte": "**[Rédacteur]** J'accepte les trois objections, avec une nuance sur la troisième.\n\n1. **Repli e-mail** : accepté. Je le sors du critère 2 et j'en fais l'hypothèse H-email, avec une question à Yanis. Le critère 2 devient : « PENDANT QUE la DPO n'a pas validé le traitement, LE SYSTÈME NE DOIT PAS envoyer de SMS. » _Source : D1, CT-01, CT-02_\n2. **Consentement et 5 min** : acceptés. H-consentement est numérotée, avec une question ouverte à la DPO. Le critère 1 devient : « …dans un délai de 5 minutes (H-délai, à confirmer). »\n3. **Cnn et CT-01/CT-04** : acceptés. Je cite les Cnn de l'Analyste dès qu'ils sont numérotés. Ajouts :\n   - Critère 6 : le plan de tâches commence par la revue DPO. _Source : CT-01_\n   - Critère 7 : les tests utilisent des données synthétiques. _Source : CT-04_\n\nCe sont les conflits de l'Analyste. Je ne les numérote pas à sa place.\n\n@Contrôleur : validé ?"
+  },
+  {
+   "agent": "analyste",
+   "t": 57.5,
+   "texte": "**[Analyste]** Version corrigée acceptée. Je numérote les conflits, puisque le Rédacteur les attend :\n- **C27** : D2 contre CT-03. D2 est exclue avec la raison « contraire à CT-03, voir C27 », et renvoyée vers un message marketing distinct.\n- **C28** : D1 contre CT-02 et CT-01. SMS désactivé par défaut.\n- **C29** : D3 contre CT-07. D3 reste incluse comme développement, sans mise en service avant le 11/01/2027.\n\nHypothèses : H32 repli e-mail, H33 consentement, H34 délai de 5 min.\n\nQuestions :\n- **Q40, @Hélène Marsac (DPO)** : le SMS d'expédition est-il autorisé avec le mobile collecté pour la livraison ? Quel consentement faut-il ?\n- **Q41, @Yanis Mercadier** : un e-mail de service sans offre suffit-il en attendant ? Quelle est l'échéance réelle, l'e-mail n'étant pas daté ?\n- **Q42, @Capucine Lorrain (marketing)** : un code promo à l'expédition passe-t-il par un message marketing séparé ?\n\n@Contrôleur : je suis d'accord."
+  },
+  {
+   "agent": "controleur",
+   "t": 66.6,
+   "texte": "VERDICT : ACCORD\n\n- **Projet** : extension V2 de P01 (SMS d'expédition). Aucun nouveau projet.\n- **Décisions** : D2 est exclue, car contraire à CT-03 (C27). Le SMS est désactivé par défaut tant que la DPO n'a pas répondu (C28). D3 est incluse comme développement seulement, sans mise en service avant le 11/01/2027 (C29). La revue DPO ouvre le plan de tâches (CT-01). Les tests utilisent des données synthétiques (CT-04). Le service client modifie lui-même le texte (CT-14). L'export et l'effacement sont couverts (CT-13).\n- **Hypothèses retenues** : H32 (repli e-mail sans offre), H33 (consentement SMS), H34 (délai de 5 min). Le Rédacteur citera C27 dans le critère 3.\n- **Questions à poser** : Q40 à la DPO (autorisation et consentement), Q41 à Yanis (e-mail suffisant ? échéance réelle ?), Q42 à Capucine (code promo dans un message marketing séparé ?)."
+  }
+ ],
+ "conclusion": "VERDICT : ACCORD\n\n- **Projet** : extension V2 de P01 (SMS d'expédition). Aucun nouveau projet.\n- **Décisions** : D2 est exclue, car contraire à CT-03 (C27). Le SMS est désactivé par défaut tant que la DPO n'a pas répondu (C28). D3 est incluse comme développement seulement, sans mise en service avant le 11/01/2027 (C29). La revue DPO ouvre le plan de tâches (CT-01). Les tests utilisent des données synthétiques (CT-04). Le service client modifie lui-même le texte (CT-14). L'export et l'effacement sont couverts (CT-13).\n- **Hypothèses retenues** : H32 (repli e-mail sans offre), H33 (consentement SMS), H34 (délai de 5 min). Le Rédacteur citera C27 dans le critère 3.\n- **Questions à poser** : Q40 à la DPO (autorisation et consentement), Q41 à Yanis (e-mail suffisant ? échéance réelle ?), Q42 à Capucine (code promo dans un message marketing séparé ?)."
+}
