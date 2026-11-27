@@ -148,18 +148,15 @@ class Gestionnaire(BaseHTTPRequestHandler):
         self.envoyer(200, json.dumps({"id": ident}).encode(), "application/json")
 
 
-EXEMPLE = """De : Lucie Fabre, responsable de l'entrepôt E3
-À : DSI
-Objet : déclaration de la casse, E3 aussi
+EXEMPLE = """De : Yanis Mercadier, service client
+Objet : SMS d'expédition
 
 Bonjour,
-J'ai appris que E2 va avoir un outil pour déclarer la casse. On le veut aussi à E3, et en même temps que E2.
-Chez nous, les colis abîmés sont repérés au poste de contrôle de la réception, sur PC, pas sur douchette.
-Les photos doivent partir automatiquement chez le transporteur avec le dossier de litige, étiquette bien visible, sinon il refuse le litige.
-Attention, notre transporteur principal impose une déclaration sous 48 h, pas sous 7 jours.
-On a environ 25 cas par jour, plus en janvier.
+Quand une commande part de l'entrepôt, je veux envoyer un SMS au client pour le prévenir.
+Dans ce SMS, on ajoute un code promo de 10 % pour sa prochaine commande.
+À mettre en place la semaine prochaine.
 Merci,
-Lucie"""
+Yanis"""
 
 PAGE = r"""<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Orvanne · les agents débattent en direct</title>
