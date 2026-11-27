@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Orvanne : des expressions de besoin aux specs Kiro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --s: 1; --bleu: #12355b; --cyan: #0e7c86; --clair: #e8f3f4; --gris: #5b6770; --orange: #d9822b; --rouge: #b73a3a; --vert: #2e7d4f; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #1d2731; font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; color: #1f2a33; overflow: hidden; }
+  .slide { display: none; position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; padding: 44px 60px 36px;
+           background: #fff; transform: translate(-50%, -50%) scale(var(--s)); transform-origin: center; }
+  .slide.active { display: flex; flex-direction: column; }
+  h1 { margin: 0; font-size: 40px; color: var(--bleu); letter-spacing: -0.5px; }
+  h2 { margin: 0 0 6px; font-size: 20px; color: var(--cyan); text-transform: uppercase; letter-spacing: 1.5px; }
+  .sous { margin: 10px 0 0; font-size: 21px; color: var(--gris); line-height: 1.4; }
+  .pied { margin-top: auto; display: flex; justify-content: space-between; font-size: 15px; color: var(--gris); border-top: 1px solid #dde3e7; padding-top: 10px; }
+  code { font-family: Consolas, "SF Mono", monospace; font-size: 0.92em; background: var(--clair); color: var(--bleu); padding: 1px 6px; border-radius: 4px; }
+
+  /* Diapo 1 : chaîne d'agents */
+  .chaine { display: flex; align-items: stretch; gap: 10px; margin-top: 34px; }
+  .etape { flex: 1; border: 2px solid var(--cyan); border-radius: 12px; padding: 14px 14px 12px; background: var(--clair); position: relative; }
+  .etape.doc { background: #f4f6f8; border-color: #9aa7b1; }
+  .etape .num { display: inline-block; width: 30px; height: 30px; line-height: 30px; text-align: center; border-radius: 50%; background: var(--cyan); color: #fff; font-weight: 700; font-size: 16px; }
+  .etape .nom { font-size: 21px; font-weight: 700; color: var(--bleu); margin: 8px 0 6px; }
+  .etape p { margin: 0; font-size: 16px; line-height: 1.4; }
+  .etape .sortie { margin-top: 10px; font-size: 13px; color: var(--gris); }
+  .etape .qui { position: absolute; top: 10px; right: 12px; font-size: 13px; font-weight: 700; color: var(--cyan); }
+  .fleche { align-self: center; font-size: 30px; color: var(--cyan); }
+  .pause { align-self: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 13px; font-weight: 700; color: var(--orange);
+           border: 2px dashed var(--orange); border-radius: 8px; padding: 10px 4px; }
+  .socle { margin-top: 22px; display: flex; gap: 16px; }
+  .socle div { flex: 1; border-left: 5px solid var(--bleu); background: #f4f6f8; padding: 12px 16px; font-size: 17px; line-height: 1.4; }
+  .socle b { color: var(--bleu); }
+
+  /* Diapo 2 : garde-fous et exemple */
+  .deux { display: flex; gap: 28px; margin-top: 24px; flex: 1; min-height: 0; }
+  .regles { flex: 1.05; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+  .regle { border-radius: 12px; padding: 16px 18px; background: var(--clair); border-top: 5px solid var(--cyan); }
+  .regle .t { font-size: 20px; font-weight: 700; color: var(--bleu); margin-bottom: 6px; }
+  .regle p { margin: 0; font-size: 16px; line-height: 1.42; }
+  .exemple { flex: 1; border: 2px solid var(--bleu); border-radius: 12px; padding: 16px 20px; display: flex; flex-direction: column; gap: 9px; }
+  .exemple .t { font-size: 18px; font-weight: 700; color: var(--bleu); }
+  .cit { font-size: 15px; line-height: 1.38; padding: 8px 12px; border-radius: 8px; background: #f4f6f8; border-left: 5px solid #9aa7b1; }
+  .cit.a { border-color: var(--rouge); } .cit.b { border-color: var(--orange); } .cit.c { border-color: var(--bleu); }
+  .cit i { font-style: normal; font-weight: 700; color: var(--bleu); margin-right: 6px; }
+  .issue { font-size: 15px; line-height: 1.4; padding: 9px 12px; border-radius: 8px; background: #eaf5ee; border-left: 5px solid var(--vert); }
+  .issue b { color: var(--vert); }
+
+  /* Diapo 3 : résultats */
+  .chiffres { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+  .chiffre { background: var(--clair); border-radius: 12px; padding: 14px 18px; }
+  .chiffre .v { font-size: 46px; font-weight: 800; color: var(--bleu); line-height: 1; }
+  .chiffre .l { font-size: 16px; color: var(--gris); margin-top: 6px; line-height: 1.3; }
+  .chiffre.ok { background: #eaf5ee; } .chiffre.ok .v { color: var(--vert); }
+  .bas { display: flex; gap: 18px; margin-top: 20px; }
+  .bloc { flex: 1; border-radius: 12px; padding: 14px 18px; border: 2px solid #dde3e7; }
+  .bloc .t { font-size: 18px; font-weight: 700; color: var(--bleu); margin-bottom: 8px; }
+  .bloc p, .bloc li { font-size: 15.5px; line-height: 1.42; margin: 0; }
+  .bloc ul { margin: 0; padding-left: 18px; }
+  .barre { display: flex; height: 22px; border-radius: 6px; overflow: hidden; margin: 8px 0 6px; font-size: 12px; color: #fff; font-weight: 700; }
+  .barre span { display: flex; align-items: center; justify-content: center; }
+  .bloc.alerte { border-color: var(--orange); }
+
+  /* Navigation et notes */
+  #nav { position: fixed; bottom: 12px; right: 16px; color: #c9d3da; font-size: 13px; font-family: system-ui, sans-serif; }
+  #notes { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-height: 34%; overflow: auto; background: #0f171f; color: #e7edf1;
+           font-size: 16px; line-height: 1.5; padding: 14px 22px 28px; border-top: 3px solid var(--orange); }
+  #notes.visible { display: block; }
+  .note { display: none; }
+
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { overflow: visible; background: #fff; }
+    .slide { display: flex !important; flex-direction: column; position: relative; left: 0; top: 0; transform: none; page-break-after: always; break-after: page; }
+    #nav, #notes { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Diapo 1 : le problème et la solution -->
+<section class="slide" data-note="On part de 9 demandes réelles d'Orvanne, toutes dans un format différent, souvent floues et contradictoires. Notre réponse : une chaîne de 4 agents Kiro, un par étape, pilotée par un orchestrateur. Après l'analyse, la chaîne s'arrête pour qu'un humain valide la carte des projets. Chaque membre de l'équipe a construit une étape : A l'extraction, B l'analyse, C la rédaction, D la qualité et l'assemblage.">
+  <h2>Challenge B · Orvanne</h2>
+  <h1>Des expressions de besoin aux specs Kiro</h1>
+  <p class="sous"><b>Le problème :</b> 9 demandes de 9 services, dans 9 formats (e-mail, ticket, cahier des charges, notes de réunion, messagerie, message vocal, note RGPD, compte rendu, CSV). Elles sont floues, éparpillées et se contredisent.</p>
+
+  <div class="chaine">
+    <div class="etape doc">
+      <div class="nom">9 documents</div>
+      <p>Dossier <code>challenge-b/</code>, en lecture seule.</p>
+    </div>
+    <div class="fleche">→</div>
+    <div class="etape"><span class="qui">A</span>
+      <span class="num">1</span><div class="nom">Extracteur</div>
+      <p>Découpe chaque document en demandes, avec la phrase exacte comme preuve.</p>
+      <div class="sortie"><code>work/fiches/B0x.json</code></div>
+    </div>
+    <div class="fleche">→</div>
+    <div class="etape"><span class="qui">B</span>
+      <span class="num">2</span><div class="nom">Analyste</div>
+      <p>Regroupe en projets, détecte les conflits, propose hypothèses et questions.</p>
+      <div class="sortie"><code>work/analyse.json</code></div>
+    </div>
+    <div class="pause">VALIDATION HUMAINE</div>
+    <div class="etape"><span class="qui">C</span>
+      <span class="num">3</span><div class="nom">Rédacteur</div>
+      <p>Écrit une spec Kiro par projet : exigences, conception, tâches.</p>
+      <div class="sortie"><code>.kiro/specs/&lt;projet&gt;/</code></div>
+    </div>
+    <div class="fleche">→</div>
+    <div class="etape"><span class="qui">D</span>
+      <span class="num">4</span><div class="nom">Contrôleur</div>
+      <p>Vérifie la traçabilité et la qualité de chaque spec.</p>
+      <div class="sortie"><code>work/rapport-qualite.md</code></div>
+    </div>
+  </div>
+
+  <div class="socle">
+    <div><b>Orchestrateur</b> : enchaîne les 4 étapes et lance les agents en parallèle (un par document, un par projet).</div>
+    <div><b>Contrats communs</b> : un format fixé entre chaque étape (<code>CONTRATS.md</code>), ce qui a permis de travailler à 4 en parallèle.</div>
+    <div><b>Une spec Kiro</b> = <code>requirements.md</code> (quoi), <code>design.md</code> (comment), <code>tasks.md</code> (dans quel ordre).</div>
+  </div>
+  <div class="pied"><span>Équipe A · B · C · D</span><span>1 / 3</span></div>
+</section>
+
+<!-- Diapo 2 : les garde-fous -->
+<section class="slide" data-note="Le risque d'une IA, c'est qu'elle invente ou qu'elle tranche à notre place. Nous avons quatre garde-fous. L'exemple de droite, C01 : la logistique veut un SMS, le service client un e-mail, et la DPO rappelle que le mobile n'est collecté que pour la livraison. L'IA ne choisit pas : elle rend le canal paramétrable, démarre en e-mail, et pose la question aux deux directions, avec l'avis de la DPO.">
+  <h2>Comment on évite que l'IA invente</h2>
+  <h1>Quatre garde-fous</h1>
+
+  <div class="deux">
+    <div class="regles">
+      <div class="regle"><div class="t">Rien n'est inventé</div>
+        <p>Chaque exigence cite sa source (<code>B02-D7</code>) ou une hypothèse déclarée (<code>H01</code>). Un script compare chaque citation au document, mot pour mot.</p></div>
+      <div class="regle"><div class="t">Conflits visibles</div>
+        <p>Une contradiction n'est jamais tranchée en silence. Elle devient un conflit, avec une hypothèse réversible, une question et l'arbitre à qui la poser.</p></div>
+      <div class="regle"><div class="t">Contraintes communes</div>
+        <p>Les 14 contraintes transverses (RGPD, gel des mises en production du 16/11 au 11/01, hébergement dans l'UE…) sont partagées par tous les agents.</p></div>
+      <div class="regle"><div class="t">Contrôle automatique</div>
+        <p>Des validateurs Python tournent à chaque étape, relancés par un hook Kiro dès qu'un agent écrit un fichier. Un humain valide les projets.</p></div>
+    </div>
+
+    <div class="exemple">
+      <div class="t">Exemple : conflit C01, le canal de l'alerte de retard</div>
+      <div class="cit a"><i>B01 · Logistique</i>« Une alerte automatique au client dès qu'un colis est en retard. Par SMS, pas par e-mail »</div>
+      <div class="cit b"><i>B02 · Service client</i>« Envoi par e-mail uniquement. Le SMS a été étudié l'an dernier et refusé pour une question de budget, et nous n'avons pas le numéro de mobile de tous les clients. »</div>
+      <div class="cit c"><i>B07 · DPO</i>« Le numéro de mobile est collecté pour la livraison. Tout autre usage suppose une analyse préalable. »</div>
+      <div class="issue"><b>Hypothèse H01 :</b> le canal est un paramètre ; la V1 envoie un e-mail ; le SMS n'est activé qu'après analyse de la DPO et accord budgétaire.<br>
+        <b>Question Q01 :</b> posée à la directrice logistique et à la responsable du service client, après avis de la DPO.</div>
+    </div>
+  </div>
+  <div class="pied"><span>Citations exactes extraites des documents B01, B02 et B07</span><span>2 / 3</span></div>
+</section>
+
+<!-- Diapo 3 : les résultats -->
+<section class="slide" data-note="Sur les 9 documents, la chaîne sort 168 demandes, 8 projets et 8 specs, toutes au verdict OK. Sept specs décrivent de nouvelles fonctions, une corrige un bug de l'espace vendeur. Une seule question bloque : la DSI doit dire si on peut déroger au gel pour le pic. Nous avons aussi mesuré nos limites : sur 34 conflits relevés à la main, 25 sont détectés, 7 en partie, 2 manqués. Place à la démo : demo/index.html.">
+  <h2>Ce que produit la chaîne</h2>
+  <h1>Résultats sur les 9 documents</h1>
+
+  <div class="chiffres">
+    <div class="chiffre"><div class="v">168</div><div class="l">demandes extraites, chacune avec sa citation</div></div>
+    <div class="chiffre"><div class="v">8</div><div class="l">projets : 7 nouvelles fonctions, 1 correction de bug</div></div>
+    <div class="chiffre"><div class="v">26</div><div class="l">conflits détectés entre les services</div></div>
+    <div class="chiffre"><div class="v">31 · 39</div><div class="l">hypothèses réversibles · questions par destinataire</div></div>
+    <div class="chiffre ok"><div class="v">8 / 8</div><div class="l">specs Kiro au verdict OK du contrôle qualité</div></div>
+    <div class="chiffre"><div class="v">483</div><div class="l">critères d'acceptation, tous tracés vers une source</div></div>
+    <div class="chiffre"><div class="v">424</div><div class="l">sous-tâches de développement, toutes reliées aux exigences</div></div>
+    <div class="chiffre"><div class="v">1</div><div class="l">question bloquante : dérogation au gel pour le pic (DSI)</div></div>
+  </div>
+
+  <div class="bas">
+    <div class="bloc alerte"><div class="t">Nos limites, mesurées</div>
+      <p>Comparaison avec 34 conflits relevés à la main :</p>
+      <div class="barre"><span style="flex:25;background:var(--vert)">25 détectés</span><span style="flex:7;background:var(--orange)">7 partiels</span><span style="flex:2;background:var(--rouge)">2</span></div>
+      <p>Manqués : le bon d'achat majoré de 5 % et les priorités incohérentes du tableau marketplace.</p></div>
+    <div class="bloc"><div class="t">À voir en démo</div>
+      <ul>
+        <li><code>demo/index.html</code> : chaque identifiant est cliquable et affiche sa preuve</li>
+        <li>Dans Kiro : agent <b>orchestrateur</b>, « Génère les specs à partir de challenge-b »</li>
+        <li>Sans l'IDE : <code>bash tools/pipeline.sh</code></li>
+      </ul></div>
+  </div>
+  <div class="pied"><span>Sources : <code>work/analyse.json</code>, <code>work/rapport-qualite.md</code></span><span>3 / 3</span></div>
+</section>
+
+<div id="notes"></div>
+<div id="nav">← → pour naviguer · N : notes de l'orateur · Ctrl+P : exporter en PDF</div>
+
+<script>
+  const diapos = [...document.querySelectorAll('.slide')];
+  const notes = document.getElementById('notes');
+  let i = 0;
+  function ajuster() {
+    const s = Math.min(innerWidth / 1280, innerHeight / 720) * 0.97;
+    document.documentElement.style.setProperty('--s', s);
+  }
+  function montrer(n) {
+    i = Math.max(0, Math.min(diapos.length - 1, n));
+    diapos.forEach((d, k) => d.classList.toggle('active', k === i));
+    notes.textContent = diapos[i].dataset.note || '';
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) montrer(i + 1);
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) montrer(i - 1);
+    else if (e.key === 'Home') montrer(0);
+    else if (e.key === 'End') montrer(diapos.length - 1);
+    else if (e.key.toLowerCase() === 'n') notes.classList.toggle('visible');
+  });
+  addEventListener('click', e => { if (!notes.contains(e.target)) montrer(e.clientX > innerWidth / 3 ? i + 1 : i - 1); });
+  addEventListener('resize', ajuster);
+  ajuster();
+  montrer((parseInt(location.hash.slice(1), 10) || 1) - 1);
+</script>
+</body>
+</html>
