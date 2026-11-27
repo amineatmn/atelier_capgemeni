@@ -2,265 +2,118 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Orvanne : nos agents débattent en direct</title>
+<title>Orvanne : des demandes aux specs Kiro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  :root { --s: 1; --fond: #0a0f1a; --carte: #ffffff0d; --bord: #ffffff1c; --texte: #e8edf5; --doux: #9fb3cc; --bleu: #7fb2ff;
-          --ext: #4fc3f7; --ana: #ffb74d; --red: #81c784; --ctl: #e57373; --jaune: #ffd54f; }
+  :root { --s: 1; --ext: #4fc3f7; --ana: #ffb74d; --red: #81c784; --ctl: #e57373; --hum: #ffd54f; --doux: #9fb3cc; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; background: #05080f; font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; color: var(--texte); overflow: hidden; }
-  .slide { display: none; position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; padding: 40px 56px 30px;
-           background: radial-gradient(ellipse at top, #16233a, var(--fond) 72%); transform: translate(-50%, -50%) scale(var(--s)); }
-  .slide.active { display: flex; flex-direction: column; }
-  h1 { margin: 0; font-size: 38px; letter-spacing: -0.3px; } h1 span { color: var(--bleu); }
-  h2 { margin: 0 0 6px; font-size: 16px; color: var(--doux); text-transform: uppercase; letter-spacing: 2px; }
-  .sous { margin: 10px 0 0; font-size: 19px; color: #c9d6e6; line-height: 1.45; }
-  .pied { margin-top: auto; display: flex; justify-content: space-between; font-size: 14px; color: #7d8ea6; border-top: 1px solid var(--bord); padding-top: 9px; }
-  code { font-family: Consolas, "SF Mono", ui-monospace, monospace; font-size: 0.9em; background: #ffffff14; color: #dfe7f2; padding: 1px 6px; border-radius: 4px; }
-  .carte { background: var(--carte); border: 1px solid var(--bord); border-radius: 14px; }
-  .titre { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  html, body { margin: 0; height: 100%; background: #05080f; color: #e8edf5; overflow: hidden;
+               font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; }
+  .slide { display: none; position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; padding: 60px 80px;
+           flex-direction: column; justify-content: center; align-items: center; text-align: center;
+           background: radial-gradient(ellipse at top, #16233a, #0a0f1a 72%); transform: translate(-50%, -50%) scale(var(--s)); }
+  .slide.active { display: flex; }
+  h1 { margin: 0 0 14px; font-size: 54px; letter-spacing: -0.5px; line-height: 1.1; }
+  h1 span { color: #7fb2ff; }
+  .phrase { margin: 0; font-size: 26px; color: #c9d6e6; line-height: 1.45; }
+  .num { position: absolute; bottom: 22px; right: 34px; font-size: 15px; color: #5d6f88; }
 
-  /* Diapo 1 : les 4 agents */
-  .agents { display: flex; gap: 12px; margin-top: 26px; align-items: stretch; }
-  .agent { flex: 1; padding: 16px 16px 14px; border-top: 4px solid var(--c); position: relative; }
-  .avatar { width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--c); background: #0b1220; display: flex; align-items: center; justify-content: center; font-size: 26px; }
-  .agent .nom { font-size: 22px; font-weight: 700; color: var(--c); margin: 10px 0 6px; }
-  .agent p { margin: 0; font-size: 15.5px; line-height: 1.42; color: #d5deea; }
-  .agent .sortie { margin-top: 10px; font-size: 12.5px; color: var(--doux); }
-  .agent .qui { position: absolute; top: 14px; right: 14px; font-size: 13px; font-weight: 700; color: var(--c); border: 1px solid var(--c); border-radius: 20px; padding: 1px 9px; }
-  .fl { align-self: center; color: #5d6f88; font-size: 26px; }
-  .pause { align-self: center; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; font-weight: 700; color: var(--jaune); border: 2px dashed var(--jaune); border-radius: 8px; padding: 10px 3px; }
-  .regles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
-  .regle { padding: 12px 14px; font-size: 14.5px; line-height: 1.42; color: #d5deea; }
-  .regle b { display: block; color: #fff; font-size: 16px; margin-bottom: 4px; }
+  .agents { display: flex; align-items: center; gap: 18px; margin: 50px 0; }
+  .agent { width: 170px; }
+  .rond { width: 104px; height: 104px; margin: 0 auto 12px; border-radius: 50%; border: 4px solid var(--c); background: #0b1220;
+          display: flex; align-items: center; justify-content: center; font-size: 46px; }
+  .agent b { display: block; font-size: 24px; color: var(--c); }
+  .agent small { display: block; margin-top: 4px; font-size: 18px; color: var(--doux); }
+  .fl { font-size: 34px; color: #5d6f88; margin-bottom: 52px; }
 
-  /* Diapo 2 : la démo */
-  .deux { display: flex; gap: 22px; margin-top: 22px; flex: 1; min-height: 0; }
-  .gauche { flex: 1.1; display: flex; flex-direction: column; gap: 14px; }
-  .droite { flex: 1; display: flex; flex-direction: column; gap: 14px; }
-  .etapes { padding: 14px 18px; }
-  .etapes ol { margin: 0; padding-left: 22px; font-size: 16px; line-height: 1.55; color: #d5deea; }
-  .tours { padding: 14px 18px; }
-  .file { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; margin-top: 4px; }
-  .tour { text-align: center; font-size: 11.5px; color: var(--doux); width: 74px; }
-  .tour .rond { width: 40px; height: 40px; margin: 0 auto 4px; border-radius: 50%; border: 3px solid var(--c); background: #0b1220; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-  .tour b { display: block; color: var(--c); font-size: 12px; }
-  .file .sep { color: #5d6f88; }
-  .verdict { margin-top: 10px; font-size: 14px; color: #d5deea; }
-  .verdict span { color: var(--red); font-weight: 700; }
-  .mail { padding: 14px 18px; font: 14.5px/1.55 ui-monospace, Consolas, monospace; color: #dfe7f2; background: #0b1220; border: 1px solid var(--bord); border-radius: 12px; white-space: pre-wrap; }
-  mark { background: none; color: var(--jaune); font-weight: 700; border-bottom: 2px solid var(--jaune); }
-  .pieges { padding: 12px 16px; }
-  .piege { display: flex; gap: 10px; font-size: 15px; line-height: 1.4; margin: 6px 0; color: #d5deea; }
-  .piege .n { flex: 0 0 24px; height: 24px; border-radius: 50%; background: var(--jaune); color: #1a1a1a; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
-  .lien { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding: 12px 18px; border-radius: 12px; border: 2px solid var(--bleu); background: #7fb2ff14; }
-  .lien a { color: #fff; font: 600 17px ui-monospace, Consolas, monospace; text-decoration: none; }
-  .lien .bouton { background: linear-gradient(90deg, #3b82f6, #8b5cf6); color: #fff; font-weight: 700; font-size: 15px; padding: 7px 14px; border-radius: 8px; white-space: nowrap; }
-  .lien small { color: var(--doux); font-size: 13px; margin-left: auto; text-align: right; }
+  .mail { margin: 34px 0; padding: 26px 36px; max-width: 900px; text-align: left; font-size: 27px; line-height: 1.6;
+          background: #0b1220; border: 1px solid #ffffff22; border-radius: 16px; }
+  mark { background: none; color: var(--hum); font-weight: 700; border-bottom: 3px solid var(--hum); }
+  .bouton { display: inline-block; padding: 18px 34px; border-radius: 14px; font-size: 26px; font-weight: 700; color: #fff; text-decoration: none;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6); box-shadow: 0 8px 30px #3b82f655; }
+  .lien { margin-top: 14px; font: 18px ui-monospace, Consolas, monospace; color: var(--doux); }
 
-  /* Diapo 3 : conclusion et résultats */
-  .accord { padding: 16px 20px; border: 2px solid var(--red); background: linear-gradient(135deg, #123b26, #0f2c3d); border-radius: 14px; box-shadow: 0 0 34px #81c78433; }
-  .accord .titre { color: #fff; font-size: 20px; }
-  .accord ul { margin: 0; padding-left: 20px; font-size: 15.5px; line-height: 1.55; }
-  .accord li b { color: var(--red); }
-  .invente { padding: 14px 18px; border-left: 4px solid var(--ctl); }
-  .invente p { margin: 0; font-size: 15px; line-height: 1.45; color: #d5deea; }
-  .questions { padding: 14px 18px; }
-  .questions p { margin: 3px 0; font-size: 15px; line-height: 1.4; color: #d5deea; }
-  .chiffres { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .chiffre { padding: 10px 14px; }
-  .chiffre .v { font-size: 34px; font-weight: 800; line-height: 1.05; }
-  .chiffre .l { font-size: 13.5px; color: var(--doux); margin-top: 3px; line-height: 1.3; }
-  .chiffre.ok .v { color: var(--red); }
-  .barre { display: flex; height: 20px; border-radius: 6px; overflow: hidden; margin: 8px 0 6px; font-size: 12px; color: #0a0f1a; font-weight: 800; }
-  .barre span { display: flex; align-items: center; justify-content: center; }
-  .limites { padding: 12px 16px; }
-  .limites p { margin: 0; font-size: 14px; line-height: 1.4; color: #d5deea; }
+  .chiffres { display: flex; gap: 70px; margin: 46px 0; }
+  .chiffre .v { font-size: 92px; font-weight: 800; line-height: 1; }
+  .chiffre .l { margin-top: 10px; font-size: 22px; color: var(--doux); }
 
-  /* Navigation et notes */
-  #nav { position: fixed; bottom: 10px; right: 14px; color: #5d6f88; font-size: 12.5px; }
-  #notes { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-height: 36%; overflow: auto; background: #0b1220f2; color: #e7edf1;
-           font-size: 16px; line-height: 1.5; padding: 14px 22px 28px; border-top: 3px solid var(--jaune); white-space: pre-line; }
+  #notes { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-height: 34%; overflow: auto; background: #0b1220f2;
+           font-size: 17px; line-height: 1.5; padding: 14px 22px 26px; border-top: 3px solid var(--hum); white-space: pre-line; }
   #notes.visible { display: block; }
+  #aide { position: fixed; bottom: 8px; left: 14px; color: #3f4d61; font-size: 12px; }
 
   @media print {
     @page { size: 1280px 720px; margin: 0; }
     html, body { overflow: visible; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .slide { display: flex !important; flex-direction: column; position: relative; left: 0; top: 0; transform: none; break-after: page; page-break-after: always; }
-    #nav, #notes { display: none !important; }
+    .slide { display: flex !important; position: relative; left: 0; top: 0; transform: none; break-after: page; page-break-after: always; }
+    #notes, #aide { display: none !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- Diapo 1 : le problème et nos 4 agents -->
-<section class="slide" data-note="Orvanne reçoit des demandes de tous ses services : e-mails, tickets, notes de réunion, message vocal, tableau CSV… Elles sont floues et se contredisent.
-Notre solution : 4 agents Kiro, chacun avec un rôle, comme une équipe projet. L'extracteur découpe, l'analyste regroupe et repère les conflits, le rédacteur écrit la spec, le contrôleur vérifie.
-Chacun de nous a construit un agent : A, B, C, D.
-En bas, les 4 règles qui empêchent l'IA d'inventer ou de trancher à notre place. Vous allez les voir à l'œuvre dans la démo.">
-  <h2>Challenge B · Orvanne</h2>
-  <h1>Des expressions de besoin aux <span>specs Kiro</span></h1>
-  <p class="sous">Les demandes arrivent en vrac, dans 9 formats (e-mail, ticket, notes de réunion, message vocal, CSV…). Elles sont floues et se contredisent. Nos 4 agents Kiro en font des specs prêtes à développer.</p>
-
+<section class="slide" data-note="Orvanne reçoit des demandes en vrac : e-mails, tickets, notes de réunion, message vocal… Elles sont floues et se contredisent.
+Nos 4 agents Kiro en font des specs prêtes à développer. Chacun de nous en a construit un.
+Nos règles : l'IA n'invente rien, elle signale les conflits, et c'est un humain qui tranche.">
+  <h1>Des demandes en vrac<br>aux <span>specs Kiro</span></h1>
   <div class="agents">
-    <div class="carte agent" style="--c: var(--ext)"><span class="qui">A</span>
-      <div class="avatar">🔎</div><div class="nom">Extracteur</div>
-      <p>Découpe chaque document en demandes, avec la phrase exacte comme preuve.</p>
-      <div class="sortie"><code>work/fiches/</code></div></div>
+    <div class="agent" style="--c: var(--ext)"><div class="rond">🔎</div><b>Extracteur</b><small>découpe</small></div>
     <div class="fl">→</div>
-    <div class="carte agent" style="--c: var(--ana)"><span class="qui">B</span>
-      <div class="avatar">🧭</div><div class="nom">Analyste</div>
-      <p>Rattache à un projet, détecte les conflits, propose hypothèses et questions.</p>
-      <div class="sortie"><code>work/analyse.json</code></div></div>
-    <div class="pause">VALIDATION HUMAINE</div>
-    <div class="carte agent" style="--c: var(--red)"><span class="qui">C</span>
-      <div class="avatar">✍</div><div class="nom">Rédacteur</div>
-      <p>Écrit la spec Kiro : exigences en EARS, conception, tâches.</p>
-      <div class="sortie"><code>.kiro/specs/</code></div></div>
+    <div class="agent" style="--c: var(--ana)"><div class="rond">🧭</div><b>Analyste</b><small>repère les conflits</small></div>
     <div class="fl">→</div>
-    <div class="carte agent" style="--c: var(--ctl)"><span class="qui">D</span>
-      <div class="avatar">🛡</div><div class="nom">Contrôleur</div>
-      <p>Vérifie, objecte, et rend le verdict qualité.</p>
-      <div class="sortie"><code>work/rapport-qualite.md</code></div></div>
+    <div class="agent" style="--c: var(--red)"><div class="rond">✍</div><b>Rédacteur</b><small>écrit la spec</small></div>
+    <div class="fl">→</div>
+    <div class="agent" style="--c: var(--ctl)"><div class="rond">🛡</div><b>Contrôleur</b><small>vérifie</small></div>
   </div>
-
-  <div class="regles">
-    <div class="carte regle"><b>Rien n'est inventé</b>Chaque exigence cite sa source ou une hypothèse déclarée.</div>
-    <div class="carte regle"><b>Conflits visibles</b>Jamais tranchés en silence : hypothèse réversible et question à l'arbitre.</div>
-    <div class="carte regle"><b>Règles communes</b>14 contraintes transverses : RGPD, gel des mises en production du 16/11 au 11/01…</div>
-    <div class="carte regle"><b>Contrôle automatique</b>Validateurs Python et hook Kiro à chaque fichier écrit.</div>
-  </div>
-  <div class="pied"><span>Équipe A · B · C · D</span><span>1 / 3</span></div>
+  <p class="phrase">L'IA n'invente rien, signale les conflits,<br>et c'est un humain qui tranche.</p>
+  <div class="num">1 / 3</div>
 </section>
 
-<!-- Diapo 2 : la démo en direct -->
-<section class="slide" data-note="On passe en direct. Je colle une nouvelle demande, qui ne fait pas partie des 9 documents : le service client veut un SMS à l'expédition, avec un code promo, pour la semaine prochaine.
-Elle contient 3 pièges, en jaune. Le code promo est interdit dans un message de service. Le mobile ne sert qu'à la livraison sans avis de la DPO. Et la semaine prochaine tombe pendant le gel des mises en production.
-Chaque bulle est un vrai appel à un agent Kiro, qui lit ses consignes et nos règles. Le débat dure 7 tours, environ une minute.
-Si le réseau tombe : ouvrir demo/index.html, qui fonctionne sans serveur.">
-  <h2>Démo en direct</h2>
-  <h1>Nos agents <span>débattent en direct</span></h1>
-
-  <div class="deux">
-    <div class="gauche">
-      <div class="carte etapes"><div class="titre">Ce que vous allez voir</div>
-        <ol>
-          <li>On colle une <b>nouvelle demande</b>, qui ne fait pas partie des 9 documents.</li>
-          <li>Les 4 agents en débattent : chaque message est un <b>vrai appel à un agent Kiro</b>, qui lit ses consignes, nos contraintes et nos projets.</li>
-          <li>Le contrôleur fait des objections, le rédacteur corrige.</li>
-          <li>Le débat se termine par un <b>verdict</b> : accord, ou désaccord et arbitrage humain.</li>
-        </ol></div>
-      <div class="carte tours"><div class="titre">7 tours, environ 1 minute</div>
-        <div class="file">
-          <div class="tour" style="--c: var(--ext)"><div class="rond">🔎</div><b>1</b>découpe</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--ana)"><div class="rond">🧭</div><b>2</b>conflits</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--red)"><div class="rond">✍</div><b>3</b>critères</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--ctl)"><div class="rond">🛡</div><b>4</b>objections</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--red)"><div class="rond">✍</div><b>5</b>corrige</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--ana)"><div class="rond">🧭</div><b>6</b>questions</div><span class="sep">›</span>
-          <div class="tour" style="--c: var(--ctl)"><div class="rond">🛡</div><b>7</b>verdict</div>
-        </div>
-        <div class="verdict">Répétition du 27/11/2026 : 63 secondes, <span>VERDICT : ACCORD</span></div></div>
-    </div>
-
-    <div class="droite">
-      <div class="mail">De : Yanis Mercadier, service client
-Objet : SMS d'expédition
-
-Quand une commande part de l'entrepôt, je veux
-envoyer <mark>un SMS</mark> au client pour le prévenir.
-Dans ce SMS, on ajoute <mark>un code promo de 10 %</mark>
-pour sa prochaine commande.
-À mettre en place <mark>la semaine prochaine</mark>.</div>
-      <div class="carte pieges"><div class="titre">3 pièges à repérer</div>
-        <div class="piege"><span class="n">1</span><span><b>SMS</b> : le mobile n'est collecté que pour la livraison, la DPO doit d'abord donner son avis (CT-02).</span></div>
-        <div class="piege"><span class="n">2</span><span><b>Code promo</b> : interdit dans un message de service (CT-03).</span></div>
-        <div class="piege"><span class="n">3</span><span><b>Semaine prochaine</b> : on est en plein gel des mises en production, du 16/11 au 11/01 (CT-07).</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="lien">
-    <span class="bouton">▶ Démo</span>
-    <a href="https://d18a0hd99lcxu3.cloudfront.net/proxy/8766/" target="_blank" rel="noopener">d18a0hd99lcxu3.cloudfront.net/proxy/8766/</a>
-    <small>Être connecté à l'environnement de l'atelier<br>Serveur : <code>python3 tools/demo_live.py</code></small>
-  </div>
-  <div class="pied"><span>Secours sans réseau : <code>demo/index.html</code></span><span>2 / 3</span></div>
+<section class="slide" data-note="On passe en direct avec une demande que les agents n'ont jamais vue. Elle contient 3 pièges, en jaune : le SMS demande l'avis de la DPO, le code promo est interdit dans un message de service, et la semaine prochaine tombe pendant le gel des mises en production.
+Les agents débattent, s'arrêtent pour qu'un responsable métier tranche, puis rendent leur verdict. Environ une minute.
+Si le lien ne marche pas : ouvrir demo/index.html.">
+  <h1>Démo <span>en direct</span></h1>
+  <div class="mail">« Quand une commande part de l'entrepôt, je veux envoyer <mark>un SMS</mark> au client.
+On y ajoute <mark>un code promo de 10 %</mark>.
+À mettre en place <mark>la semaine prochaine</mark>. »</div>
+  <a class="bouton" href="https://d18a0hd99lcxu3.cloudfront.net/proxy/8766/" target="_blank" rel="noopener">▶ Lancer la démo</a>
+  <div class="lien">d18a0hd99lcxu3.cloudfront.net/proxy/8766/</div>
+  <div class="num">2 / 3</div>
 </section>
 
-<!-- Diapo 3 : la conclusion des agents et les résultats -->
-<section class="slide" data-note="Voici ce que les agents ont conclu à la répétition. Les 3 pièges sont détectés : code promo exclu, SMS désactivé tant que la DPO n'a pas validé, pas de mise en service avant le 12 janvier.
-Le moment le plus parlant : le rédacteur avait mis un délai de 5 minutes qui ne venait d'aucune source. Le contrôleur l'a refusé, et ce délai est devenu une question au service client. C'est notre règle : rien n'est inventé.
-À droite, le pipeline complet sur les 9 documents : 168 demandes, 8 projets, 8 specs toutes validées. Et nos limites, mesurées : 2 conflits sur 34 nous échappent encore.">
-  <h2>Ce que les agents ont conclu</h2>
-  <h1>Les 3 pièges détectés, <span>rien d'inventé</span></h1>
-
-  <div class="deux">
-    <div class="gauche">
-      <div class="accord"><div class="titre">🤝 Conclusion commune (répétition)</div>
-        <ul>
-          <li><b>Projet</b> : rattaché au projet existant P01 (information du client sur sa livraison), pas de nouveau projet.</li>
-          <li><b>Code promo</b> : exclu, car contraire à CT-03 ; il devient un conflit, pas une exigence.</li>
-          <li><b>SMS</b> : informatif seulement, et désactivé tant que la DPO n'a pas validé (CT-02).</li>
-          <li><b>Date</b> : aucune mise en service avant le 12/01/2027 (CT-07).</li>
-          <li><b>En plus</b> : journalisation des textes modifiés et tests sur des numéros fictifs (CT-10, CT-04).</li>
-        </ul></div>
-      <div class="carte invente"><div class="titre" style="color: var(--ctl)">🛡 Le contrôleur refuse un chiffre inventé</div>
-        <p>Le rédacteur avait écrit « envoi dans les 5 minutes ». Aucune source ne le dit : le contrôleur l'a refusé, et le délai est devenu une question au service client.</p></div>
-      <div class="carte questions"><div class="titre">Questions posées aux décideurs</div>
-        <p>Délai d'envoi → <b>service client</b> · SMS sur le mobile → <b>DPO</b> · Dérogation au gel → <b>DSI</b></p></div>
-    </div>
-
-    <div class="droite">
-      <div class="titre" style="margin: 0">Le pipeline complet sur les 9 documents</div>
-      <div class="chiffres">
-        <div class="carte chiffre"><div class="v">168</div><div class="l">demandes, chacune avec sa citation</div></div>
-        <div class="carte chiffre"><div class="v">8</div><div class="l">projets : 7 fonctions, 1 bugfix</div></div>
-        <div class="carte chiffre"><div class="v">26</div><div class="l">conflits entre services</div></div>
-        <div class="carte chiffre ok"><div class="v">8 / 8</div><div class="l">specs Kiro au verdict OK</div></div>
-        <div class="carte chiffre"><div class="v">483</div><div class="l">critères tracés vers une source</div></div>
-        <div class="carte chiffre"><div class="v">39</div><div class="l">questions, dont 1 bloquante (gel)</div></div>
-      </div>
-      <div class="carte limites"><div class="titre">Nos limites, mesurées</div>
-        <p>Sur 34 conflits relevés à la main :</p>
-        <div class="barre"><span style="flex:25;background:var(--red)">25 détectés</span><span style="flex:7;background:var(--ana)">7 partiels</span><span style="flex:2;background:var(--ctl)">2</span></div>
-        <p>Manqués : le bon d'achat majoré de 5 % et les priorités incohérentes du tableau marketplace.</p></div>
-    </div>
+<section class="slide" data-note="Sur les 9 documents du challenge : 168 demandes extraites, chacune avec sa preuve. 26 conflits signalés, jamais tranchés en silence. 8 specs Kiro, toutes validées par le contrôle qualité.
+Notre limite, mesurée : sur 34 conflits relevés à la main, 2 nous échappent encore.">
+  <h1>Le <span>résultat</span></h1>
+  <div class="chiffres">
+    <div class="chiffre"><div class="v">168</div><div class="l">demandes extraites</div></div>
+    <div class="chiffre"><div class="v" style="color: var(--ana)">26</div><div class="l">conflits signalés</div></div>
+    <div class="chiffre"><div class="v" style="color: var(--red)">8</div><div class="l">specs Kiro validées</div></div>
   </div>
-  <div class="pied"><span>Sources : débat de répétition, <code>work/analyse.json</code>, <code>work/rapport-qualite.md</code></span><span>3 / 3</span></div>
+  <p class="phrase">Chaque exigence renvoie à sa source.</p>
+  <div class="num">3 / 3</div>
 </section>
 
 <div id="notes"></div>
-<div id="nav">← → naviguer · N : notes de l'orateur · Ctrl+P : PDF</div>
+<div id="aide">← → · N : notes</div>
 
 <script>
-  const diapos = [...document.querySelectorAll('.slide')];
-  const notes = document.getElementById('notes');
+  const diapos = [...document.querySelectorAll('.slide')], notes = document.getElementById('notes');
   let i = 0;
-  function ajuster() {
-    document.documentElement.style.setProperty('--s', Math.min(innerWidth / 1280, innerHeight / 720) * 0.97);
-  }
+  const ajuster = () => document.documentElement.style.setProperty('--s', Math.min(innerWidth / 1280, innerHeight / 720));
   function montrer(n) {
     i = Math.max(0, Math.min(diapos.length - 1, n));
     diapos.forEach((d, k) => d.classList.toggle('active', k === i));
     notes.textContent = diapos[i].dataset.note || '';
-    history.replaceState(null, '', '#' + (i + 1));
   }
   addEventListener('keydown', e => {
     if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) montrer(i + 1);
     else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) montrer(i - 1);
-    else if (e.key === 'Home') montrer(0);
-    else if (e.key === 'End') montrer(diapos.length - 1);
     else if (e.key.toLowerCase() === 'n') notes.classList.toggle('visible');
   });
-  addEventListener('click', e => {
-    if (e.target.closest('a') || notes.contains(e.target)) return;
-    montrer(e.clientX > innerWidth / 3 ? i + 1 : i - 1);
-  });
+  addEventListener('click', e => { if (!e.target.closest('a') && !notes.contains(e.target)) montrer(e.clientX > innerWidth / 3 ? i + 1 : i - 1); });
   addEventListener('resize', ajuster);
-  ajuster();
-  montrer((parseInt(location.hash.slice(1), 10) || 1) - 1);
+  ajuster(); montrer(0);
 </script>
 </body>
 </html>
