@@ -1,0 +1,121 @@
+# Plan d'implémentation : relance personnalisée des paniers abandonnés
+
+Le plan suit les trois lots de `requirements.md` :
+- **Lot 0** (tâche 2) : démonstration pour le comité commerce du 8 décembre 2026, hors production, sur données fictives. Elle ne constitue pas une mise en production (`H19`).
+- **Lot 1** (tâches 3 à 8) : relance par règles, e-mail seul. Mise en production au plus tôt le 12 janvier 2027, après le gel (`CT-07`) et après l'avis de la DPO (`CT-01`).
+- **Lot 2** (tâche 9) : canaux supplémentaires et modèle d'IA, après les avis de la DPO correspondants.
+
+- [ ] 1. Prérequis et cadrage (aucune dépendance ; 1.4 à lancer en premier pour la démo)
+  - [ ] 1.1 Soumettre l'analyse du traitement à la DPO : base légale et portée du consentement newsletter, profilage et analyse d'impact, remise ciblée, définition du dernier contact, canaux, usage du mobile, mentions de l'e-mail (Q18, Q19, Q36)
+    - Livrable : avis écrit de la DPO, versé au dossier du projet
+    - _Exigences : 1.3, 1.4, 4.4, 4.6, 5.2, 9.1_
+  - [ ] 1.2 Cadrer les données avec l'équipe du Lac : contenu réel (commandes, navigation des clients connectés et date de début), liste des attributs utilisables, volume de paniers abandonnés par jour en temps normal et au pic (Q19)
+    - Livrable : note de données et volume de pointe retenu pour le dimensionnement
+    - _Exigences : 4.1, 4.3, 9.5_
+  - [ ] 1.3 Qualifier les intégrations avec la DSI : détection actuelle des paniers abandonnés et délai d'abandon, mécanisme de remise individuelle de Vitrine et sa durée de validité, système portant l'appartenance à Orvanne+, outil d'e-mailing (envoi unitaire, débit, hébergement UE), hébergement du projet (Q34)
+    - Livrable : contrats d'interface Vitrine, consentements, outil d'e-mailing
+    - _Exigences : 1.1, 3.2, 3.6, 5.1, 9.2_
+  - [ ] 1.4 Constituer un jeu de données synthétique : clients (dont membres Orvanne+), paniers, commandes sur 3 ans et au-delà, navigation connectée et non connectée, consentements et oppositions, cas aux bornes (CT-04)
+    - _Exigences : 7.2, 9.3_
+  - [ ] 1.5 Atelier marketing et finance : méthode du CA incrémental, part du groupe témoin, fenêtre d'attribution, plafonds de remise (Q33), relance unique ou séquence
+    - Livrable : méthode validée et valeurs initiales des paramètres
+    - _Exigences : 1.7, 3.3, 6.1, 6.2, 6.4_
+
+- [ ] 2. Démonstration du comité commerce, lot 0 (dépend de 1.4 ; livraison au plus tard le 8 décembre 2026)
+  - [ ] 2.1 Monter un environnement de démonstration isolé, hébergé dans l'UE, sans connecteur d'envoi ni route réseau vers la production ou l'outil d'e-mailing
+    - _Exigences : 7.5, 7.6, 9.2_
+  - [ ] 2.2 Charger le jeu synthétique (ou une version anonymisée validée par la DPO) et vérifier l'absence de toute donnée réelle
+    - _Exigences : 7.2, 7.3_
+  - [ ] 2.3 Développer un prototype du moteur de règles (règles de relance et de remise, plafonds) et l'écran de restitution par panier : message, moment, canal, remise, règle appliquée
+    - Le moteur sert de base à la tâche 4.2
+    - _Exigences : 7.1_
+  - [ ] 2.4 Produire le tableau de CA incrémental simulé, marqué « simulation sur données fictives », avec la méthode provisoire de `design.md`
+    - _Exigences : 7.4_
+  - [ ] 2.5 Répéter la démonstration avec Capucine Lorrain et ajuster son contenu à la réponse à Q20
+    - _Exigences : 7.1, 7.4_
+
+- [ ] 3. Socle de données du lot 1 (dépend de 1.1, 1.2 et 1.3)
+  - [ ] 3.1 Créer le schéma de la base de relance (PanierCandidat, Décision, Relance, Remise, règles, modèles, Paramètre, Journal) avec versions et journal
+    - _Exigences : 2.5, 2.7, 9.4_
+  - [ ] 3.2 Développer le collecteur de paniers abandonnés depuis Vitrine, avec rejet des paniers sans client identifié ou sans e-mail
+    - _Exigences : 1.1, 1.2_
+  - [ ] 3.3 Construire la vue de personnalisation : extraction quotidienne du Lac, liste fermée d'attributs, fenêtre de 3 ans avant le dernier contact, navigation des seules sessions connectées
+    - _Exigences : 4.1, 4.2, 4.3, 4.6_
+  - [ ] 3.4 Implémenter la purge quotidienne des données de relance 3 ans après le dernier contact
+    - _Exigences : 4.5_
+  - [ ] 3.5 Écrire les tests du socle : paniers anonymes, données hors fenêtre, navigation non connectée, purge
+    - _Exigences : 1.1, 1.2, 4.2, 4.3, 4.5_
+
+- [ ] 4. Éligibilité, moteur de règles et back-office (dépend de 3.1 et 2.3)
+  - [ ] 4.1 Développer le contrôle d'éligibilité : consentement à la prospection par canal, opposition, panier commandé, verrou sur le mobile
+    - _Exigences : 1.3, 1.4, 4.4_
+  - [ ] 4.2 Industrialiser le moteur de règles derrière l'interface « décideur » : priorité des règles, relance par défaut (e-mail, 24 h), refus des critères non autorisés
+    - _Exigences : 2.1, 2.2, 2.4_
+  - [ ] 4.3 Développer le back-office des règles et des modèles de message : création, test sur échantillon, activation, désactivation, versions, journal
+    - _Exigences : 2.3, 2.7, 9.4_
+  - [ ] 4.4 Enregistrer pour chaque relance programmée la règle et sa version, le modèle, l'heure prévue, le canal et la remise
+    - _Exigences : 2.5_
+  - [ ] 4.5 Écrire les tests unitaires de l'éligibilité et du moteur de règles
+    - _Exigences : 1.3, 1.4, 2.1, 2.2, 2.4_
+
+- [ ] 5. Remises (dépend de 4.2 et 1.3)
+  - [ ] 5.1 Implémenter les règles de remise : aucune remise sans règle active, remise au taux de la règle
+    - _Exigences : 3.1, 3.2_
+  - [ ] 5.2 Implémenter les plafonds par catégorie (10 %, 15 % Orvanne+), le refus d'activation, la suspension sur baisse de plafond, le plafond général si Orvanne+ est invérifiable, et la journalisation des modifications
+    - _Exigences : 3.3, 3.4, 3.5, 3.6_
+  - [ ] 5.3 Réserver l'échantillon témoin sans remise de chaque règle de remise
+    - _Exigences : 3.7_
+  - [ ] 5.4 Intégrer la création de la remise individuelle dans Vitrine, utilisable par le seul client destinataire
+    - _Exigences : 3.2_
+  - [ ] 5.5 Écrire les tests des remises : plafonds aux bornes, plafond abaissé, Orvanne+ invérifiable, échantillon témoin
+    - _Exigences : 3.1, 3.3, 3.4, 3.6, 3.7_
+
+- [ ] 6. Planification et envoi (dépend de 4 et 5)
+  - [ ] 6.1 Développer le planificateur : heure prévue, tolérance d'envoi, lissage, une relance au plus par panier
+    - _Exigences : 1.7, 2.6_
+  - [ ] 6.2 Re-vérifier l'éligibilité au moment de l'envoi et annuler la relance si le panier est commandé
+    - _Exigences : 1.5, 1.6_
+  - [ ] 6.3 Intégrer l'outil d'e-mailing, avec nouvelles tentatives et statut « non envoyée » motivé
+    - _Exigences : 5.1, 5.4_
+  - [ ] 6.4 Implémenter le registre des canaux : e-mail seul actif, verrou des autres canaux sans avis de la DPO, choix du canal parmi ceux consentis
+    - _Exigences : 5.2, 5.3_
+  - [ ] 6.5 Ajouter l'interrupteur général de retour à la relance actuelle
+    - _Exigences : 9.6_
+  - [ ] 6.6 Écrire les tests de l'envoi : re-vérification, annulation, doublon, tolérance, échec d'envoi, interrupteur
+    - _Exigences : 1.5, 1.6, 1.7, 2.6, 5.4, 9.6_
+
+- [ ] 7. Mesure du CA incrémental (dépend de 1.5 et 6.1)
+  - [ ] 7.1 Implémenter l'affectation au hasard au groupe témoin, qui reçoit la relance actuelle
+    - _Exigences : 6.1_
+  - [ ] 7.2 Implémenter l'attribution des commandes du Lac aux relances selon la fenêtre paramétrée
+    - _Exigences : 6.2_
+  - [ ] 7.3 Développer le tableau : indicateurs par période et par règle pour les deux groupes, CA incrémental avec méthode, tailles et période, agrégats seulement
+    - _Exigences : 6.3, 6.4, 6.6_
+  - [ ] 7.4 Restreindre l'accès aux rôles marketing et finance, journaliser les accès, ajouter l'export agrégé pour le comité commerce
+    - _Exigences : 6.5, 9.4_
+  - [ ] 7.5 Tester le calcul sur un jeu synthétique aux résultats connus d'avance
+    - _Exigences : 6.1, 6.2, 6.4_
+
+- [ ] 8. Recette et mise en service du lot 1 (dépend de 6 et 7)
+  - [ ] 8.1 Tester la charge à 2 fois le volume de pointe mesuré en 1.2, pendant 1 h
+    - _Exigences : 2.6, 9.5_
+  - [ ] 8.2 Vérifier l'hébergement dans l'UE de tous les composants et l'absence de donnée de production hors production
+    - _Exigences : 9.2, 9.3_
+  - [ ] 8.3 Faire la recette métier avec le marketing (règles, modèles, test sur échantillon) et la finance (plafonds, tableau)
+    - _Exigences : 2.1, 2.3, 3.3, 6.3_
+  - [ ] 8.4 Enregistrer l'avis de la DPO, vérifier le verrou d'envoi, puis mettre en service au plus tôt le 12 janvier 2027, e-mail seul
+    - _Exigences : 9.1_
+
+- [ ] 9. Lot 2 : canaux supplémentaires et modèle d'IA (dépend de 8 et des avis de la DPO correspondants)
+  - [ ] 9.1 Activer, canal par canal, les notifications de l'application, le SMS et les messageries mobiles nommées, après avis de la DPO
+    - _Exigences : 5.2, 5.3_
+  - [ ] 9.2 Brancher le modèle d'IA derrière l'interface « décideur », soumis aux mêmes contrôles, avec retour aux règles par paramètre
+    - _Exigences : 8.1, 8.5_
+  - [ ] 9.3 Mettre en place le verrou d'activation du modèle tant que l'avis de la DPO n'est pas enregistré
+    - _Exigences : 8.2_
+  - [ ] 9.4 Enregistrer la version du modèle et les principaux facteurs de chaque décision
+    - _Exigences : 8.3_
+  - [ ] 9.5 Mesurer le CA incrémental du modèle par rapport aux règles sur un groupe de comparaison
+    - _Exigences : 8.4_
+  - [ ] 9.6 Écrire les tests et faire la recette du lot 2
+    - _Exigences : 8.1, 8.2, 8.4, 8.5_

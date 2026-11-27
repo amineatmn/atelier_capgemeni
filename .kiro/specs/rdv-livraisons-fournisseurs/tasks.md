@@ -1,0 +1,148 @@
+# Plan d'implémentation : prise de rendez-vous de déchargement par les fournisseurs et transporteurs
+
+Toutes les tâches relèvent de la **V1** (pilote sur E1 au printemps). Jalons des sources : vérification des commandes d'achat dans Passerelle et liste des fournisseurs pilotes pour le 27/11, paramétrage cible de E1 pour le 04/12, chiffrage et planning de la DSI en décembre. Aucune mise en production entre le 16 novembre et le 11 janvier (CT-07) : les tâches 1 à 3 peuvent avancer pendant le gel, la mise en service (tâche 11) a lieu au printemps. La V2 (notation des fournisseurs, lien avec Hangar, application chauffeurs) n'est pas planifiée ici.
+
+- [ ] 1. Prérequis et cadrage (aucune dépendance)
+  - [ ] 1.1 Soumettre le traitement des contacts fournisseurs et transporteurs à la DPO : base légale, données collectées, durée d'inactivité avant suppression des comptes, conservation des e-mails et du journal, inscription au registre (Q36)
+    - Livrable : avis écrit de la DPO, versé au dossier du projet
+    - _Exigences : 11.2, 11.3_
+  - [ ] 1.2 Vérifier avec l'équipe Passerelle la disponibilité des commandes d'achat (numéro, fournisseur, validité, solde, site de livraison), leur format et leur fréquence de mise à jour, pour le 27/11 (B08-D27)
+    - Livrable : contrat d'interface du flux des commandes d'achat
+    - _Exigences : 3.2, 3.3_
+  - [ ] 1.3 Recevoir des achats la liste des fournisseurs pilotes (une vingtaine) et de leurs transporteurs, avec un contact par entreprise, pour le 27/11
+    - Livrable : fichier de comptes à créer, sans donnée saisie dans les environnements de test
+    - _Exigences : 1.3_
+  - [ ] 1.4 Recueillir le paramétrage de E1 auprès du chef de quai pour le 04/12 (quais, horaires, jours fermés, durée de créneau) et les réponses à Q21 et Q22 ; vérifier la capacité contre les 70 camions par jour (calcul de design.md)
+    - Livrable : fiche de paramétrage de E1 validée par l'approvisionnement
+    - _Exigences : 2.5_
+  - [ ] 1.5 Constituer un jeu de données synthétique : 2 sites, 30 fournisseurs fictifs, 300 commandes d'achat (valides, soldées), une journée de 70 camions dont 1 sur 4 sans rendez-vous (CT-04)
+    - _Exigences : 11.4_
+  - [ ] 1.6 Choisir l'hébergement (UE, réponse à Q34) et le service d'envoi d'e-mails transactionnels
+    - Livrable : note de choix d'architecture
+    - _Exigences : 11.1, 5.1_
+
+- [ ] 2. Socle applicatif (dépend de 1.1 et 1.6)
+  - [ ] 2.1 Créer le schéma de données : Site, Quai, HoraireSite, JourFermé, Fournisseur, Transporteur, CompteExterne, CommandeAchat, Réservation, Occupation (contrainte d'unicité site, quai, date, heure de début), Blocage, ArrivéeSansRendezVous, E-mailEnvoyé, Journal
+    - _Exigences : 2.1, 3.7, 3.8, 11.2_
+  - [ ] 2.2 Mettre en place l'authentification des comptes externes : création par l'approvisionnement, activation par lien à usage unique, second facteur, verrouillage
+    - _Exigences : 1.2_
+  - [ ] 2.3 Implémenter le cloisonnement par fournisseur sur toutes les requêtes du portail et la limitation des vérifications de commande par compte
+    - _Exigences : 1.4_
+  - [ ] 2.4 Brancher le back-office sur le SSO interne et définir les rôles par site (`chef-de-quai`, `poste-de-garde`, `bureau-reception`, `approvisionnement`, `achats`, `admin-site`)
+    - _Exigences : 6.7, 8.6_
+  - [ ] 2.5 Mettre en place le mécanisme de traduction : textes des écrans et des modèles d'e-mail dans des fichiers par langue, français seul activé, choix de la langue dans le compte externe
+    - _Exigences : 10.1, 10.2, 10.3_
+  - [ ] 2.6 Créer le journal append-only des actions internes et des connexions
+    - _Exigences : 6.6_
+  - [ ] 2.7 Écrire les tests de sécurité du socle : cloisonnement entre deux fournisseurs, rôles internes, comptes partagés refusés
+    - _Exigences : 1.2, 1.4, 6.7, 8.6_
+
+- [ ] 3. Paramétrage des sites et génération des créneaux (dépend de 2.1)
+  - [ ] 3.1 Développer les écrans de paramétrage d'un site : quais actifs, horaires par jour de la semaine, jours fermés, durée de créneau (30 minutes par défaut)
+    - _Exigences : 2.1, 2.2_
+  - [ ] 3.2 Générer les créneaux d'un jour ouvert à partir des horaires et de la durée, un par quai actif, en heure de Paris
+    - _Exigences : 2.3_
+  - [ ] 3.3 Refuser une modification de paramétrage incompatible avec des réservations existantes et lister ces réservations
+    - _Exigences : 2.4_
+  - [ ] 3.4 Ajouter l'ouverture et la fermeture de la réservation par site
+    - _Exigences : 2.6_
+  - [ ] 3.5 Charger le paramétrage de E1 issu de la tâche 1.4, sans développement spécifique
+    - _Exigences : 2.5_
+  - [ ] 3.6 Écrire les tests de génération : créneaux de 30 minutes et d'une heure, jours fermés, dernier créneau, changement d'heure, modification incompatible
+    - _Exigences : 2.1, 2.2, 2.3, 2.4_
+
+- [ ] 4. Copie des commandes d'achat (dépend de 1.2 et 2.1)
+  - [ ] 4.1 Développer la synchronisation des commandes d'achat depuis Passerelle selon le contrat de la tâche 1.2
+    - _Exigences : 3.2_
+  - [ ] 4.2 Superviser la fraîcheur de la copie : alerte à la DSI au-delà du délai paramétré, bandeau dans le back-office
+    - _Exigences : 3.2_
+  - [ ] 4.3 Écrire les tests d'intégration : création, solde, changement de fournisseur, flux interrompu
+    - _Exigences : 3.2, 3.3_
+
+- [ ] 5. Réservation sur le portail (dépend de 2.3, 3.2 et 4.1)
+  - [ ] 5.1 Développer le parcours de réservation : choix du site et du jour, saisie d'une ou plusieurs commandes d'achat, camion complet, e-mail du transporteur, choix du créneau
+    - _Exigences : 1.1, 3.1, 3.9_
+  - [ ] 5.2 Contrôler les commandes d'achat (valides, non soldées, rattachées au compte) avec les deux motifs de refus
+    - _Exigences : 3.2, 3.3_
+  - [ ] 5.3 Contrôler la fenêtre J-10 à J-1 12 h 00 et ne proposer que les créneaux ayant un quai libre sur toute la durée, deux créneaux consécutifs du même quai pour un camion complet
+    - _Exigences : 3.4, 3.5, 3.6_
+  - [ ] 5.4 Enregistrer la réservation dans une transaction (occupations, numéro unique, quai attribué) et gérer l'échec en cas de course
+    - _Exigences : 3.7, 3.8_
+  - [ ] 5.5 Développer la modification et l'annulation jusqu'à J-1 12 h 00, avec nouveau contrôle et libération des créneaux, et le refus au-delà avec les coordonnées du site
+    - _Exigences : 4.1, 4.2, 4.3, 4.4_
+  - [ ] 5.6 Rendre le portail utilisable sur smartphone et conforme au RGAA (structure, contrastes, navigation au clavier, libellés)
+    - _Exigences : 1.5_
+  - [ ] 5.7 Écrire les tests unitaires et de concurrence : bornes de R3, camion complet sur le dernier créneau, 50 réservations simultanées sur le dernier quai libre, modification après J-1 12 h 00
+    - _Exigences : 3.4, 3.5, 3.6, 3.7, 3.8, 4.1, 4.2, 4.3, 4.4_
+
+- [ ] 6. Notifications par e-mail (dépend de 2.5 et 5.4)
+  - [ ] 6.1 Envoyer la confirmation au transporteur à l'enregistrement, avec la tolérance de 20 minutes
+    - _Exigences : 5.1_
+  - [ ] 6.2 Planifier le rappel de la veille à l'heure paramétrée du site, postérieure à 12 h 00
+    - _Exigences : 5.2_
+  - [ ] 6.3 Envoyer les avis de modification, de déplacement et d'annulation, et la copie à l'auteur quand il n'est pas le transporteur
+    - _Exigences : 5.3, 5.4_
+  - [ ] 6.4 Rédiger les modèles d'e-mail de service, sans contenu commercial, et les faire relire par l'approvisionnement
+    - _Exigences : 5.5_
+  - [ ] 6.5 Gérer les échecs d'envoi : 3 tentatives, puis signalement sur la réservation dans la vue planning
+    - _Exigences : 5.6_
+  - [ ] 6.6 Écrire les tests des notifications : chaque type d'e-mail, destinataires, langue, échec simulé
+    - _Exigences : 5.1, 5.2, 5.3, 5.4, 5.6, 10.3_
+
+- [ ] 7. Actions du chef de quai (dépend de 2.4, 2.6 et 5.4)
+  - [ ] 7.1 Développer le déplacement d'une réservation vers un autre créneau ou un autre quai, y compris après J-1 12 h 00
+    - _Exigences : 6.1_
+  - [ ] 7.2 Développer le forçage pour le compte d'un fournisseur (créneau sans quai libre, hors fenêtre R3), avec contrôle maintenu de la commande d'achat et affichage en surnombre
+    - _Exigences : 6.2, 6.3_
+  - [ ] 7.3 Développer le blocage ponctuel ou récurrent d'un créneau ou d'un quai avec motif, et le refus sur un créneau réservé
+    - _Exigences : 6.4, 6.5_
+  - [ ] 7.4 Journaliser les forçages, déplacements, blocages et annulations internes (auteur, horodatage, avant / après, motif)
+    - _Exigences : 6.6_
+  - [ ] 7.5 Écrire les tests des actions du chef de quai : rôles, forçage sans commande refusé, blocage récurrent, blocage d'un créneau réservé, contenu du journal
+    - _Exigences : 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
+
+- [ ] 8. Poste de garde et vue planning (dépend de 5.4)
+  - [ ] 8.1 Développer la vue planning par site, jour, quai et créneau, avec les statuts, le détail des réservations et la charge des 10 jours à venir
+    - _Exigences : 8.1, 8.2, 8.3, 8.4_
+  - [ ] 8.2 Développer l'écran du poste de garde : liste du jour triée, recherche par numéro de réservation ou de commande d'achat, pointage horodaté, statut « arrivé »
+    - _Exigences : 7.1, 7.2, 7.3_
+  - [ ] 8.3 Implémenter dans l'ordonnanceur le passage au statut « perdu » à début + 20 minutes, le rattrapage après arrêt, et l'alerte au chef de quai pour un pointage sur réservation perdue
+    - _Exigences : 7.4, 7.5_
+  - [ ] 8.4 Développer l'enregistrement d'un camion sans rendez-vous
+    - _Exigences : 7.6_
+  - [ ] 8.5 Ajouter dans la vue planning la mise à quai et la fin du déchargement, horodatées
+    - _Exigences : 8.5_
+  - [ ] 8.6 Écrire les tests aux bornes de la tolérance (19 min 59 s, 20 min 00 s, 20 min 01 s) et des statuts du planning
+    - _Exigences : 7.3, 7.4, 7.5, 8.1, 8.4_
+
+- [ ] 9. Indicateurs et export (dépend de 8.2, 8.4 et 8.5)
+  - [ ] 9.1 Calculer la part des camions sans rendez-vous et l'attente moyenne par site, jour et demi-journée
+    - _Exigences : 9.1, 9.2_
+  - [ ] 9.2 Calculer le taux d'occupation des quais et la ponctualité par fournisseur
+    - _Exigences : 9.3, 9.4_
+  - [ ] 9.3 Développer l'export CSV des indicateurs pour un site et une période
+    - _Exigences : 9.5_
+  - [ ] 9.4 Garantir la conservation des heures prévues et réelles pendant 12 mois au moins, sans calcul de note ni de pénalité
+    - _Exigences : 9.6, 9.7_
+  - [ ] 9.5 Écrire les tests des indicateurs sur un jeu synthétique aux résultats connus et faire valider les définitions par l'approvisionnement
+    - _Exigences : 9.1, 9.2, 9.3, 9.4, 9.5_
+
+- [ ] 10. Conservation des données (dépend de 1.1 et 2.1)
+  - [ ] 10.1 Implémenter la purge des comptes externes inactifs et la pseudonymisation des e-mails des réservations selon les durées fixées avec la DPO
+    - _Exigences : 11.3_
+  - [ ] 10.2 Vérifier que seules les données de contact autorisées sont collectées dans les écrans et l'API
+    - _Exigences : 11.2_
+
+- [ ] 11. Recette et mise en service du pilote E1 (dépend de 3 à 10)
+  - [ ] 11.1 Faire réaliser l'audit RGAA du portail et tester le parcours complet sur smartphone
+    - _Exigences : 1.5_
+  - [ ] 11.2 Vérifier l'absence de texte en dur avec une pseudo-langue
+    - _Exigences : 10.1, 10.2_
+  - [ ] 11.3 Faire la recette métier avec le chef de quai et le poste de garde de E1 sur une journée synthétique rejouée de 70 camions
+    - _Exigences : 2.5, 6.1, 6.2, 6.4, 7.1, 7.2, 7.6, 8.1, 8.3, 8.5_
+  - [ ] 11.4 Faire la recette du parcours de réservation avec 2 ou 3 fournisseurs pilotes, sur l'environnement de recette et des données synthétiques
+    - _Exigences : 1.1, 3.1, 4.1, 5.1, 5.2, 11.4_
+  - [ ] 11.5 Décider avec le chef de quai E1 du traitement des fournisseurs hors pilote (saisie par forçage ou quais bloqués)
+    - _Exigences : 6.2, 6.4_
+  - [ ] 11.6 Déployer dans l'Union européenne, hors période de gel, créer les comptes des fournisseurs pilotes et ouvrir la réservation sur E1
+    - _Exigences : 11.1, 1.3, 2.6_
