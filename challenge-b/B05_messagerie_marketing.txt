@@ -1,0 +1,26 @@
+[Export de la messagerie interne Orvanne]
+Canal : #crm-projets
+Date : mardi 3 novembre 2026
+
+10:12  Capucine Lorrain : hello @Théo, t'as 5 min ? j'ai une idée pour les paniers abandonnés
+10:12  Capucine Lorrain : en gros aujourd'hui on envoie le même mail de relance à tout le monde 24h après, et ça convertit à 2 et quelques %
+10:13  Capucine Lorrain : je voudrais un truc intelligent qui choisit le bon message, le bon moment et le bon canal pour chaque client
+10:15  Théo Bazin : salut. intelligent comment ? des règles ou un modèle ?
+10:15  Capucine Lorrain : de l'IA évidemment :) on a tout l'historique d'achats depuis 2014 et la navigation, autant s'en servir
+10:16  Capucine Lorrain : et le Lac a déjà tout, non ?
+10:18  Théo Bazin : le Lac a les commandes. la navigation c'est seulement pour les clients connectés, et pas avant 2023 je crois
+10:19  Théo Bazin : tu veux quels canaux ?
+10:19  Capucine Lorrain : mail, notifs de l'appli, SMS, et les messageries mobiles si on peut
+10:20  Capucine Lorrain : et il faudrait que ça propose une remise quand le client hésite, mais pas à ceux qui auraient acheté de toute façon
+10:21  Théo Bazin : ok donc un score + le choix du message + le choix de la remise. qui valide les remises ? il y a un plafond ?
+10:22  Capucine Lorrain : je verrai avec la finance. mets 10 % max pour l'instant, 15 pour les Orvanne+
+10:24  Théo Bazin : volumétrie ?
+10:25  Capucine Lorrain : aucune idée, beaucoup. tu peux regarder ?
+10:25  Capucine Lorrain : ah et tant qu'on y est : dans les messages de retard de livraison que prépare la logistique, je voudrais qu'on glisse un code promo. ça transforme une mauvaise expérience en occasion de rachat
+10:27  Théo Bazin : ça c'est pas chez moi, c'est le projet retards. et il faut voir avec Hélène pour les données perso, non ?
+10:28  Capucine Lorrain : on verra après, on a le consentement newsletter de toute façon
+10:28  Capucine Lorrain : il me faut une démo pour le comité commerce du 8 décembre. même un truc moche
+10:30  Théo Bazin : une démo de quoi exactement ? sur de vraies données ?
+10:31  Capucine Lorrain : oui sur les vrais clients, sinon ça ne parlera à personne. et un tableau avec le CA incrémental
+10:33  Théo Bazin : je regarde ce que je peux faire. pas avant la semaine prochaine
+10:33  Capucine Lorrain : top, merci !! en vrai c'est LE sujet de l'année prochaine

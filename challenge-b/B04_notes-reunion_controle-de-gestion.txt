@@ -1,0 +1,25 @@
+POINT RETOURS - jeudi 29/10/2026 - notes Odile (pas relues)
+
+présents : Karim B. (exploitation E2), Yanis M. (service client), Capucine L. (marketing), moi (contrôle de gestion)
+excusée : Inès R. -> lui envoyer les notes
+
+- rappel : le CDC portail retours circule en v0.3, personne ne l'a lu en entier
+- Karim : E2 reçoit ~1 100 colis retour / jour. 1 sur 5 n'est pas conforme à l'ouverture (mauvais article, article utilisé, carton vide vu 2 fois ce mois-ci). Veut voir les photos AVANT réception
+- remboursement au 1er scan = NON pour la finance. On rembourse après contrôle en entrepôt, point. Sinon provision fraude à revoir, voir avec le DAF
+   -> Capucine pas d'accord : les concurrents remboursent au dépôt, c'est un argument commercial, "au moins pour les bons clients"
+- délai de retour : le site dit 14 jours. 30 jours c'est seulement pour les membres Orvanne+
+- frais : retour gratuit seulement si article défectueux ou erreur de prépa. Sinon 4,90 retenus sur le remboursement. Capucine : "on avait dit gratuit pour le lancement"
+- Yanis : 35 % des demandes de retour concernent des articles marketplace -> si le portail ne les prend pas, les conseillers gardent tout le boulot. Les veut dans la V1
+   - Karim : les retours marketplace ne passent pas par nos entrepôts, ils repartent chez le vendeur. Donc autre circuit, autres étiquettes
+- contrôle qualité : grille A / B / C (A = remis en stock, B = déstockage, C = rebut). Montant remboursé selon la note : Karim dit oui pour C, Yanis dit que légalement non
+- délai de contrôle aujourd'hui : 3 à 6 jours après réception, 10 en janvier. Le client attend son argent pendant ce temps
+- Karim voudrait une appli sur les douchettes pour saisir la note + photo au contrôle. Pas dans le CDC
+- bon d'achat à la place du remboursement, avec +5 % ? idée Capucine. Finance OK sur le principe
+- le RMA doit être imprimé DANS le colis, sinon on ne retrouve pas la commande (étiquette transporteur illisible 1 fois sur 10)
+- stats : qui suit le taux de retour par produit ? demander au Lac
+
+ACTIONS
+- Odile : chiffrer le coût du remboursement anticipé -> avant le codir
+- Yanis : sortir les volumes exacts de retours par jour + relire les CGV sur le délai
+- Capucine : benchmark
+- prochaine réunion : à caler

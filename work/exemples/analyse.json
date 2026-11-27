@@ -1,0 +1,77 @@
+{
+  "_commentaire": "Extrait d'exemple limité au projet P01. Les IDs B02-Dn et B05-Dn sont fictifs : ils dépendront des vraies fiches.",
+  "projets": [
+    {
+      "id": "P01",
+      "slug": "alertes-retards-livraison",
+      "titre": "Détection des retards de livraison, information du client et pilotage",
+      "type_spec": "feature",
+      "commanditaire": "Direction des opérations logistiques",
+      "parties_prenantes": ["Service client", "DSI", "DPO", "Marketing"],
+      "documents": ["B01", "B02", "B05"],
+      "demandes_incluses": ["B01-D1", "B01-D2", "B01-D3", "B01-D4", "B01-D5", "B01-D6", "B01-D7", "B01-D8", "B01-D9", "B01-D10", "B01-D11", "B02-D3", "B02-D4"],
+      "demandes_exclues": [
+        { "id": "B05-D9", "raison": "Code promo dans un message de service, interdit par CT-03", "renvoi": null }
+      ],
+      "contraintes": ["CT-02", "CT-03", "CT-07"],
+      "conflits": ["C01", "C02", "C03"],
+      "dependances": [],
+      "decoupage_versions": {
+        "V1": ["B01-D1", "B01-D3", "B01-D7"],
+        "V2": ["B01-D5", "B01-D6"]
+      }
+    }
+  ],
+  "contraintes_transverses": [
+    { "id": "CT-02", "enonce": "Le numéro de mobile ne sert qu'à la livraison sans analyse préalable de la DPO", "sources": ["B07-D8"], "projets": ["P01", "P04"] },
+    { "id": "CT-03", "enonce": "Un message de service ne contient pas d'offre commerciale", "sources": ["B07-D9", "B02-D9"], "projets": ["P01"] },
+    { "id": "CT-07", "enonce": "Gel des mises en production du 16/11 au 11/01", "sources": ["B02-D12"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07"] }
+  ],
+  "conflits": [
+    {
+      "id": "C01",
+      "sujet": "Canal de l'alerte client",
+      "positions": [
+        { "source": "B01-D5", "position": "SMS uniquement" },
+        { "source": "B02-D4", "position": "E-mail uniquement (budget SMS refusé, mobiles incomplets)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Comité de direction (logistique et service client), avis DPO",
+      "hypothese": "H01",
+      "question": "Q01"
+    },
+    {
+      "id": "C02",
+      "sujet": "Définition d'une commande en retard",
+      "positions": [
+        { "source": "B01-D7", "position": "48 h après la date promise" },
+        { "source": "B02-D5", "position": "J+1 matin après la date promise affichée sur Vitrine" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Directrice des opérations logistiques et responsable du service client",
+      "hypothese": "H02",
+      "question": "Q02"
+    },
+    {
+      "id": "C03",
+      "sujet": "Échéance « pour le pic » contre gel des mises en production",
+      "positions": [
+        { "source": "B01-D5", "position": "Opérationnel pour le pic" },
+        { "source": "B02-D12", "position": "Gel du 16/11 au 11/01, mise en service au T1" }
+      ],
+      "gravite": "bloquant",
+      "arbitre": "DSI",
+      "hypothese": null,
+      "question": "Q03"
+    }
+  ],
+  "hypotheses": [
+    { "id": "H01", "enonce": "Le canal est paramétrable ; la V1 envoie des e-mails ; le SMS est activé après validation DPO (CT-02) et budget.", "justification": "Option réversible, conforme à CT-02, qui couvre les clients sans mobile.", "conflit": "C01", "reversible": true },
+    { "id": "H02", "enonce": "Le seuil de retard est un paramètre, avec deux niveaux : « à surveiller » à J+1 (liste service client, tableau de bord) et « en retard » à J+2 (alerte client).", "justification": "Satisfait les deux usages sans trancher à la place des métiers.", "conflit": "C02", "reversible": true }
+  ],
+  "questions": [
+    { "id": "Q01", "question": "Quel canal pour l'alerte retard : SMS (budget, avis DPO), e-mail, ou les deux selon la disponibilité du mobile ?", "destinataire": "Solène Garrigue, Yanis Mercadier, Hélène Marsac", "projets": ["P01"], "bloquante": false },
+    { "id": "Q02", "question": "À partir de quand une commande est-elle « en retard » : J+1 ou J+2 après la date promise ? Le seuil peut-il différer entre le tableau de bord et l'alerte client ?", "destinataire": "Solène Garrigue, Yanis Mercadier", "projets": ["P01"], "bloquante": false },
+    { "id": "Q03", "question": "Une dérogation au gel du 16/11 est-elle envisageable pour un tableau de bord interne, sans envoi aux clients, avant le pic ?", "destinataire": "DSI (Bertrand Lacassagne)", "projets": ["P01"], "bloquante": true }
+  ]
+}

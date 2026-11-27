@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Valider les contrats intermédiaires",
+      "description": "Après chaque écriture d'une fiche ou de l'analyse par un agent, vérifie le format défini dans CONTRATS.md.",
+      "trigger": "PostFileSave",
+      "matcher": "work/(fiches/B0[1-9]|analyse)\\.json$",
+      "action": { "type": "command", "command": "python3 tools/valider_contrats.py" },
+      "timeout": 30
+    },
+    {
+      "name": "Valider les specs",
+      "description": "Après chaque écriture d'un fichier de spec par un agent, vérifie la structure, l'EARS et la traçabilité.",
+      "trigger": "PostFileSave",
+      "matcher": "\\.kiro/specs/.+\\.md$",
+      "action": { "type": "command", "command": "python3 tools/valider_specs.py" },
+      "timeout": 30
+    }
+  ]
+}

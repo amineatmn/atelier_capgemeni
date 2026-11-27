@@ -1,0 +1,155 @@
+{
+  "doc_id": "B01",
+  "fichier": "B01_email_direction-logistique.txt",
+  "format": "email",
+  "emetteur": {
+    "nom": "Solène Garrigue",
+    "fonction": "Directrice des opérations logistiques",
+    "direction": "Direction des opérations logistiques"
+  },
+  "autres_parties": [
+    { "nom": "Bertrand Lacassagne", "fonction": null, "role": "destinataire" },
+    { "nom": "Inès Rouvière", "fonction": "Cheffe de projet digital, DSI", "role": "copie" },
+    { "nom": "Karim Benhaddou", "fonction": "Exploitation entrepôt E2", "role": "copie" }
+  ],
+  "date": "2026-10-14",
+  "resume": "La direction logistique demande, avant le pic de fin d'année, un tableau de bord temps réel des colis en retard et une alerte SMS automatique aux clients. Un colis est en retard 48 h après la date promise.",
+  "demandes": [
+    {
+      "id": "B01-D1",
+      "type": "fonctionnelle",
+      "enonce": "Tableau de bord des colis en retard pour les équipes transport et les responsables d'entrepôt.",
+      "citation": "Un tableau de bord des retards, mis à jour en temps réel, pour mes équipes transport et pour les responsables d'entrepôt.",
+      "acteurs": ["Équipes transport", "Responsables d'entrepôt"],
+      "systemes": [],
+      "priorite_exprimee": "priorité numéro un de la direction logistique",
+      "echeance_exprimee": "opérationnel pour le pic",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D2",
+      "type": "non_fonctionnelle",
+      "enonce": "Le tableau de bord est mis à jour en temps réel.",
+      "citation": "mis à jour en temps réel",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D3",
+      "type": "fonctionnelle",
+      "enonce": "Ventilation des colis en retard par transporteur, par entrepôt (E1, E2, E3) et par région, avec descente jusqu'au colis.",
+      "citation": "Je veux voir les colis en retard par transporteur, par entrepôt (E1, E2, E3) et par région, avec la possibilité de descendre jusqu'au colis.",
+      "acteurs": ["Équipes transport", "Responsables d'entrepôt"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D4",
+      "type": "fonctionnelle",
+      "enonce": "Les retards « rouges » ressortent en priorité dans le tableau de bord.",
+      "citation": "les rouges doivent ressortir en priorité dans le tableau de bord.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D5",
+      "type": "fonctionnelle",
+      "enonce": "Alerte automatique envoyée au client par SMS dès qu'un colis est en retard.",
+      "citation": "Une alerte automatique au client dès qu'un colis est en retard. Par SMS, pas par e-mail",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "opérationnel pour le pic",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D6",
+      "type": "fonctionnelle",
+      "enonce": "Le message d'alerte indique la nouvelle date de livraison.",
+      "citation": "Le message doit donner la nouvelle date de livraison.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D7",
+      "type": "regle_metier",
+      "enonce": "Un colis est en retard s'il n'est pas livré 48 h après la date promise.",
+      "citation": "un colis est en retard quand il n'est pas livré 48 h après la date promise.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D8",
+      "type": "regle_metier",
+      "enonce": "Les alertes partent sans aucune intervention manuelle ; le service client est informé.",
+      "citation": "je ne veux aucune intervention manuelle",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D9",
+      "type": "contrainte",
+      "enonce": "La solution est hébergée dans le cloud d'Orvanne, pas chez un éditeur.",
+      "citation": "il faut que ça tourne dans notre cloud, pas chez un éditeur",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D10",
+      "type": "contrainte",
+      "enonce": "Les statuts transporteurs sont repris depuis Passerelle.",
+      "citation": "les statuts transporteurs arrivent déjà dans Passerelle",
+      "acteurs": [],
+      "systemes": ["Passerelle"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D11",
+      "type": "echeance",
+      "enonce": "Planning demandé à la DSI d'ici la fin de la semaine suivant l'e-mail.",
+      "citation": "Peux-tu me donner un planning d'ici la fin de la semaine prochaine ?",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "fin de la semaine prochaine",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B01-N1", "libelle": "Colis expédiés par jour en temps normal", "valeur": "35000", "unite": "colis/jour", "citation": "on expédie autour de 35 000 colis par jour en temps normal" },
+    { "id": "B01-N2", "libelle": "Colis expédiés par jour pendant le pic", "valeur": "70000", "unite": "colis/jour (≈ double)", "citation": "à peu près le double pendant le pic" },
+    { "id": "B01-N3", "libelle": "Seuil de retard après la date promise", "valeur": "48", "unite": "heures", "citation": "48 h après la date promise" },
+    { "id": "B01-N4", "libelle": "Durée de la dégradation du taux de service lors du pic précédent", "valeur": "3", "unite": "semaines", "citation": "pendant trois semaines" }
+  ],
+  "systemes_cites": ["Hangar", "Passerelle"],
+  "points_flous": [
+    { "id": "B01-F1", "description": "« Temps réel » n'est pas chiffré, alors que les fichiers transporteurs arrivent une fois par jour.", "citation": "fichiers que les transporteurs nous envoient chaque matin" },
+    { "id": "B01-F2", "description": "La signification des « rouges » n'est pas définie (seuil, gravité ?).", "citation": "les rouges doivent ressortir en priorité" },
+    { "id": "B01-F3", "description": "La source de la nouvelle date de livraison n'est pas précisée : transporteur, calcul interne ?", "citation": "Le message doit donner la nouvelle date de livraison." },
+    { "id": "B01-F4", "description": "L'hypothèse « surtout de l'affichage » n'est pas vérifiée : couverture des 3 transporteurs dans Passerelle, fraîcheur des statuts.", "citation": "a priori il n'y a pas grand-chose à développer côté flux, c'est surtout de l'affichage" },
+    { "id": "B01-F5", "description": "La manière d'informer le service client n'est pas décrite.", "citation": "Le service client sera informé, bien sûr." },
+    { "id": "B01-F6", "description": "La date du pic n'est pas donnée ; l'échéance « pour le pic » est probablement incompatible avec le gel des mises en production (B02).", "citation": "Il me faut ça opérationnel pour le pic." }
+  ]
+}

@@ -1,0 +1,13 @@
+ref;date_demande;origine;demande;benefice_attendu;priorite;echeance;commentaire
+MKP-01;02/09/2026;Vendeurs (enquête de rentrée);Voir en un coup d'œil mes ventes du jour, de la semaine et du mois;Moins d'appels aux chargés de compte;P1;T1 2027;
+MKP-02;02/09/2026;Vendeurs (enquête de rentrée);Télécharger mes factures de commission;Autonomie des vendeurs;Haute;;La comptabilité produit les factures en PDF chaque mois
+MKP-03;09/09/2026;Chargés de compte;Être alerté quand un vendeur dépasse 2 % de commandes expédiées en retard;Qualité de service;P2;fin mars;Calcul sur 30 jours glissants
+MKP-04;15/09/2026;Vendeur (top 20);Modifier mon IBAN moi-même dans l'espace vendeur;Reversements plus rapides;urgent;ASAP;Aujourd'hui la demande passe par un e-mail au chargé de compte
+MKP-05;15/09/2026;Finance;Aucune modification de coordonnées bancaires sans double validation interne;Lutte contre la fraude;1;;Suite à l'incident de juin
+MKP-06;22/09/2026;Vendeurs;Suivre mes retours et mes litiges;;P2;T1;Les vendeurs veulent voir les retours déclarés par les clients sur leurs articles
+MKP-07;30/09/2026;DSI;Ajouter un index sur la table des lignes de commande et passer l'export en asynchrone;Performance;P3;;L'export des ventes tombe en erreur au-delà de 50 000 lignes
+MKP-08;06/10/2026;Chargés de compte;Alerter le vendeur dès que son taux de retard dépasse 5 %;Qualité de service;P1;15/01/2027;Calcul sur 7 jours
+MKP-09;06/10/2026;Vendeurs;Répondre aux questions des clients depuis l'espace vendeur;Satisfaction client;moyenne;S1 2027;Via Comptoir ou une messagerie dédiée
+MKP-10;13/10/2026;Direction marketplace;Ouvrir l'espace vendeur aux vendeurs européens;Croissance;P1;2027;Allemagne et Espagne d'abord
+MKP-11;20/10/2026;Vendeur;L'espace vendeur est trop lent et on ne comprend rien aux reversements;;;;Verbatim de l'enquête
+MKP-12;03/11/2026;Direction marketplace;Tableau de bord vendeur disponible sur mobile;Usage en déplacement;P2;T2 2027;Application ou site adapté

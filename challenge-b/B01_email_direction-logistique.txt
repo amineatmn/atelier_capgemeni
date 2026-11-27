@@ -1,0 +1,33 @@
+De : Solène Garrigue <solene.garrigue@orvanne.example>
+À : Bertrand Lacassagne <bertrand.lacassagne@orvanne.example>
+Cc : Inès Rouvière ; Karim Benhaddou
+Date : mercredi 14 octobre 2026, 18:42
+Objet : Retards de livraison : il nous faut un outil avant le pic
+
+Bertrand,
+
+Je reviens vers toi après le comité d'exploitation de lundi. On ne peut pas repasser un pic comme celui de l'an dernier : on a découvert les retards quand les clients appelaient, et on a fini avec un taux de service catastrophique pendant trois semaines.
+
+Ce que je demande est simple.
+
+1. Un tableau de bord des retards, mis à jour en temps réel, pour mes équipes transport et pour les responsables d'entrepôt. Je veux voir les colis en retard par transporteur, par entrepôt (E1, E2, E3) et par région, avec la possibilité de descendre jusqu'au colis. Aujourd'hui on fait ça à la main, à partir d'extractions de Hangar et des fichiers que les transporteurs nous envoient chaque matin. C'est intenable.
+
+2. Une alerte automatique au client dès qu'un colis est en retard. Par SMS, pas par e-mail : personne ne lit les e-mails, on le voit bien avec les avis de passage. Le message doit donner la nouvelle date de livraison.
+
+Pour moi, un colis est en retard quand il n'est pas livré 48 h après la date promise. Avant, c'est du bruit : les transporteurs rattrapent la plupart des écarts d'eux-mêmes et on inquiéterait les clients pour rien.
+
+Quelques éléments pour ton cadrage :
+- on expédie autour de 35 000 colis par jour en temps normal, à peu près le double pendant le pic ;
+- les statuts transporteurs arrivent déjà dans Passerelle, donc a priori il n'y a pas grand-chose à développer côté flux, c'est surtout de l'affichage ;
+- il faut que ça tourne dans notre cloud, pas chez un éditeur, on a assez de contrats comme ça ;
+- les rouges doivent ressortir en priorité dans le tableau de bord.
+
+Côté alertes, je ne veux aucune intervention manuelle : si on attend qu'un conseiller valide chaque message, on n'enverra jamais rien. Le service client sera informé, bien sûr.
+
+Il me faut ça opérationnel pour le pic. Je sais que c'est court, mais c'est la priorité numéro un de la direction logistique et je l'ai dit en comité de direction. Peux-tu me donner un planning d'ici la fin de la semaine prochaine ?
+
+Merci,
+Solène
+
+Solène Garrigue
+Directrice des opérations logistiques, Orvanne
