@@ -91,7 +91,7 @@ Le projet est livré en deux lots, pour tenir compte du gel des mises en product
 #### Critères d'acceptation
 
 1. LE SYSTÈME DOIT mettre à disposition du service client, chaque jour à 7 h 00, la liste des commandes ayant au moins un colis `à surveiller` ou `en retard`. _Source : B02-D14, H02_
-2. LE SYSTÈME DOIT indiquer pour chaque commande de la liste : le niveau de retard, le transporteur, la présence d'un dossier ouvert dans Comptoir, le statut client Premium, et si un message de retard a été envoyé, programmé ou mis en attente de validation. _Source : B02-D14, B02-D13, H04_
+2. LE SYSTÈME DOIT indiquer pour chaque commande de la liste : le niveau de retard, le transporteur, la présence d'un dossier ouvert dans Comptoir, le statut client Premium, et si un message de retard a été envoyé, programmé ou mis en attente de validation. _Source : B02-D14, B02-D13, B01-D12, H04_
 3. LE SYSTÈME DOIT rendre la liste consultable dans Comptoir et exportable au format CSV. _Source : B02-D14_
 
 ### Exigence 6 : message de retard au client (lot 2)
@@ -107,7 +107,7 @@ Le projet est livré en deux lots, pour tenir compte du gel des mises en product
 5. SI aucune nouvelle date de livraison n'est connue, ALORS LE SYSTÈME DOIT envoyer le message sans date estimée, avec le modèle prévu à cet effet. _Source : B01-D6, H07_
 6. LE SYSTÈME DOIT envoyer au plus un message par commande et par niveau de retard, en regroupant tous les colis concernés de la commande. _Source : B02-D3, H08_
 7. LE SYSTÈME DOIT envoyer les messages entre 8 h 00 et 20 h 00. _Source : B02-D3, H08_
-8. QUAND un message de retard est envoyé, LE SYSTÈME DOIT l'enregistrer dans l'historique de la commande consultable dans Comptoir : date, canal, modèle utilisé, contenu envoyé. _Source : B02-D13, B01-D8, H04_
+8. QUAND un message de retard est envoyé, LE SYSTÈME DOIT l'enregistrer dans l'historique de la commande consultable dans Comptoir : date, canal, modèle utilisé, contenu envoyé. _Source : B02-D13, B01-D12, H04_
 
 ### Exigence 7 : règles de non-envoi et validation
 
@@ -151,7 +151,6 @@ Le projet est livré en deux lots, pour tenir compte du gel des mises en product
 
 - Code promotionnel dans les messages de retard (`B05-D9`) : interdit dans un message de service par `CT-03`. Aucun projet ne le reprend. Une demande de relance commerciale relève du projet P04 et d'une base légale distincte.
 - Tableau de bord pour le service client (`B02-D14`) : le service client a demandé une liste, pas un tableau de bord. Il a cependant accès au tableau de bord (critère 3.5).
-- Validation manuelle de chaque message par un conseiller (`B01-D8`) : écartée, seule la validation des messages Premium est retenue.
 - Mesure du taux de contacts WISMO : elle relève des outils du service client. Le projet fournit les données d'envoi nécessaires (critère 9.6).
 - Planning demandé à la DSI pour la fin de la semaine suivante (`B01-D11`) : livrable de gestion de projet, pas une exigence du système. Le découpage en lots de `tasks.md` sert de base à ce planning.
 

@@ -11,6 +11,8 @@ Les modèles sont dans `templates/` :
 #[[file:templates/design.md]]
 #[[file:templates/tasks.md]]
 
+Pour une spec de type `bugfix` : `templates/bugfix.md` (remplace requirements.md) et `templates/design-bugfix.md`.
+
 ## Règles pour requirements.md
 
 - Exigences numérotées `### Exigence 1`, `### Exigence 2`…, chacune avec une user story (« En tant que…, je veux…, afin de… »).
@@ -20,8 +22,9 @@ Les modèles sont dans `templates/` :
   - **État** : `PENDANT QUE <état>, LE SYSTÈME DOIT …`
   - **Option** : `OÙ <fonction présente>, LE SYSTÈME DOIT …`
   - **Indésirable** : `SI <condition anormale>, ALORS LE SYSTÈME DOIT …`
+  - Forme négative admise : `LE SYSTÈME NE DOIT PAS …`. Tout critère contient « LE SYSTÈME DOIT » ou « LE SYSTÈME NE DOIT » (contrôlé par `tools/valider_specs.py`), et tout `SI` a son `ALORS`.
 - Un critère = un comportement testable. Les seuils sont chiffrés (pas de « rapide » ni de « temps réel » sans valeur).
-- Chaque critère se termine par `_Source : …_` (IDs `B0x-Dn`, `CT-nn`, `Hnn`).
+- Chaque critère se termine par `_Source : …_` (IDs `B0x-Dn`, `CT-nn`, `Hnn` uniquement). Les chiffres (`B0x-Nn`) ne sont pas des sources : on écrit la valeur dans le critère et on cite la demande qui la porte.
 - Sections finales obligatoires : `## Hors périmètre`, `## Hypothèses`, `## Questions ouvertes`.
 
 - **Couverture** : chaque demande incluse dans le projet est citée par au moins un critère ou listée dans `Hors périmètre` avec sa raison. Une demande qui n'est pas une exigence du système (ex. « donnez-moi un planning ») va dans `Hors périmètre`.
@@ -29,6 +32,15 @@ Les modèles sont dans `templates/` :
 - **Conflits non arbitrés** : préférer un comportement paramétrable qui permet les deux positions, avec une valeur par défaut prudente.
 - **Questions** : préciser dans la colonne `Bloquante` ce qu'elles bloquent (« oui (exigence 4) »).
 - **Échéances** : si une échéance ou un gel impose un découpage, l'annoncer dans l'introduction (lots) et le refléter dans `tasks.md`.
+
+## Règles pour bugfix.md (spec de type bugfix)
+
+- Trois sections obligatoires : `## Comportement actuel`, `## Comportement attendu`, `## Comportement inchangé`. Leurs items numérotés deviennent les critères `1.n`, `2.n` et `3.n`, que `tasks.md` référence.
+- **Actuel** : `QUAND <situation>, ALORS LE SYSTÈME <défaut observé>` (pas de « DOIT » : c'est un constat).
+- **Attendu** : `QUAND <situation>, LE SYSTÈME DOIT <comportement corrigé, mesurable>`.
+- **Inchangé** : `QUAND <situation voisine>, LE SYSTÈME DOIT CONTINUER À <comportement à préserver>`.
+- Même traçabilité `_Source : …_` et mêmes sections finales que requirements.md.
+- design.md suit `templates/design-bugfix.md` : cause, correctif, tests de reproduction, de correction et de non-régression.
 
 ## Règles pour design.md
 
