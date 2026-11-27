@@ -61,4 +61,4 @@ Pour une spec de type `bugfix` : `templates/bugfix.md` (remplace requirements.md
 
 ## Exemple de référence
 
-La spec `templates/exemple-p01/` montre le niveau attendu (détail, traçabilité, traitement des conflits).
+Les specs `templates/exemple-p01/` (plusieurs sources, conflits entre directions) et `templates/exemple-p06/` (une seule source, règles validées en atelier) montrent le niveau attendu.
