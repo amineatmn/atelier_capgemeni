@@ -47,7 +47,7 @@ def valider_fiche(chemin: Path, erreurs: list) -> dict | None:
     exiger(fiche, ["doc_id", "fichier", "format", "emetteur", "date", "resume",
                    "demandes", "chiffres", "systemes_cites", "points_flous"], chemin.name, erreurs)
     doc_id = fiche.get("doc_id", "?")
-    if not re.fullmatch(r"B0[1-9]", str(doc_id)):
+    if not re.fullmatch(r"B\d{2}", str(doc_id)):
         erreurs.append(f"{chemin.name} : doc_id invalide « {doc_id} »")
     if chemin.stem != doc_id:
         erreurs.append(f"{chemin.name} : le nom du fichier doit être {doc_id}.json")
@@ -173,12 +173,12 @@ def main(args: list) -> int:
     if args:
         cibles = [Path(a).resolve() for a in args]
     else:
-        cibles = sorted((RACINE / "work" / "fiches").glob("B0*.json"))
+        cibles = sorted((RACINE / "work" / "fiches").glob("B[0-9][0-9].json"))
         if (RACINE / "work" / "analyse.json").is_file():
             cibles.append(RACINE / "work" / "analyse.json")
 
     ids_fiches = set()
-    for f in sorted((RACINE / "work" / "fiches").glob("B0*.json")):
+    for f in sorted((RACINE / "work" / "fiches").glob("B[0-9][0-9].json")):
         try:
             fiche = json.loads(f.read_text(encoding="utf-8"))
             ids_fiches |= {d.get("id") for d in fiche.get("demandes", [])}

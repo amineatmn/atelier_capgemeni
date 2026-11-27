@@ -273,7 +273,7 @@ def main(argv: list[str]) -> int:
     v.add_argument("docs", nargs="*", help="B01 … B09 (par défaut : toutes les fiches présentes)")
     args = parser.parse_args(argv)
 
-    cibles = [FICHES / f"{d.upper()}.json" for d in args.docs] or sorted(FICHES.glob("B0*.json"))
+    cibles = [FICHES / f"{d.upper()}.json" for d in args.docs] or sorted(FICHES.glob("B[0-9][0-9].json"))
     if not cibles:
         print("Aucune fiche dans work/fiches/.")
         return 0

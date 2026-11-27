@@ -13,6 +13,8 @@ Dans le chat Kiro, choisir l'agent **orchestrateur** puis demander :
 
 **Démo :** ouvrir `demo/index.html` dans un navigateur. La page est autonome, sans serveur. Elle montre les documents et leurs demandes, les projets et leurs conflits, les 8 specs et le rapport qualité. Chaque identifiant (`B02-D7`, `C01`, `H03`…) est cliquable et affiche sa preuve : la citation exacte, les positions en conflit, l'hypothèse retenue.
 
+**Démo en direct :** `python3 tools/demo_live.py` (port 8766). On colle une nouvelle expression de besoin, puis les agents Extracteur, Analyste, Rédacteur et Contrôleur en débattent en temps réel (7 tours, environ 1 minute) : objections, corrections, puis verdict et conclusion commune. Chaque message est un vrai appel à un agent Kiro, en lecture seule.
+
 **Sans l'IDE :** `bash tools/pipeline.sh` exécute tout le pipeline avec la CLI Kiro, ou une seule étape : `bash tools/pipeline.sh specs P02`, `… qualite`, `… demo`.
 
 Contrôles manuels :

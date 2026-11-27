@@ -20,7 +20,7 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 SPECS = RACINE / ".kiro" / "specs"
 SORTIE = RACINE / "work" / "rapport-qualite.md"
-ID_DEMANDE = re.compile(r"B0\d-D\d+(?!\d)")
+ID_DEMANDE = re.compile(r"B\d{2}-D\d+(?!\d)")
 
 # Correspondance établie à la lecture entre la référence humaine (Rnn) et l'analyse.
 # Valeur : (éléments de work/analyse.json qui la traitent, couverture : oui / partiel / non, commentaire).

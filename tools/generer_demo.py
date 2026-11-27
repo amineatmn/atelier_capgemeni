@@ -21,14 +21,14 @@ def lire(p: Path) -> str:
 
 def main() -> int:
     analyse = json.loads(lire(RACINE / "work" / "analyse.json"))
-    fiches = [json.loads(lire(f)) for f in sorted((RACINE / "work" / "fiches").glob("B0*.json"))]
+    fiches = [json.loads(lire(f)) for f in sorted((RACINE / "work" / "fiches").glob("B[0-9][0-9].json"))]
     specs = {}
     for p in analyse["projets"]:
         d = RACINE / ".kiro" / "specs" / p["slug"]
         specs[p["slug"]] = {n: lire(d / n) for n in ("requirements.md", "bugfix.md", "design.md", "tasks.md") if (d / n).is_file()}
     donnees = {"analyse": analyse, "fiches": fiches, "specs": specs,
                "rapport": lire(RACINE / "work" / "rapport-qualite.md"),
-               "sources": {f.name: lire(f) for f in sorted((RACINE / "challenge-b").glob("B0*"))}}
+               "sources": {f.name: lire(f) for f in sorted((RACINE / "challenge-b").glob("B[0-9][0-9]_*"))}}
     html = MODELE.replace("__DONNEES__", json.dumps(donnees, ensure_ascii=False).replace("</", "<\\/"))
     sortie = RACINE / "demo" / "index.html"
     sortie.parent.mkdir(exist_ok=True)
@@ -73,7 +73,7 @@ A.conflits.forEach(x => idx[x.id] = {type:"conflit", x}); A.hypotheses.forEach(x
 A.questions.forEach(x => idx[x.id] = {type:"question", x}); A.contraintes_transverses.forEach(x => idx[x.id] = {type:"contrainte", x});
 A.projets.forEach(x => idx[x.id] = {type:"projet", x});
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const RE_ID = /\b(B0\d-[DNF]\d+|CT-\d+|C\d{2}|H\d{2}|Q\d{2}|P0\d)\b/g;
+const RE_ID = /\b(B\d\d-[DNF]\d+|CT-\d+|C\d{2}|H\d{2}|Q\d{2}|P0\d)\b/g;
 const lier = s => s.replace(RE_ID, m => idx[m] ? `<span class="id" onclick="montrer('${m}')">${m}</span>` : m);
 const badge = g => `<span class="badge ${g}">${g}</span>`;
 function montrer(id){ const e = idx[id]; if(!e) return; let h = `<h3>${id}</h3>`;

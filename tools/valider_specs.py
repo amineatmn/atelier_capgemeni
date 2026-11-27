@@ -45,7 +45,7 @@ SECTIONS_DESIGN = ["## Architecture", "## Gestion des erreurs", "## Stratégie d
 def ids_connus() -> set:
     """IDs déclarés dans les fiches et l'analyse ; vide si l'amont n'existe pas encore."""
     ids = set()
-    for f in (RACINE / "work" / "fiches").glob("B0*.json"):
+    for f in (RACINE / "work" / "fiches").glob("B[0-9][0-9].json"):
         try:
             fiche = json.loads(f.read_text(encoding="utf-8"))
             ids |= {d.get("id") for d in fiche.get("demandes", [])}

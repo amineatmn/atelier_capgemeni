@@ -20,7 +20,7 @@ agent() { # agent <fichier .md de l'agent> <journal> <consigne>
 }
 
 extraction() {
-  for f in challenge-b/B0*; do id=$(basename "$f" | cut -c1-3)
+  for f in challenge-b/B[0-9][0-9]_*; do id=$(basename "$f" | cut -c1-3)
     agent extracteur.md "extraction-$id" "Traite le document $id et écris work/fiches/$id.json." & done; wait
   python3 tools/valider_contrats.py
 }
