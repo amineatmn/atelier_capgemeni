@@ -140,17 +140,18 @@ Par spec : résultat des contrôles automatiques (`tools/valider_specs.py`) + re
 
 ---
 
-## 6. Décisions à confirmer au lancement
+## 6. Décisions prises
 
-- [ ] Langue des mots-clés EARS : français (`QUAND … LE SYSTÈME DOIT …`), retenu par défaut, ou anglais.
-- [ ] Liste provisoire des projets (ci-dessous) : l'analyste peut la modifier, mais il prévient C et D.
+- [x] Mots-clés EARS en français (`QUAND … LE SYSTÈME DOIT …`).
+- [x] Liste des projets, fixée par l'analyse (`work/analyse.json`) :
 
-| Id | Slug | Documents |
-|---|---|---|
-| P01 | `alertes-retards-livraison` | B01, B02, B05 (code promo) |
-| P02 | `portail-retours` | B03, B04, B09 (MKP-06) |
-| P03 | `declaration-casse-entrepot` | B06 |
-| P04 | `relance-paniers-abandonnes` | B05 |
-| P05 | `registre-droits-rgpd` | B07 |
-| P06 | `rdv-livraisons-fournisseurs` | B08 |
-| P07 | `espace-vendeur-marketplace` | B09 (à découper ? MKP-07 ressemble à un bugfix) |
+| Id | Slug | Type | Documents |
+|---|---|---|---|
+| P01 | `alertes-retards-livraison` | feature | B01, B02, B05 |
+| P02 | `portail-retours` | feature | B03, B04, B09 |
+| P03 | `declaration-casse-entrepot` | feature | B06, B04 |
+| P04 | `relance-paniers-abandonnes` | feature | B05 |
+| P05 | `registre-droits-rgpd` | feature | B07 |
+| P06 | `rdv-livraisons-fournisseurs` | feature | B08 |
+| P07 | `espace-vendeur-marketplace` | feature | B09 |
+| P08 | `correctifs-espace-vendeur` | bugfix | B09 |

@@ -95,8 +95,8 @@
     {
       "id": "B01-D8",
       "type": "regle_metier",
-      "enonce": "Les alertes partent sans aucune intervention manuelle ; le service client est informé.",
-      "citation": "je ne veux aucune intervention manuelle",
+      "enonce": "Les alertes au client partent sans aucune intervention manuelle, en particulier sans validation de chaque message par un conseiller.",
+      "citation": "je ne veux aucune intervention manuelle : si on attend qu'un conseiller valide chaque message, on n'enverra jamais rien.",
       "acteurs": ["Service client"],
       "systemes": [],
       "priorite_exprimee": null,
@@ -134,6 +134,17 @@
       "systemes": [],
       "priorite_exprimee": null,
       "echeance_exprimee": "fin de la semaine prochaine",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B01-D12",
+      "type": "fonctionnelle",
+      "enonce": "Le service client est informé des alertes de retard envoyées aux clients.",
+      "citation": "Le service client sera informé, bien sûr.",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
       "statut_source": "demande"
     }
   ],

@@ -60,6 +60,23 @@ Les formats échangés entre les étapes sont définis dans [CONTRATS.md](CONTRA
 
 Pour travailler en parallèle, chacun part des exemples de `work/exemples/` sans attendre l'étape précédente. Toute modification de format passe par `CONTRATS.md` et doit être annoncée à l'équipe.
 
-## Décisions à prendre au lancement
+## Résultats
 
-Voir `CONTRATS.md` §6 : la langue des mots-clés EARS et la liste provisoire des projets.
+Sorties du pipeline sur les 9 documents de `challenge-b/` :
+
+- `work/fiches/` : 9 fiches, 168 demandes extraites avec leur citation exacte ;
+- `work/analyse.json` et `work/analyse.md` : 8 projets, 26 conflits, 31 hypothèses, 39 questions ;
+- `.kiro/specs/` : 8 specs Kiro, toutes conformes à `tools/valider_specs.py`.
+
+| Id | Spec | Type | Sources |
+|---|---|---|---|
+| P01 | [Détection des retards de livraison, suivi colis dans Comptoir et information du client](.kiro/specs/alertes-retards-livraison/) | feature | B01, B02, B05 |
+| P02 | [Portail de retours en libre-service, remboursement et visibilité des entrepôts](.kiro/specs/portail-retours/) | feature | B03, B04, B09 |
+| P03 | [Déclaration de casse à la douchette, blocage du stock dans Hangar et litiges transporteurs](.kiro/specs/declaration-casse-entrepot/) | feature | B06, B04 |
+| P04 | [Relance personnalisée des paniers abandonnés](.kiro/specs/relance-paniers-abandonnes/) | feature | B05 |
+| P05 | [Registre et traitement des demandes d'exercice de droits RGPD](.kiro/specs/registre-droits-rgpd/) | feature | B07 |
+| P06 | [Prise de rendez-vous de déchargement par les fournisseurs et transporteurs](.kiro/specs/rdv-livraisons-fournisseurs/) | feature | B08 |
+| P07 | [Évolutions de l'espace vendeur de la marketplace](.kiro/specs/espace-vendeur-marketplace/) | feature | B09 |
+| P08 | [Correctifs de l'espace vendeur : export des ventes et temps de réponse](.kiro/specs/correctifs-espace-vendeur/) | bugfix | B09 |
+
+Les décisions de format sont dans `CONTRATS.md` §6.
