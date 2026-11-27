@@ -155,6 +155,8 @@ def valider_analyse(chemin: Path, ids_fiches: set, erreurs: list) -> None:
             erreurs.append(f"{ctx} : gravité inconnue")
         if len(c.get("positions", [])) < 2:
             erreurs.append(f"{ctx} : un conflit oppose au moins deux positions")
+        if c.get("hypothese") is None and c.get("gravite") in {"majeur", "mineur"}:
+            erreurs.append(f"{ctx} : conflit {c.get('gravite')} sans hypothèse (null est réservé aux conflits bloquants)")
         ref_connue(c.get("hypothese"), "H", ctx)
         ref_connue(c.get("question"), "Q", ctx)
     for h in analyse.get("hypotheses", []):
