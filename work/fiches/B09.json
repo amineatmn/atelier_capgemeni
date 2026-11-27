@@ -1,0 +1,253 @@
+{
+  "doc_id": "B09",
+  "fichier": "B09_tableau_marketplace.csv",
+  "format": "tableau",
+  "emetteur": {
+    "nom": null,
+    "fonction": null,
+    "direction": "Direction marketplace"
+  },
+  "autres_parties": [],
+  "date": "2026-11-03",
+  "resume": "Tableau de 12 demandes (MKP-01 à MKP-12) sur l'espace vendeur de la marketplace, saisies entre le 02/09/2026 et le 03/11/2026 et émanant des vendeurs, des chargés de compte, de la finance, de la DSI et de la direction marketplace. Il couvre le suivi des ventes, les factures, les alertes de retard, les coordonnées bancaires, les retours et litiges, la performance, la relation client, l'ouverture européenne et l'accès mobile. Deux lignes décrivent des défauts de l'existant (MKP-07, MKP-11).",
+  "demandes": [
+    {
+      "id": "B09-D1",
+      "type": "fonctionnelle",
+      "enonce": "MKP-01 : le vendeur voit en un coup d'œil ses ventes du jour, de la semaine et du mois.",
+      "citation": "Voir en un coup d'œil mes ventes du jour, de la semaine et du mois",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": "P1",
+      "echeance_exprimee": "T1 2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D2",
+      "type": "fonctionnelle",
+      "enonce": "MKP-02 : le vendeur télécharge ses factures de commission.",
+      "citation": "Télécharger mes factures de commission",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": "Haute",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D3",
+      "type": "contrainte",
+      "enonce": "MKP-02 : les factures de commission sont produites en PDF chaque mois par la comptabilité.",
+      "citation": "La comptabilité produit les factures en PDF chaque mois",
+      "acteurs": ["Comptabilité"],
+      "systemes": [],
+      "priorite_exprimee": "Haute",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D4",
+      "type": "fonctionnelle",
+      "enonce": "MKP-03 : les chargés de compte sont alertés quand un vendeur dépasse 2 % de commandes expédiées en retard.",
+      "citation": "Être alerté quand un vendeur dépasse 2 % de commandes expédiées en retard",
+      "acteurs": ["Chargés de compte", "Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": "P2",
+      "echeance_exprimee": "fin mars",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D5",
+      "type": "regle_metier",
+      "enonce": "MKP-03 : le taux de commandes expédiées en retard est calculé sur 30 jours glissants.",
+      "citation": "Calcul sur 30 jours glissants",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "P2",
+      "echeance_exprimee": "fin mars",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D6",
+      "type": "fonctionnelle",
+      "enonce": "MKP-04 : le vendeur modifie lui-même son IBAN dans l'espace vendeur (aujourd'hui par e-mail au chargé de compte).",
+      "citation": "Modifier mon IBAN moi-même dans l'espace vendeur",
+      "acteurs": ["Vendeurs (top 20)", "Chargés de compte"],
+      "systemes": [],
+      "priorite_exprimee": "urgent",
+      "echeance_exprimee": "ASAP",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D7",
+      "type": "regle_metier",
+      "enonce": "MKP-05 : aucune modification de coordonnées bancaires sans double validation interne.",
+      "citation": "Aucune modification de coordonnées bancaires sans double validation interne",
+      "acteurs": ["Finance"],
+      "systemes": [],
+      "priorite_exprimee": "1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D8",
+      "type": "fonctionnelle",
+      "enonce": "MKP-06 : le vendeur suit ses retours et ses litiges, dont les retours déclarés par les clients sur ses articles.",
+      "citation": "Suivre mes retours et mes litiges",
+      "acteurs": ["Vendeurs", "Clients"],
+      "systemes": [],
+      "priorite_exprimee": "P2",
+      "echeance_exprimee": "T1",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D9",
+      "type": "non_fonctionnelle",
+      "enonce": "MKP-07 (défaut à corriger) : l'export des ventes tombe en erreur au-delà de 50 000 lignes.",
+      "citation": "L'export des ventes tombe en erreur au-delà de 50 000 lignes",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": "P3",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D10",
+      "type": "non_fonctionnelle",
+      "enonce": "MKP-07 : solution proposée par la DSI : ajouter un index sur la table des lignes de commande.",
+      "citation": "Ajouter un index sur la table des lignes de commande",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": "P3",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D11",
+      "type": "non_fonctionnelle",
+      "enonce": "MKP-07 : solution proposée par la DSI : passer l'export des ventes en asynchrone.",
+      "citation": "passer l'export en asynchrone",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": "P3",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D12",
+      "type": "fonctionnelle",
+      "enonce": "MKP-08 : le vendeur est alerté dès que son taux de retard dépasse 5 %.",
+      "citation": "Alerter le vendeur dès que son taux de retard dépasse 5 %",
+      "acteurs": ["Vendeurs", "Chargés de compte"],
+      "systemes": [],
+      "priorite_exprimee": "P1",
+      "echeance_exprimee": "15/01/2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D13",
+      "type": "regle_metier",
+      "enonce": "MKP-08 : le taux de retard du vendeur est calculé sur 7 jours.",
+      "citation": "Calcul sur 7 jours",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "P1",
+      "echeance_exprimee": "15/01/2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D14",
+      "type": "fonctionnelle",
+      "enonce": "MKP-09 : le vendeur répond aux questions des clients depuis l'espace vendeur, via Comptoir ou une messagerie dédiée.",
+      "citation": "Répondre aux questions des clients depuis l'espace vendeur",
+      "acteurs": ["Vendeurs", "Clients"],
+      "systemes": ["Comptoir"],
+      "priorite_exprimee": "moyenne",
+      "echeance_exprimee": "S1 2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D15",
+      "type": "fonctionnelle",
+      "enonce": "MKP-10 : l'espace vendeur est ouvert aux vendeurs européens.",
+      "citation": "Ouvrir l'espace vendeur aux vendeurs européens",
+      "acteurs": ["Vendeurs européens"],
+      "systemes": [],
+      "priorite_exprimee": "P1",
+      "echeance_exprimee": "2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D16",
+      "type": "regle_metier",
+      "enonce": "MKP-10 : l'ouverture européenne commence par l'Allemagne et l'Espagne.",
+      "citation": "Allemagne et Espagne d'abord",
+      "acteurs": ["Vendeurs européens"],
+      "systemes": [],
+      "priorite_exprimee": "P1",
+      "echeance_exprimee": "2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D17",
+      "type": "non_fonctionnelle",
+      "enonce": "MKP-11 (défaut à corriger) : l'espace vendeur est jugé trop lent par un vendeur (verbatim d'enquête).",
+      "citation": "L'espace vendeur est trop lent",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D18",
+      "type": "fonctionnelle",
+      "enonce": "MKP-11 : les reversements affichés aux vendeurs ne sont pas compréhensibles (verbatim d'enquête).",
+      "citation": "on ne comprend rien aux reversements",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B09-D19",
+      "type": "fonctionnelle",
+      "enonce": "MKP-12 : le tableau de bord vendeur est disponible sur mobile (application ou site adapté).",
+      "citation": "Tableau de bord vendeur disponible sur mobile",
+      "acteurs": ["Vendeurs"],
+      "systemes": [],
+      "priorite_exprimee": "P2",
+      "echeance_exprimee": "T2 2027",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B09-N1", "libelle": "Seuil d'alerte chargés de compte : part de commandes expédiées en retard (MKP-03)", "valeur": "2", "unite": "%", "citation": "dépasse 2 % de commandes expédiées en retard" },
+    { "id": "B09-N2", "libelle": "Fenêtre de calcul du taux de retard (MKP-03)", "valeur": "30", "unite": "jours glissants", "citation": "Calcul sur 30 jours glissants" },
+    { "id": "B09-N3", "libelle": "Seuil d'alerte vendeur : taux de retard (MKP-08)", "valeur": "5", "unite": "%", "citation": "son taux de retard dépasse 5 %" },
+    { "id": "B09-N4", "libelle": "Fenêtre de calcul du taux de retard (MKP-08)", "valeur": "7", "unite": "jours", "citation": "Calcul sur 7 jours" },
+    { "id": "B09-N5", "libelle": "Volume d'export au-delà duquel l'export des ventes tombe en erreur (MKP-07)", "valeur": "50000", "unite": "lignes", "citation": "au-delà de 50 000 lignes" },
+    { "id": "B09-N6", "libelle": "Segment de vendeurs à l'origine de MKP-04", "valeur": "20", "unite": "vendeurs (top 20)", "citation": "Vendeur (top 20)" },
+    { "id": "B09-N7", "libelle": "Échéance datée de MKP-08", "valeur": "2027-01-15", "unite": "date", "citation": "15/01/2027" },
+    { "id": "B09-N8", "libelle": "Date de demande la plus ancienne (MKP-01, MKP-02)", "valeur": "2026-09-02", "unite": "date", "citation": "02/09/2026" },
+    { "id": "B09-N9", "libelle": "Date de demande la plus récente (MKP-12)", "valeur": "2026-11-03", "unite": "date", "citation": "03/11/2026" }
+  ],
+  "systemes_cites": ["Comptoir"],
+  "points_flous": [
+    { "id": "B09-F1", "description": "Le tableau n'a pas de date unique : chaque ligne a sa date_demande, du 02/09/2026 au 03/11/2026. La date de la fiche retenue est la plus récente (2026-11-03, MKP-12), considérée comme la dernière mise à jour connue du tableau.", "citation": "03/11/2026" },
+    { "id": "B09-F2", "description": "Émetteur sans nom ni fonction : la direction marketplace est déduite du README du challenge ; les lignes ont des origines variées (vendeurs, chargés de compte, finance, DSI, direction marketplace).", "citation": "Direction marketplace" },
+    { "id": "B09-F3", "description": "Échelles de priorité hétérogènes et non comparables : P1, P2, P3, Haute, urgent, 1, moyenne, ou vide.", "citation": "moyenne" },
+    { "id": "B09-F4", "description": "Échéances hétérogènes, parfois sans année ni date précise : fin mars, T1, ASAP, 2027, S1 2027 ; MKP-02, MKP-05, MKP-07 et MKP-11 n'en ont pas.", "citation": "fin mars" },
+    { "id": "B09-F5", "description": "Contradiction interne : MKP-04 demande que le vendeur modifie son IBAN lui-même (urgent), MKP-05 interdit toute modification de coordonnées bancaires sans double validation interne.", "citation": "Aucune modification de coordonnées bancaires sans double validation interne" },
+    { "id": "B09-F6", "description": "Contradiction interne entre deux alertes de retard : MKP-03 (2 %, 30 jours glissants, destinée aux chargés de compte, P2, fin mars) et MKP-08 (5 %, 7 jours, destinée au vendeur, P1, 15/01/2027). La définition d'une commande « en retard » n'est pas donnée, ni le lien entre « commandes expédiées en retard » et « taux de retard ».", "citation": "Calcul sur 7 jours" },
+    { "id": "B09-F7", "description": "Défaut à corriger : MKP-07 décrit une anomalie de l'existant (export en erreur au-delà de 50 000 lignes) et impose une solution technique (index, export asynchrone) plutôt qu'un besoin. Candidat à une spec bugfix.", "citation": "L'export des ventes tombe en erreur au-delà de 50 000 lignes" },
+    { "id": "B09-F8", "description": "Défaut à corriger : MKP-11 est un verbatim d'enquête sans bénéfice, priorité ni échéance ; « trop lent » n'est pas chiffré et les pages concernées ne sont pas précisées ; le problème de compréhension des reversements n'est pas détaillé.", "citation": "Verbatim de l'enquête" },
+    { "id": "B09-F9", "description": "MKP-06 n'a pas de bénéfice attendu ; « litiges » n'est pas défini et l'échéance « T1 » n'a pas d'année.", "citation": "Suivre mes retours et mes litiges" },
+    { "id": "B09-F10", "description": "MKP-09 : le canal n'est pas arbitré entre Comptoir et une messagerie dédiée.", "citation": "Via Comptoir ou une messagerie dédiée" },
+    { "id": "B09-F11", "description": "MKP-12 : la forme n'est pas arbitrée entre application et site adapté ; le lien avec la vue des ventes de MKP-01 est implicite.", "citation": "Application ou site adapté" },
+    { "id": "B09-F12", "description": "MKP-10 : seuls l'Allemagne et l'Espagne sont cités ; les autres pays et ce que l'ouverture implique pour l'espace vendeur ne sont pas décrits.", "citation": "Allemagne et Espagne d'abord" },
+    { "id": "B09-F13", "description": "MKP-05 : l'incident de juin qui motive la règle n'est pas décrit, et les rôles de la double validation interne ne sont pas précisés.", "citation": "Suite à l'incident de juin" },
+    { "id": "B09-F14", "description": "MKP-02 : les factures existent déjà en PDF mensuel ; on ne sait pas si la demande se limite à leur mise à disposition dans l'espace vendeur.", "citation": "La comptabilité produit les factures en PDF chaque mois" },
+    { "id": "B09-F15", "description": "Implicite : l'espace vendeur existe déjà (MKP-04, MKP-11), son périmètre actuel et le système qui le porte ne sont pas nommés.", "citation": "L'espace vendeur est trop lent" }
+  ]
+}

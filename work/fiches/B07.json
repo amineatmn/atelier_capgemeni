@@ -1,0 +1,269 @@
+{
+  "doc_id": "B07",
+  "fichier": "B07_note_conformite.md",
+  "format": "note_interne",
+  "emetteur": {
+    "nom": "Hélène Marsac",
+    "fonction": "Déléguée à la protection des données",
+    "direction": "Direction juridique et conformité"
+  },
+  "autres_parties": [
+    { "nom": "Comité d'architecture de la DSI", "fonction": null, "role": "destinataire" },
+    { "nom": "Comité des risques", "fonction": null, "role": "mentionné" },
+    { "nom": null, "fonction": "Service client", "role": "mentionné" }
+  ],
+  "date": "2026-11-09",
+  "resume": "La déléguée à la protection des données demande un outil de registre et de traitement des demandes d'exercice de droits (accès, rectification, effacement, opposition), aujourd'hui suivies dans un classeur partagé avec des dépassements de délai et sans preuve d'exécution. La note fixe aussi des règles applicables aux projets en cours : consultation préalable, usage du numéro de mobile, durée de conservation des données de prospection, photos, données de test.",
+  "demandes": [
+    {
+      "id": "B07-D1",
+      "type": "fonctionnelle",
+      "enonce": "Registre unique des demandes d'exercice de droits, avec pour chacune : canal, date de réception, type, identité vérifiée ou non, systèmes concernés, échéance, statut, preuve de clôture.",
+      "citation": "Un registre unique des demandes, avec pour chacune : canal, date de réception, type, identité vérifiée ou non, systèmes concernés, échéance, statut, preuve de clôture.",
+      "acteurs": ["Équipe de la déléguée à la protection des données", "Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "avant le prochain contrôle interne",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D2",
+      "type": "fonctionnelle",
+      "enonce": "Compte à rebours par demande, avec des alertes à J+15 et J+25.",
+      "citation": "Un compte à rebours par demande, avec des alertes à J+15 et J+25",
+      "acteurs": ["Équipe de la déléguée à la protection des données"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D3",
+      "type": "regle_metier",
+      "enonce": "Le délai de traitement d'une demande peut être prolongé de deux mois, sur décision motivée.",
+      "citation": "la possibilité de prolonger le délai de deux mois en motivant la décision",
+      "acteurs": ["Équipe de la déléguée à la protection des données"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D4",
+      "type": "regle_metier",
+      "enonce": "Le délai légal de traitement d'une demande est d'un mois.",
+      "citation": "Dix-sept ont été traitées au-delà du délai légal d'un mois.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D5",
+      "type": "fonctionnelle",
+      "enonce": "Orchestration des actions dans les systèmes concernés : Vitrine, Comptoir, Hangar, le Lac, l'outil d'e-mailing, et tout nouveau système stockant des données clients.",
+      "citation": "Une orchestration des actions dans les systèmes concernés : Vitrine, Comptoir, Hangar, le Lac, l'outil d'e-mailing, et tout nouveau système qui stockerait des données clients.",
+      "acteurs": ["Équipe de la déléguée à la protection des données"],
+      "systemes": ["Vitrine", "Comptoir", "Hangar", "Lac", "Outil d'e-mailing"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D6",
+      "type": "fonctionnelle",
+      "enonce": "Pour une demande d'accès, constitution d'un export lisible remis au demandeur par un canal sécurisé.",
+      "citation": "Pour l'accès : la constitution d'un export lisible, remis au demandeur par un canal sécurisé.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D7",
+      "type": "regle_metier",
+      "enonce": "Pour une demande d'effacement, les données sont supprimées ou anonymisées, sauf celles à conserver au titre d'une obligation légale.",
+      "citation": "Pour l'effacement : la suppression ou l'anonymisation, sauf pour les données à conserver au titre d'une obligation légale",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D8",
+      "type": "regle_metier",
+      "enonce": "Les données soumises à une obligation légale de conservation (factures : 10 ans) sont isolées lors d'un effacement.",
+      "citation": "données à conserver au titre d'une obligation légale (factures : 10 ans), qui doivent être isolées.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D9",
+      "type": "indicateur",
+      "enonce": "Tableau de bord trimestriel des demandes pour le comité des risques.",
+      "citation": "Un tableau de bord trimestriel pour le comité des risques.",
+      "acteurs": ["Comité des risques"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D10",
+      "type": "contrainte",
+      "enonce": "Tout nouveau traitement de données est soumis à la déléguée à la protection des données avant développement.",
+      "citation": "Tout nouveau traitement doit m'être soumis avant développement.",
+      "acteurs": ["DSI", "Déléguée à la protection des données"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D11",
+      "type": "contrainte",
+      "enonce": "Le numéro de mobile est collecté pour la livraison ; tout autre usage suppose une analyse préalable.",
+      "citation": "Le numéro de mobile est collecté pour la livraison. Tout autre usage suppose une analyse préalable.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D12",
+      "type": "regle_metier",
+      "enonce": "Un message de service ne contient pas d'offre commerciale.",
+      "citation": "Un message de service ne contient pas d'offre commerciale.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D13",
+      "type": "regle_metier",
+      "enonce": "Les données de prospection ne sont pas conservées plus de 3 ans après le dernier contact du client.",
+      "citation": "Les données de prospection ne sont pas conservées plus de 3 ans après le dernier contact du client.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D14",
+      "type": "contrainte",
+      "enonce": "Les historiques de prospection antérieurs à la limite de 3 ans sont purgés ou anonymisés (chantier non commencé).",
+      "citation": "Les historiques antérieurs doivent être purgés ou anonymisés ; ce chantier n'a pas commencé.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D15",
+      "type": "regle_metier",
+      "enonce": "Les photos et pièces jointes transmises par les clients ou prises en entrepôt sont des données personnelles dès qu'une étiquette ou une personne y est visible.",
+      "citation": "Les photos et pièces jointes transmises par les clients ou prises en entrepôt sont des données personnelles dès lors qu'une étiquette ou une personne y est visible.",
+      "acteurs": ["Client", "Entrepôts"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D16",
+      "type": "contrainte",
+      "enonce": "Aucune donnée de production n'est utilisée pour des démonstrations ou des tests sans anonymisation.",
+      "citation": "Aucune donnée de production ne sert à des démonstrations ou à des tests sans anonymisation.",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D17",
+      "type": "non_fonctionnelle",
+      "enonce": "L'outil est utilisable par l'équipe de la déléguée à la protection des données sans formation lourde.",
+      "citation": "L'outil doit être utilisable par mon équipe sans formation lourde",
+      "acteurs": ["Équipe de la déléguée à la protection des données"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D18",
+      "type": "fonctionnelle",
+      "enonce": "Le service client peut enregistrer dans l'outil les demandes reçues sur ses canaux.",
+      "citation": "par le service client pour l'enregistrement des demandes reçues sur ses canaux",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D19",
+      "type": "echeance",
+      "enonce": "Première version de l'outil avant le prochain contrôle interne.",
+      "citation": "Je souhaite une première version avant le prochain contrôle interne.",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "avant le prochain contrôle interne",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B07-D20",
+      "type": "contrainte",
+      "enonce": "Une solution intégrée à l'existant est préférée à l'achat d'un produit.",
+      "citation": "une solution intégrée à l'existant serait préférable à l'achat d'un produit",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": "serait préférable",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B07-N1", "libelle": "Effectif de l'équipe de la déléguée à la protection des données", "valeur": "2", "unite": "personnes", "citation": "tenu par mon équipe (2 personnes)" },
+    { "id": "B07-N2", "libelle": "Demandes enregistrées sur les neuf premiers mois de 2026", "valeur": "412", "unite": "demandes", "citation": "Sur les neuf premiers mois de 2026, nous avons enregistré 412 demandes" },
+    { "id": "B07-N3", "libelle": "Part des demandes d'effacement", "valeur": "61", "unite": "%", "citation": "dont 61 % de demandes d'effacement" },
+    { "id": "B07-N4", "libelle": "Demandes traitées au-delà du délai légal", "valeur": "17", "unite": "demandes", "citation": "Dix-sept ont été traitées au-delà du délai légal d'un mois" },
+    { "id": "B07-N5", "libelle": "Délai légal de traitement d'une demande", "valeur": "1", "unite": "mois", "citation": "délai légal d'un mois" },
+    { "id": "B07-N6", "libelle": "Première alerte du compte à rebours", "valeur": "15", "unite": "jours (J+15)", "citation": "des alertes à J+15 et J+25" },
+    { "id": "B07-N7", "libelle": "Seconde alerte du compte à rebours", "valeur": "25", "unite": "jours (J+25)", "citation": "des alertes à J+15 et J+25" },
+    { "id": "B07-N8", "libelle": "Prolongation possible du délai", "valeur": "2", "unite": "mois", "citation": "prolonger le délai de deux mois" },
+    { "id": "B07-N9", "libelle": "Durée de conservation légale des factures", "valeur": "10", "unite": "ans", "citation": "factures : 10 ans" },
+    { "id": "B07-N10", "libelle": "Durée maximale de conservation des données de prospection après le dernier contact", "valeur": "3", "unite": "ans", "citation": "pas conservées plus de 3 ans après le dernier contact du client" }
+  ],
+  "systemes_cites": ["Vitrine", "Comptoir", "Hangar", "Lac", "Outil d'e-mailing"],
+  "points_flous": [
+    { "id": "B07-F1", "description": "Les sauvegardes, où les données restent après effacement, ne figurent pas dans la liste des systèmes à orchestrer ; le traitement attendu pour le Lac et les sauvegardes n'est pas décrit.", "citation": "les données restent présentes dans le Lac et dans les sauvegardes après leur effacement dans Vitrine" },
+    { "id": "B07-F2", "description": "La manière de repérer les demandes arrivant par le chat et les réseaux sociaux n'est pas décrite.", "citation": "où elles ne sont pas toujours reconnues comme telles" },
+    { "id": "B07-F3", "description": "Le mode de vérification de l'identité du demandeur n'est pas précisé.", "citation": "identité vérifiée ou non" },
+    { "id": "B07-F4", "description": "Le « canal sécurisé » de remise de l'export n'est pas défini, ni le format de l'export lisible.", "citation": "remis au demandeur par un canal sécurisé" },
+    { "id": "B07-F5", "description": "Le point de départ du compte à rebours (date de réception, date de vérification d'identité ?) et le décompte en jours calendaires ou ouvrés ne sont pas précisés.", "citation": "des alertes à J+15 et J+25" },
+    { "id": "B07-F6", "description": "Les alertes J+15 et J+25 ne sont pas définies pour une demande prolongée de deux mois ; on ne sait pas si la prolongation s'ajoute au mois initial.", "citation": "la possibilité de prolonger le délai de deux mois en motivant la décision" },
+    { "id": "B07-F7", "description": "Le critère de choix entre suppression et anonymisation n'est pas donné.", "citation": "la suppression ou l'anonymisation" },
+    { "id": "B07-F8", "description": "Le mécanisme d'intégration de « tout nouveau système » stockant des données clients n'est pas décrit.", "citation": "tout nouveau système qui stockerait des données clients" },
+    { "id": "B07-F9", "description": "Le contenu du tableau de bord trimestriel (indicateurs) n'est pas défini.", "citation": "Un tableau de bord trimestriel pour le comité des risques." },
+    { "id": "B07-F10", "description": "La notion de « dernier contact du client » n'est pas définie (commande, ouverture d'e-mail, contact service client ?).", "citation": "après le dernier contact du client" },
+    { "id": "B07-F11", "description": "Le chantier de purge des historiques de prospection est cité sans porteur ni échéance ; son rattachement à l'outil demandé n'est pas précisé.", "citation": "ce chantier n'a pas commencé" },
+    { "id": "B07-F12", "description": "La date du prochain contrôle interne, qui fixe l'échéance, n'est pas donnée.", "citation": "avant le prochain contrôle interne" },
+    { "id": "B07-F13", "description": "Le budget n'est pas arrêté, et la préférence pour une solution intégrée n'est pas une exigence ferme.", "citation": "Le budget n'est pas arrêté" },
+    { "id": "B07-F14", "description": "Implicite : les projets d'alertes de retard, de portail de retours et de personnalisation marketing n'ont pas été soumis à la déléguée à la protection des données ; leur conformité reste à analyser.", "citation": "Je n'ai été consultée ni sur les alertes de retard, ni sur le portail de retours, ni sur les projets de personnalisation du marketing." },
+    { "id": "B07-F15", "description": "Les types de demandes listés dans le constat (accès, rectification, effacement, opposition) ne sont pas tous traités dans le besoin : rien n'est décrit pour la rectification et l'opposition à la prospection.", "citation": "accéder à leurs données, les faire rectifier ou effacer, ou s'opposer à la prospection" }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "doc_id": "B02",
+  "fichier": "B02_ticket_service-client.md",
+  "format": "ticket",
+  "emetteur": {
+    "nom": "Yanis Mercadier",
+    "fonction": "Responsable du service client",
+    "direction": "Service client"
+  },
+  "autres_parties": [],
+  "date": "2026-10-21",
+  "resume": "Le service client demande dans Comptoir l'affichage du suivi colis (dernier statut et historique) et l'envoi d'un e-mail proactif au client dès que la date promise sur Vitrine est dépassée. Le WISMO représente 4 contacts sur 10 ; l'objectif est de le réduire de 30 %. La mise en service est attendue au T1 2027, après le gel des mises en production, et le service client refuse que des messages partent vers les clients sans qu'il le sache.",
+  "demandes": [
+    {
+      "id": "B02-D1",
+      "type": "fonctionnelle",
+      "enonce": "Le conseiller voit le dernier statut du colis et son historique dans la fiche commande de Comptoir, sans en sortir.",
+      "citation": "Le conseiller doit voir le dernier statut du colis et son historique sans sortir de Comptoir.",
+      "acteurs": ["Conseillers du service client"],
+      "systemes": ["Comptoir"],
+      "priorite_exprimee": "Bloquant",
+      "echeance_exprimee": "T1 2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D2",
+      "type": "non_fonctionnelle",
+      "enonce": "Le suivi colis s'affiche dans Comptoir en moins de 2 secondes.",
+      "citation": "Temps d'affichage acceptable : moins de 2 secondes, sinon ils continueront à ouvrir le site du transporteur.",
+      "acteurs": ["Conseillers du service client"],
+      "systemes": ["Comptoir"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D3",
+      "type": "fonctionnelle",
+      "enonce": "Le statut colis est visible dans la fiche commande pour les 3 transporteurs.",
+      "citation": "Le statut colis est visible dans la fiche commande pour les 3 transporteurs.",
+      "acteurs": ["Conseillers du service client"],
+      "systemes": ["Comptoir"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D4",
+      "type": "fonctionnelle",
+      "enonce": "Un message proactif est envoyé au client quand sa commande est en retard.",
+      "citation": "Message proactif au client quand sa commande est en retard",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "Bloquant",
+      "echeance_exprimee": "T1 2027",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D5",
+      "type": "contrainte",
+      "enonce": "Le message de retard est envoyé par e-mail uniquement (SMS refusé pour raison de budget et numéros de mobile incomplets).",
+      "citation": "Envoi par e-mail uniquement. Le SMS a été étudié l'an dernier et refusé pour une question de budget, et nous n'avons pas le numéro de mobile de tous les clients.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D6",
+      "type": "regle_metier",
+      "enonce": "Une commande est en retard dès que la date promise affichée sur Vitrine est dépassée, soit à J+1 matin.",
+      "citation": "Une commande est en retard dès que la date promise affichée sur Vitrine est dépassée, donc à J+1 matin.",
+      "acteurs": [],
+      "systemes": ["Vitrine"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D7",
+      "type": "regle_metier",
+      "enonce": "Aucun message n'est envoyé si un dossier est déjà ouvert sur la commande dans Comptoir.",
+      "citation": "Pas d'envoi si un dossier est déjà ouvert sur la commande dans Comptoir, pour ne pas dire deux choses différentes au client.",
+      "acteurs": ["Client", "Conseillers du service client"],
+      "systemes": ["Comptoir"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D8",
+      "type": "regle_metier",
+      "enonce": "Pour les clients Premium, un conseiller valide le message avant envoi.",
+      "citation": "Pour les clients Premium, le message est validé par un conseiller avant envoi.",
+      "acteurs": ["Conseillers du service client", "Clients Premium"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D9",
+      "type": "fonctionnelle",
+      "enonce": "L'équipe du service client peut modifier le texte des messages sans passer par la DSI.",
+      "citation": "Le texte des messages doit être modifiable par mon équipe sans passer par la DSI.",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D10",
+      "type": "regle_metier",
+      "enonce": "Le message est purement informatif, sans contenu commercial.",
+      "citation": "Message d'information uniquement, sans contenu commercial.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D11",
+      "type": "indicateur",
+      "enonce": "Le taux de contacts WISMO baisse de 30 %.",
+      "citation": "Le taux de contacts WISMO baisse de 30 %.",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D12",
+      "type": "contrainte",
+      "enonce": "Aucune mise en service pendant le gel des mises en production, du 16 novembre au 11 janvier.",
+      "citation": "inutile de viser une mise en service avant janvier, il y a le gel des mises en production du 16 novembre au 11 janvier.",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D13",
+      "type": "echeance",
+      "enonce": "Mise en service souhaitée au premier trimestre (T1 2027).",
+      "citation": "Je préfère quelque chose de propre au premier trimestre.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "au premier trimestre",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D14",
+      "type": "regle_metier",
+      "enonce": "Aucun message ne part vers les clients sans que l'équipe du service client le sache.",
+      "citation": "je ne veux pas que des messages partent vers les clients sans que mon équipe le sache.",
+      "acteurs": ["Service client", "Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B02-D15",
+      "type": "fonctionnelle",
+      "enonce": "Le service client reçoit chaque matin la liste des commandes en retard, sans tableau de bord.",
+      "citation": "je n'ai pas besoin d'un tableau de bord, juste de la liste des commandes concernées chaque matin pour anticiper les appels.",
+      "acteurs": ["Service client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B02-N1", "libelle": "Part des contacts WISMO depuis septembre", "valeur": "4 sur 10", "unite": "contacts", "citation": "Depuis septembre, 4 contacts sur 10 sont du WISMO." },
+    { "id": "B02-N2", "libelle": "Contacts reçus par jour (tous canaux)", "valeur": "2600", "unite": "contacts/jour (environ)", "citation": "On reçoit environ 2 600 contacts par jour" },
+    { "id": "B02-N3", "libelle": "Contacts par jour pendant les fêtes", "valeur": "5000", "unite": "contacts/jour (plus de)", "citation": "on monte à plus de 5 000 pendant les fêtes" },
+    { "id": "B02-N4", "libelle": "Temps d'affichage maximal du suivi colis", "valeur": "2", "unite": "secondes (moins de)", "citation": "moins de 2 secondes" },
+    { "id": "B02-N5", "libelle": "Déclenchement du retard après la date promise", "valeur": "J+1", "unite": "jour (matin)", "citation": "donc à J+1 matin" },
+    { "id": "B02-N6", "libelle": "Nombre de transporteurs couverts", "valeur": "3", "unite": "transporteurs", "citation": "pour les 3 transporteurs" },
+    { "id": "B02-N7", "libelle": "Baisse visée du taux de contacts WISMO", "valeur": "30", "unite": "%", "citation": "Le taux de contacts WISMO baisse de 30 %." },
+    { "id": "B02-N8", "libelle": "Période de gel des mises en production", "valeur": "16 novembre - 11 janvier", "unite": "dates", "citation": "du 16 novembre au 11 janvier" },
+    { "id": "B02-N9", "libelle": "Échéance souhaitée du ticket", "valeur": "T1 2027", "unite": "trimestre", "citation": "T1 2027" }
+  ],
+  "systemes_cites": ["Comptoir", "Vitrine", "Guichet DSI"],
+  "points_flous": [
+    { "id": "B02-F1", "description": "La catégorie « Premium » n'est pas définie ; son lien avec Orvanne+ n'est pas précisé.", "citation": "Pour les clients Premium" },
+    { "id": "B02-F2", "description": "La validation par un conseiller pour les clients Premium contredit le caractère proactif et automatique du message ; le délai de validation et le comportement sans validation ne sont pas définis.", "citation": "le message est validé par un conseiller avant envoi." },
+    { "id": "B02-F3", "description": "L'heure exacte de « J+1 matin » n'est pas définie, ni le cas où la date promise est modifiée après la commande.", "citation": "donc à J+1 matin" },
+    { "id": "B02-F4", "description": "La notion de « dossier ouvert » n'est pas précisée (types de dossiers, statuts), ni le comportement si le dossier est clôturé ensuite.", "citation": "un dossier est déjà ouvert sur la commande dans Comptoir" },
+    { "id": "B02-F5", "description": "La baisse de 30 % n'a ni base de référence, ni période de mesure, et on ignore s'il s'agit d'une baisse relative ou en points.", "citation": "Le taux de contacts WISMO baisse de 30 %." },
+    { "id": "B02-F6", "description": "Les 3 transporteurs ne sont pas nommés, et la source des statuts colis et de l'historique (profondeur, fraîcheur) n'est pas indiquée.", "citation": "pour les 3 transporteurs" },
+    { "id": "B02-F7", "description": "Le contenu du message de retard n'est pas décrit (nouvelle date de livraison ? lien de suivi ?).", "citation": "Message proactif au client quand sa commande est en retard" },
+    { "id": "B02-F8", "description": "« Sans que mon équipe le sache » peut signifier une simple information ou une validation préalable ; le mode d'information n'est pas défini.", "citation": "sans que mon équipe le sache" },
+    { "id": "B02-F9", "description": "Le format et le canal de la liste quotidienne des commandes concernées ne sont pas précisés, ni si elle inclut les commandes ayant un dossier ouvert.", "citation": "la liste des commandes concernées chaque matin" },
+    { "id": "B02-F10", "description": "La priorité « Bloquant » et l'échéance T1 2027 portent sur le ticket entier, sans distinguer les demandes A et B ; le ticket est « À qualifier » et non affecté.", "citation": "Bloquant" }
+  ]
+}

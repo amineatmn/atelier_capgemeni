@@ -1,0 +1,239 @@
+{
+  "doc_id": "B04",
+  "fichier": "B04_notes-reunion_controle-de-gestion.txt",
+  "format": "notes_reunion",
+  "emetteur": {
+    "nom": "Odile",
+    "fonction": null,
+    "direction": "Contrôle de gestion"
+  },
+  "autres_parties": [
+    { "nom": "Karim B.", "fonction": "Exploitation E2", "role": "participant" },
+    { "nom": "Yanis M.", "fonction": "Service client", "role": "participant" },
+    { "nom": "Capucine L.", "fonction": "Marketing", "role": "participant" },
+    { "nom": "Inès R.", "fonction": null, "role": "excusée, destinataire des notes" },
+    { "nom": null, "fonction": "DAF", "role": "mentionné" }
+  ],
+  "date": "2026-10-29",
+  "resume": "Notes non relues d'une réunion sur le portail retours (cahier des charges en v0.3). Les participants divergent sur le moment du remboursement, la gratuité des retours, l'inclusion des retours marketplace en V1 et le montant remboursé selon la note qualité A / B / C. Plusieurs idées sont évoquées (photos avant réception, appli sur douchettes, bon d'achat majoré) et des actions sont fixées avant le codir.",
+  "demandes": [
+    {
+      "id": "B04-D1",
+      "type": "fonctionnelle",
+      "enonce": "L'exploitation E2 veut voir les photos des colis retour avant leur réception en entrepôt.",
+      "citation": "Veut voir les photos AVANT réception",
+      "acteurs": ["Exploitation E2"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D2",
+      "type": "regle_metier",
+      "enonce": "Position de la finance : le remboursement intervient après le contrôle en entrepôt, et non au premier scan.",
+      "citation": "remboursement au 1er scan = NON pour la finance. On rembourse après contrôle en entrepôt, point.",
+      "acteurs": ["Finance", "Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D3",
+      "type": "regle_metier",
+      "enonce": "Position du marketing : rembourser au dépôt du colis, au moins pour les bons clients, comme argument commercial.",
+      "citation": "Capucine pas d'accord : les concurrents remboursent au dépôt, c'est un argument commercial, \"au moins pour les bons clients\"",
+      "acteurs": ["Marketing", "Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D4",
+      "type": "regle_metier",
+      "enonce": "Le délai de retour standard est de 14 jours.",
+      "citation": "délai de retour : le site dit 14 jours.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D5",
+      "type": "regle_metier",
+      "enonce": "Le délai de retour de 30 jours est réservé aux membres Orvanne+.",
+      "citation": "30 jours c'est seulement pour les membres Orvanne+",
+      "acteurs": ["Membres Orvanne+"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D6",
+      "type": "regle_metier",
+      "enonce": "Le retour est gratuit uniquement si l'article est défectueux ou en cas d'erreur de préparation.",
+      "citation": "retour gratuit seulement si article défectueux ou erreur de prépa.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D7",
+      "type": "regle_metier",
+      "enonce": "Dans les autres cas, 4,90 sont retenus sur le remboursement.",
+      "citation": "Sinon 4,90 retenus sur le remboursement.",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D8",
+      "type": "regle_metier",
+      "enonce": "Position du marketing : les retours devaient être gratuits pour le lancement.",
+      "citation": "Capucine : \"on avait dit gratuit pour le lancement\"",
+      "acteurs": ["Marketing", "Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour le lancement",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D9",
+      "type": "fonctionnelle",
+      "enonce": "Le service client veut que le portail prenne en charge les retours d'articles marketplace dès la V1.",
+      "citation": "si le portail ne les prend pas, les conseillers gardent tout le boulot. Les veut dans la V1",
+      "acteurs": ["Service client", "Conseillers"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "V1",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D10",
+      "type": "contrainte",
+      "enonce": "Les retours marketplace ne passent pas par les entrepôts Orvanne et repartent chez le vendeur, avec un circuit et des étiquettes distincts.",
+      "citation": "les retours marketplace ne passent pas par nos entrepôts, ils repartent chez le vendeur. Donc autre circuit, autres étiquettes",
+      "acteurs": ["Vendeurs marketplace"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D11",
+      "type": "regle_metier",
+      "enonce": "Le contrôle qualité attribue une note de la grille A / B / C : A remis en stock, B déstockage, C rebut.",
+      "citation": "contrôle qualité : grille A / B / C (A = remis en stock, B = déstockage, C = rebut)",
+      "acteurs": ["Exploitation entrepôt"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D12",
+      "type": "regle_metier",
+      "enonce": "Le montant remboursé dépend de la note de contrôle qualité (point contesté pour la note C).",
+      "citation": "Montant remboursé selon la note : Karim dit oui pour C, Yanis dit que légalement non",
+      "acteurs": ["Exploitation E2", "Service client", "Client"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D13",
+      "type": "fonctionnelle",
+      "enonce": "Application sur les douchettes pour saisir la note et une photo au contrôle qualité.",
+      "citation": "Karim voudrait une appli sur les douchettes pour saisir la note + photo au contrôle. Pas dans le CDC",
+      "acteurs": ["Exploitation entrepôt"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D14",
+      "type": "fonctionnelle",
+      "enonce": "Proposer un bon d'achat majoré de 5 % à la place du remboursement.",
+      "citation": "bon d'achat à la place du remboursement, avec +5 % ? idée Capucine. Finance OK sur le principe",
+      "acteurs": ["Client", "Marketing", "Finance"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "idee"
+    },
+    {
+      "id": "B04-D15",
+      "type": "regle_metier",
+      "enonce": "Le RMA est imprimé et placé dans le colis pour permettre de retrouver la commande.",
+      "citation": "le RMA doit être imprimé DANS le colis, sinon on ne retrouve pas la commande",
+      "acteurs": ["Client", "Exploitation entrepôt"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B04-D16",
+      "type": "indicateur",
+      "enonce": "Suivi du taux de retour par produit, à voir avec le Lac.",
+      "citation": "stats : qui suit le taux de retour par produit ? demander au Lac",
+      "acteurs": [],
+      "systemes": ["Lac"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "idee"
+    },
+    {
+      "id": "B04-D17",
+      "type": "echeance",
+      "enonce": "Le contrôle de gestion chiffre le coût du remboursement anticipé avant le codir.",
+      "citation": "Odile : chiffrer le coût du remboursement anticipé -> avant le codir",
+      "acteurs": ["Contrôle de gestion"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "avant le codir",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B04-N1", "libelle": "Colis retour reçus par jour à E2", "valeur": "1100", "unite": "colis/jour (approximatif)", "citation": "E2 reçoit ~1 100 colis retour / jour" },
+    { "id": "B04-N2", "libelle": "Part des retours non conformes à l'ouverture", "valeur": "1 sur 5", "unite": "colis", "citation": "1 sur 5 n'est pas conforme à l'ouverture" },
+    { "id": "B04-N3", "libelle": "Cartons vides constatés ce mois-ci", "valeur": "2", "unite": "occurrences/mois", "citation": "carton vide vu 2 fois ce mois-ci" },
+    { "id": "B04-N4", "libelle": "Délai de retour affiché sur le site", "valeur": "14", "unite": "jours", "citation": "le site dit 14 jours" },
+    { "id": "B04-N5", "libelle": "Délai de retour des membres Orvanne+", "valeur": "30", "unite": "jours", "citation": "30 jours c'est seulement pour les membres Orvanne+" },
+    { "id": "B04-N6", "libelle": "Montant retenu sur le remboursement hors défaut ou erreur de préparation", "valeur": "4,90", "unite": "non précisée (euros implicites)", "citation": "Sinon 4,90 retenus sur le remboursement" },
+    { "id": "B04-N7", "libelle": "Part des demandes de retour portant sur des articles marketplace", "valeur": "35", "unite": "%", "citation": "35 % des demandes de retour concernent des articles marketplace" },
+    { "id": "B04-N8", "libelle": "Délai de contrôle actuel après réception", "valeur": "3 à 6", "unite": "jours", "citation": "délai de contrôle aujourd'hui : 3 à 6 jours après réception" },
+    { "id": "B04-N9", "libelle": "Délai de contrôle en janvier", "valeur": "10", "unite": "jours", "citation": "10 en janvier" },
+    { "id": "B04-N10", "libelle": "Majoration du bon d'achat proposé à la place du remboursement", "valeur": "5", "unite": "%", "citation": "avec +5 %" },
+    { "id": "B04-N11", "libelle": "Fréquence des étiquettes transporteur illisibles", "valeur": "1 sur 10", "unite": "colis", "citation": "étiquette transporteur illisible 1 fois sur 10" },
+    { "id": "B04-N12", "libelle": "Version du cahier des charges du portail retours", "valeur": "0.3", "unite": "version", "citation": "le CDC portail retours circule en v0.3" }
+  ],
+  "systemes_cites": ["Lac"],
+  "points_flous": [
+    { "id": "B04-F1", "description": "Les notes n'ont pas été relues et la DSI (Inès R.) était absente : rien n'est formellement validé en séance.", "citation": "notes Odile (pas relues)" },
+    { "id": "B04-F2", "description": "Contradiction interne sur le moment du remboursement (après contrôle pour la finance, au dépôt pour le marketing). Les « bons clients » ne sont pas définis (Orvanne+ ?). La décision est renvoyée au DAF et au codir.", "citation": "Sinon provision fraude à revoir, voir avec le DAF" },
+    { "id": "B04-F3", "description": "Contradiction interne sur les frais de retour : 4,90 retenus hors défaut, ou gratuité pour le lancement. La durée du « lancement » n'est pas définie.", "citation": "\"on avait dit gratuit pour le lancement\"" },
+    { "id": "B04-F4", "description": "L'unité du montant de 4,90 n'est pas écrite.", "citation": "4,90 retenus" },
+    { "id": "B04-F5", "description": "Désaccord non tranché sur la légalité d'un remboursement réduit selon la note C ; les montants pour A et B ne sont pas donnés.", "citation": "Karim dit oui pour C, Yanis dit que légalement non" },
+    { "id": "B04-F6", "description": "Le délai de 14 jours vient de l'affichage du site ; sa conformité aux CGV reste à vérifier.", "citation": "relire les CGV sur le délai" },
+    { "id": "B04-F7", "description": "Le volume de retours est approximatif et ne porte que sur E2 ; les volumes exacts sont à produire.", "citation": "sortir les volumes exacts de retours par jour" },
+    { "id": "B04-F8", "description": "On ne sait pas qui prend les photos « avant réception » (le client lors de la demande ?) ni à quel moment.", "citation": "Veut voir les photos AVANT réception" },
+    { "id": "B04-F9", "description": "Tension interne : marketplace demandé en V1 alors que ces retours suivent un autre circuit, avec d'autres étiquettes, hors entrepôts Orvanne.", "citation": "Donc autre circuit, autres étiquettes" },
+    { "id": "B04-F10", "description": "L'appli sur douchettes n'est pas dans le cahier des charges : son inclusion dans le périmètre n'est pas décidée.", "citation": "Pas dans le CDC" },
+    { "id": "B04-F11", "description": "Le délai de contrôle retarde le remboursement ; aucun objectif de délai n'est fixé.", "citation": "Le client attend son argent pendant ce temps" },
+    { "id": "B04-F12", "description": "Les conditions de l'accord de la finance sur le bon d'achat majoré ne sont pas précisées.", "citation": "Finance OK sur le principe" },
+    { "id": "B04-F13", "description": "Le responsable du suivi du taux de retour par produit n'est pas identifié.", "citation": "qui suit le taux de retour par produit ?" },
+    { "id": "B04-F14", "description": "Ni la date du codir ni celle de la prochaine réunion ne sont fixées.", "citation": "prochaine réunion : à caler" }
+  ]
+}
