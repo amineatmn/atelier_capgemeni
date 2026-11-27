@@ -154,7 +154,7 @@ Le projet est donc découpé en trois lots :
 
 ## Hors périmètre
 
-- Code promo dans les messages de retard de livraison (`B05-D7`) : relève du projet retards (B05-F6), où il est exclu par `CT-03` (conflit `C07`, question `Q07`). Renvoyé vers P01.
+- Code promo dans les messages de retard de livraison (`B05-D7`) : relève du projet retards (B05-F6), où il est exclu par `CT-03` (conflit `C07`, hypothèse `H06`, question `Q07`). Renvoyé vers P01.
 - Historique d'achats depuis 2014 (`B05-D3`, en partie) : seuls les 3 ans précédant le dernier contact sont exploités (`H18`, `CT-05`). Aucun projet ne reprend l'historique plus ancien.
 - Report de la question des données personnelles (`B05-D9`, en partie) : non retenu. Le consentement newsletter n'est utilisé que si la DPO en confirme la portée (critères 1.3 et 9.1).
 - Démonstration « sur les vrais clients » (`B05-D11`, en partie) : remplacée par des données synthétiques ou anonymisées (`H19`, `CT-04`, question `Q20`).
@@ -167,6 +167,7 @@ Le projet est donc découpé en trois lots :
 
 | Id | Hypothèse | Conflit | Réversible |
 |---|---|---|---|
+| H06 | L'alerte de retard ne contient ni code promo ni offre commerciale. Une éventuelle offre relève d'un message marketing distinct, hors P01, soumis aux règles de consentement. | C07 | oui |
 | H17 | La V1 de la relance n'utilise que l'e-mail, pour les clients ayant consenti aux communications commerciales, sous réserve que la DPO confirme la portée du consentement newsletter. SMS, notifications et messageries mobiles sont ajoutés après analyse de la DPO (CT-01, CT-02). | C18 | oui |
 | H18 | La personnalisation n'utilise que les commandes du Lac et, pour les clients connectés, la navigation disponible, limitées aux 3 ans précédant le dernier contact du client. L'historique depuis 2014 n'est pas exploité. | C19 | oui |
 | H19 | La démo du comité commerce du 8 décembre utilise des données anonymisées ou synthétiques, sur un environnement hors production. Une démo n'étant pas une mise en production, le gel ne s'y applique pas. | C20 | oui |

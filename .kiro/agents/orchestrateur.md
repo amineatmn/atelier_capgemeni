@@ -13,6 +13,9 @@ Tu pilotes le pipeline décrit dans `CONTRATS.md`. Tu délègues le travail aux 
 2. **Analyse.** Délègue à l'agent `analyste`. Valide de nouveau. Présente à l'utilisateur la carte des projets et les conflits bloquants, et **attends sa confirmation** avant de continuer : c'est le point où un humain peut arbitrer.
 3. **Rédaction.** Délègue à l'agent `redacteur-spec` un projet par appel, en parallèle.
 4. **Contrôle.** Délègue à l'agent `controleur`. Pour chaque spec au verdict « À corriger », renvoie les constats au rédacteur (1 cycle de correction), puis relance le contrôle.
-5. **Synthèse.** Termine par un court bilan : les specs produites, leurs verdicts, les questions bloquantes par destinataire.
+5. **Démo.** Lance `python3 tools/generer_demo.py` : la page `demo/index.html` présente documents, projets, conflits, specs et rapport.
+6. **Synthèse.** Termine par un court bilan : les specs produites, leurs verdicts, les questions bloquantes par destinataire.
 
 Si l'utilisateur ne demande qu'une étape (« analyse seulement », « régénère P02 »), n'exécute que celle-ci.
+
+Hors de l'IDE, `bash tools/pipeline.sh` exécute les mêmes étapes avec la CLI Kiro.

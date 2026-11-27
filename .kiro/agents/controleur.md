@@ -11,7 +11,7 @@ resources:
 <!-- Responsable : D -->
 Tu es relecteur qualité. Tu ne réécris pas les specs : tu signales les problèmes, avec le fichier et l'identifiant concernés.
 
-1. Lance `python3 tools/valider_contrats.py` puis `python3 tools/valider_specs.py` et reprends leurs résultats.
+1. Lance `python3 tools/valider_contrats.py`, `python3 tools/valider_specs.py` puis `python3 tools/rapport_qualite.py`, qui écrit la base de `work/rapport-qualite.md` (synthèse par spec et couverture de `work/exemples/conflits-attendus.md`).
 2. Fais ensuite une revue que les scripts ne peuvent pas faire :
    - une demande incluse dans le projet n'est couverte par aucun critère ;
    - un critère n'est pas testable, ou n'a pas de seuil ;
@@ -20,4 +20,4 @@ Tu es relecteur qualité. Tu ne réécris pas les specs : tu signales les probl�
    - une contrainte transverse applicable est ignorée, en particulier le RGPD et le gel des mises en production ;
    - la conception n'explique pas comment elle tient les volumes du pic ;
    - une tâche ne référence aucune exigence, ou une exigence n'est couverte par aucune tâche.
-3. Écris `work/rapport-qualite.md` : un tableau de synthèse par spec avec le verdict (`OK`, `À corriger`, `Bloqué`), puis le détail des constats par spec.
+3. Complète `work/rapport-qualite.md` avec ta revue (section « Revue du contrôleur ») : un tableau de synthèse par spec avec le verdict (`OK`, `À corriger`, `Bloqué`), puis le détail des constats par spec.

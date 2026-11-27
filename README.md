@@ -11,11 +11,18 @@ Dans le chat Kiro, choisir l'agent **orchestrateur** puis demander :
 - « Génère les specs à partir de challenge-b » : pipeline complet, avec une pause pour valider la carte des projets et les arbitrages ;
 - « Analyse seulement » ou « Régénère la spec P02 » : une seule étape.
 
+**Démo :** ouvrir `demo/index.html` dans un navigateur. La page est autonome, sans serveur. Elle montre les documents et leurs demandes, les projets et leurs conflits, les 8 specs et le rapport qualité. Chaque identifiant (`B02-D7`, `C01`, `H03`…) est cliquable et affiche sa preuve : la citation exacte, les positions en conflit, l'hypothèse retenue.
+
+**Sans l'IDE :** `bash tools/pipeline.sh` exécute tout le pipeline avec la CLI Kiro, ou une seule étape : `bash tools/pipeline.sh specs P02`, `… qualite`, `… demo`.
+
 Contrôles manuels :
 
 ```bash
 python3 tools/valider_contrats.py   # fiches et analyse
 python3 tools/valider_specs.py      # specs (structure, EARS, traçabilité, couverture par les tâches)
+python3 tools/rapport_qualite.py    # work/rapport-qualite.md
+python3 tools/generer_demo.py       # demo/index.html
+python3 tools/extracteur.py verifier  # relecture des fiches (passages non cités, chiffres oubliés)
 ```
 
 ## Pipeline
@@ -66,7 +73,9 @@ Sorties du pipeline sur les 9 documents de `challenge-b/` :
 
 - `work/fiches/` : 9 fiches, 168 demandes extraites avec leur citation exacte ;
 - `work/analyse.json` et `work/analyse.md` : 8 projets, 26 conflits, 31 hypothèses, 39 questions ;
-- `.kiro/specs/` : 8 specs Kiro, toutes conformes à `tools/valider_specs.py`.
+- `.kiro/specs/` : 8 specs Kiro, toutes conformes à `tools/valider_specs.py` ;
+- `work/rapport-qualite.md` : toutes les specs au verdict OK ; la référence humaine des conflits (`work/exemples/conflits-attendus.md`, 34 conflits) est couverte à 25, partiellement à 7, et 2 conflits ne sont pas détectés ;
+- `demo/index.html` : présentation interactive des résultats.
 
 | Id | Spec | Type | Sources |
 |---|---|---|---|

@@ -173,7 +173,7 @@ Le projet est découpé en trois lots, pour tenir compte du gel des mises en pro
 
 ## Hors périmètre
 
-- Suivi des retours et des litiges par le vendeur, MKP-06 (`B09-D8`) : il dépend du circuit des retours marketplace, prévu en V2 du portail de retours. Renvoyé vers P02.
+- Suivi des retours et des litiges par le vendeur, MKP-06 (`B09-D8`) : il dépend du circuit des retours marketplace, prévu en V2 du portail de retours (conflit `C11`, hypothèse `H10`). Renvoyé vers P02.
 - Export des ventes en erreur au-delà de 50 000 lignes, MKP-07 (`B09-D9`) : défaut de l'existant. Renvoyé vers P08.
 - Index sur la table des lignes de commande et export asynchrone, MKP-07 (`B09-D10`, `B09-D11`) : solutions techniques proposées par la DSI, traitées comme pistes de conception dans la spec bugfix. Renvoyées vers P08.
 - Lenteur de l'espace vendeur, MKP-11 (`B09-D17`) : défaut de l'existant, à mesurer puis corriger. Renvoyé vers P08. Le seuil qui en sortira s'applique aussi aux nouveaux écrans (critère 12.4). La seconde partie de MKP-11, la compréhension des reversements (`B09-D18`), est traitée ici (exigence 8).
@@ -185,6 +185,7 @@ Le projet est découpé en trois lots, pour tenir compte du gel des mises en pro
 
 | Id | Hypothèse | Conflit | Réversible |
 |---|---|---|---|
+| H10 | La V1 exclut les articles marketplace : le portail les affiche comme non éligibles avec un renvoi vers le circuit actuel. Les retours marketplace (circuit vendeur, étiquettes distinctes) et leur suivi par le vendeur (MKP-06) forment la V2. | C11 | oui |
 | H24 | Le vendeur saisit son nouvel IBAN dans l'espace vendeur. Le changement ne prend effet qu'après une double validation interne ; d'ici là, l'ancien IBAN reste utilisé et le vendeur voit l'état de sa demande. | C25 | oui |
 | H25 | Deux règles d'alerte distinctes et paramétrables (seuil, fenêtre, destinataire) : 2 % sur 30 jours glissants pour les chargés de compte, 5 % sur 7 jours pour le vendeur. Elles reposent sur une même définition du retard d'expédition, à fournir par la direction marketplace. | C26 | oui |
 | H26 | Les textes de l'espace vendeur (écrans, e-mails) sont externalisés pour qu'une langue s'ajoute sans développement. La V1 est en français. | — | oui |
