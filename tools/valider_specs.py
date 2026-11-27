@@ -3,7 +3,8 @@
 
 Usage :
     python3 tools/valider_specs.py            # toutes les specs
-    python3 tools/valider_specs.py <slug>     # une spec
+    python3 tools/valider_specs.py <slug>     # une spec de .kiro/specs/
+    python3 tools/valider_specs.py <dossier>  # n'importe quel dossier de spec (ex. templates/exemple-p01)
 
 Vérifie : présence des fichiers, sections obligatoires, critères en EARS,
 traçabilité des critères vers une source connue, couverture des exigences par les tâches.
@@ -34,7 +35,8 @@ def ids_connus() -> set:
     for f in (RACINE / "work" / "fiches").glob("B0*.json"):
         try:
             fiche = json.loads(f.read_text(encoding="utf-8"))
-            ids |= {d.get("id") for d in fiche.get("demandes", [])}
+            for cle in ("demandes", "chiffres"):
+                ids |= {d.get("id") for d in fiche.get(cle, [])}
         except (json.JSONDecodeError, OSError):
             pass
     analyse = RACINE / "work" / "analyse.json"
@@ -113,10 +115,10 @@ def valider_spec(dossier: Path, connus: set) -> list:
 
 
 def main(args: list) -> int:
-    if not SPECS.is_dir():
+    if not args and not SPECS.is_dir():
         print("Aucune spec (.kiro/specs/ absent).")
         return 0
-    dossiers = [SPECS / a for a in args] if args else sorted(p for p in SPECS.iterdir() if p.is_dir())
+    dossiers = [Path(a) if Path(a).is_dir() else SPECS / a for a in args] if args else sorted(p for p in SPECS.iterdir() if p.is_dir())
     connus = ids_connus()
     total = 0
     for d in dossiers:

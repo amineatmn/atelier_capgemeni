@@ -24,9 +24,29 @@ Les modèles sont dans `templates/` :
 - Chaque critère se termine par `_Source : …_` (IDs `B0x-Dn`, `CT-nn`, `Hnn`).
 - Sections finales obligatoires : `## Hors périmètre`, `## Hypothèses`, `## Questions ouvertes`.
 
+- **Couverture** : chaque demande incluse dans le projet est citée par au moins un critère ou listée dans `Hors périmètre` avec sa raison. Une demande qui n'est pas une exigence du système (ex. « donnez-moi un planning ») va dans `Hors périmètre`.
+- **Hypothèses** : le tableau liste toutes les `Hnn` citées, et seulement elles. Une valeur que les sources ne donnent pas (seuil, délai, horaire) est soit une hypothèse, soit un paramètre, jamais une évidence.
+- **Conflits non arbitrés** : préférer un comportement paramétrable qui permet les deux positions, avec une valeur par défaut prudente.
+- **Questions** : préciser dans la colonne `Bloquante` ce qu'elles bloquent (« oui (exigence 4) »).
+- **Échéances** : si une échéance ou un gel impose un découpage, l'annoncer dans l'introduction (lots) et le refléter dans `tasks.md`.
+
+## Règles pour design.md
+
+- Commencer par un tableau des **choix structurants**, avec la raison et l'alternative écartée.
+- Les technologies non imposées par les sources sont présentées comme des **propositions**.
+- La volumétrie reprend les chiffres sources (`B0x-Nn`) et marque les **estimations** comme telles.
+- Chaque composant et chaque cas d'erreur référence ses exigences.
+- Le modèle de données indique, pour chaque entité, si elle contient des données personnelles et sa durée de conservation.
+
 ## Règles pour tasks.md
 
 - Cases à cocher `- [ ] 1. …`, sous-tâches `- [ ] 1.1 …`.
 - Chaque sous-tâche se termine par `_Exigences : 1.1, 2.3_`.
-- Ordonner les tâches pour que les dépendances soient explicites : les tâches indépendantes peuvent s'exécuter en parallèle.
-- Les tâches de test font partie du plan, ce ne sont pas des options.
+- Le premier groupe de tâches couvre les **prérequis** : avis de la DPO (CT-01), contrats d'interface, jeu de données de test synthétique (CT-04).
+- Les dépendances sont écrites sur la tâche parente : `(dépend de 2.1)`. Les tâches indépendantes peuvent s'exécuter en parallèle.
+- Les tâches de test et de recette font partie du plan, ce ne sont pas des options.
+- Une sous-tâche correspond à un livrable vérifiable, de quelques heures à deux jours de travail.
+
+## Exemple de référence
+
+La spec `templates/exemple-p01/` montre le niveau attendu (détail, traçabilité, traitement des conflits).
