@@ -1,109 +1,185 @@
-# Plan d'implémentation : Portail de retours en libre-service, remboursement et visibilité des entrepôts
+# Plan d'implémentation : portail de retours en libre-service, remboursement et visibilité des entrepôts
 
-Lots : V1 (pilote, mise en service au plus tôt le 12 janvier, hors gel) puis V2 (photos, marketplace).
+Les tâches 1 à 11 forment le **lot 1** : pilote du portail pour les articles vendus et expédiés par Orvanne, mis en service au plus tôt le 12 janvier 2027, après le gel du 16 novembre au 11 janvier (`CT-07`) et après l'avis de la DPO (`CT-01`), selon `H14`. Le développement et la recette peuvent avancer pendant le gel ; seule la mise en production attend. Les tâches 12 à 15 forment le **lot 2** : photos, retours marketplace, bon d'achat, après le pilote.
 
-- [ ] 1. Prérequis
-  - [ ] 1.1 Obtenir l'avis de la DPO sur le traitement (analyse d'impact, durées de conservation, base légale)
-    - _Exigences : 14.3, 15.2_
-  - [ ] 1.2 Figer les contrats d'interface (Passerelle, API transporteurs, prestataire de paiement, fichier Hangar, note de contrôle de P03)
-    - _Exigences : 3.4, 4.1, 6.2, 8.2_
-  - [ ] 1.3 Produire un jeu de données synthétique (commandes, clients, retours), sans donnée de production
-    - _Exigences : 14.4_
-  - [ ] 1.4 Confirmer l'hébergement UE et les exigences RGAA avec la DSI
-    - _Exigences : 14.1, 14.2_
-  - [ ] 1.5 Caler le calendrier de mise en service hors gel avec la DSI
-    - _Exigences : 15.1, 15.2, 15.3_
+- [ ] 1. Prérequis et cadrage (aucune dépendance)
+  - [ ] 1.1 Soumettre l'analyse du traitement à la DPO : données du portail, accès sans compte, durées de conservation, photos du lot 2 (`Q36`)
+    - Livrable : avis écrit de la DPO, versé au dossier du projet
+    - _Exigences : 11.6, 11.7, 12.5_
+  - [ ] 1.2 Établir avec l'équipe Passerelle le contrat d'interface des commandes et livraisons : date de livraison, vendeur, catégorie d'article, appartenance à Orvanne+, statuts transporteurs des colis retour (flux partagé avec P01)
+    - Livrable : contrat d'interface validé
+    - _Exigences : 1.6, 2.2, 2.9, 5.2_
+  - [ ] 1.3 Qualifier l'API de chaque transporteur pour les retours : étiquette prépayée PDF et QR code, dépôt en point relais, enlèvement à domicile, codes d'erreur
+    - _Exigences : 3.3, 4.1_
+  - [ ] 1.4 Établir le contrat avec le prestataire de paiement : remboursement sur le moyen d'origine, clé d'idempotence, codes de refus
+    - _Exigences : 7.4, 7.8_
+  - [ ] 1.5 Établir avec l'équipe Hangar et l'exploitation E2 le format et l'horaire du fichier quotidien, et la remontée des réceptions et des notes A / B / C (`Q37`)
+    - Livrable : contrat d'interface ; choix entre remontée Hangar et écran de saisie provisoire
+    - _Exigences : 5.3, 6.1, 8.2_
+  - [ ] 1.6 Qualifier les possibilités d'extension de Comptoir (création, correction, vue des retours, file des signalements)
+    - Livrable : note de choix d'intégration
+    - _Exigences : 6.4, 9.1, 9.4_
+  - [ ] 1.7 Recueillir auprès du commanditaire les règles non fournies par les sources : liste des motifs, catégories exclues, règle de routage, périmètre pilote ; consigner les réponses à Q08 à Q10, Q13 et Q14 comme valeurs de paramètres
+    - _Exigences : 2.5, 3.2, 8.1, 11.9_
+  - [ ] 1.8 Constituer un jeu de données synthétique : commandes Vitrine, membres Orvanne+, articles exclus, marketplace et volumineux, livraisons aux bornes des délais (`CT-04`)
+    - _Exigences : 11.11_
 
-- [ ] 2. Socle de données et paramètres (dépend de 1.1, 1.2)
-  - [ ] 2.1 Modèle de données Retour, Ligne, Remboursement, Paramètres historisés
-    - _Exigences : 5.1, 6.6_
-  - [ ] 2.2 Paramètres : déclencheur, délais par catégorie, frais par motif, seuils
-    - _Exigences : 2.2, 6.1, 7.1_
-  - [ ] 2.3 Tests unitaires du modèle et des paramètres
-    - _Exigences : 2.2, 6.1, 7.1_
+- [ ] 2. Socle technique et paramétrage (dépend de 1.2)
+  - [ ] 2.1 Créer le schéma de la base Retours (Retour, LigneRetour, Étiquette, RMA, ÉvénementRetour, ContrôleQualité, Remboursement, Signalement, TentativeAccès, Paramètre, Journal) avec les clés d'idempotence
+    - _Exigences : 7.8, 11.7_
+  - [ ] 2.2 Développer le back-office des paramètres versionnés : délais par catégorie de client, catégories exclues, motifs et leur indicateur défaut / erreur de préparation, frais par motif, déclencheur par catégorie, routage, heure du fichier, seuils de tentatives, historique des modifications
+    - _Exigences : 2.3, 2.5, 3.2, 7.6, 11.8_
+  - [ ] 2.3 Mettre en place le SSO interne, les rôles et le journal des actions
+    - _Exigences : 11.10, 9.5_
+  - [ ] 2.4 Provisionner les environnements dans l'Union européenne, alimentés par le jeu synthétique
+    - _Exigences : 11.3, 11.11_
+  - [ ] 2.5 Écrire les tests du back-office et des rôles : modification sans mise en production, historique, refus d'accès hors rôle
+    - _Exigences : 11.8, 11.10_
 
-- [ ] 3. Parcours client (dépend de 2.1, 2.2)
-  - [ ] 3.1 Accès sans compte et accès connecté, limité à la commande saisie
-    - _Exigences : 1.1, 1.2, 1.3_
-  - [ ] 3.2 Message uniforme et blocage des essais
-    - _Exigences : 1.4_
-  - [ ] 3.3 Lecture des commandes via Passerelle et gestion de son indisponibilité
-    - _Exigences : 3.4, 3.5_
-  - [ ] 3.4 Moteur d'éligibilité et affichage par article
-    - _Exigences : 2.1, 2.2, 2.3, 2.4, 2.5_
-  - [ ] 3.5 Absence d'échange et renvoi vers une nouvelle commande
-    - _Exigences : 2.6_
-  - [ ] 3.6 Sélection des articles, quantité, motif, mode de retour
-    - _Exigences : 3.1, 3.2, 3.3_
-  - [ ] 3.7 Affichage des frais avant validation
-    - _Exigences : 7.3_
-  - [ ] 3.8 Interface RGAA et mobile
-    - _Exigences : 14.1_
-  - [ ] 3.9 Tests unitaires et d'intégration du parcours
-    - _Exigences : 1.1, 1.2, 1.3, 1.4, 2.1, 2.6, 3.1, 3.2, 3.5_
+- [ ] 3. Accès et éligibilité (dépend de 2)
+  - [ ] 3.1 Développer l'accès sans compte par numéro de commande et e-mail d'achat, limité à la commande saisie, avec message d'erreur unique
+    - _Exigences : 1.1, 1.3, 1.4_
+  - [ ] 3.2 Implémenter la limitation des tentatives par numéro de commande
+    - _Exigences : 1.5_
+  - [ ] 3.3 Développer l'ouverture du portail depuis une commande du compte Vitrine
+    - _Exigences : 1.2_
+  - [ ] 3.4 Lire la commande et ses livraisons via Passerelle
+    - _Exigences : 1.6_
+  - [ ] 3.5 Développer le moteur d'éligibilité : périmètre, délai par catégorie de client, date limite affichée, catégories exclues, date de livraison absente, quantités restantes
+    - _Exigences : 2.1, 2.2, 2.3, 2.4, 2.5, 2.9, 2.10_
+  - [ ] 3.6 Traiter les cas non éligibles avec renvoi : articles marketplace, articles volumineux, demande d'échange
+    - _Exigences : 2.6, 2.7, 2.8_
+  - [ ] 3.7 Écrire les tests unitaires aux bornes : jours 14 et 15, jours 30 et 31 pour Orvanne+, chaque catégorie exclue, quantités déjà déclarées, tentatives au seuil
+    - _Exigences : 1.3, 1.4, 1.5, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10_
 
-- [ ] 4. Étiquette, RMA et e-mails (dépend de 2.1, 1.2)
-  - [ ] 4.1 Adaptateur transporteurs : étiquette PDF et QR
-    - _Exigences : 4.1_
-  - [ ] 4.2 Envoi par e-mail sans offre commerciale et affichage
-    - _Exigences : 4.2, 4.5_
-  - [ ] 4.3 Génération du RMA en PDF
-    - _Exigences : 4.3_
-  - [ ] 4.4 Reprise automatique en cas de panne du transporteur
-    - _Exigences : 4.4_
-  - [ ] 4.5 Tests d'intégration avec doubles de transporteur
-    - _Exigences : 4.1, 4.4, 4.5_
+- [ ] 4. Déclaration, étiquette et RMA (dépend de 3 et 1.3)
+  - [ ] 4.1 Développer le parcours de déclaration : articles, quantités, motifs de la liste fermée, mode de retour
+    - _Exigences : 3.1, 3.3_
+  - [ ] 4.2 Afficher le récapitulatif : montant prévisionnel, frais, moyen de paiement d'origine
+    - _Exigences : 3.4_
+  - [ ] 4.3 Développer le service étiquettes : appel à l'API du transporteur, PDF et QR code, reprises en cas d'erreur
+    - _Exigences : 4.1, 4.5_
+  - [ ] 4.4 Générer le RMA en PDF avec code-barres, rattaché au même numéro de retour que l'étiquette
+    - _Exigences : 4.3, 4.4_
+  - [ ] 4.5 Envoyer l'e-mail de service (étiquette, RMA, lien de suivi) et contrôler l'absence d'offre commerciale dans les modèles
+    - _Exigences : 4.2, 4.6_
+  - [ ] 4.6 Mesurer la durée entre l'accès à la commande et l'affichage de l'étiquette
+    - _Exigences : 3.6_
+  - [ ] 4.7 Écrire les tests de la déclaration, de l'étiquette (succès, erreur transporteur) et du RMA (lecture du code-barres à la douchette)
+    - _Exigences : 3.1, 3.4, 4.1, 4.3, 4.4, 4.5, 4.6_
 
-- [ ] 5. Suivi et remboursement (dépend de 2.2, 4.1)
-  - [ ] 5.1 Statuts du retour et suivi côté client
-    - _Exigences : 5.1, 5.3_
-  - [ ] 5.2 Consommation du premier scan transporteur via Passerelle
+- [ ] 5. Suivi de l'avancement (dépend de 4 et 1.5)
+  - [ ] 5.1 Consommer les statuts transporteurs des colis retour dans Passerelle et passer le retour à `déposé` au premier scan
     - _Exigences : 5.2_
-  - [ ] 5.3 Moteur de remboursement paramétré, moyen de paiement d'origine, idempotence
-    - _Exigences : 6.1, 6.2, 6.3, 6.4_
-  - [ ] 5.4 Réception de la note A / B / C et signalement note C
-    - _Exigences : 6.6, 6.7, 6.8_
-  - [ ] 5.5 Reprises et alertes en cas d'échec du paiement
-    - _Exigences : 6.5_
-  - [ ] 5.6 Retenue des frais paramétrée
-    - _Exigences : 7.1, 7.2_
-  - [ ] 5.7 Tests unitaires et d'intégration (scan en double, paiement en échec)
-    - _Exigences : 5.2, 6.2, 6.4, 6.5, 6.7, 7.2_
+  - [ ] 5.2 Intégrer la réception des colis retour remontée par l'entrepôt et passer le retour à `reçu`
+    - _Exigences : 5.3_
+  - [ ] 5.3 Développer la page de suivi : statut, dates des étapes, ordre `reçu` avant `remboursé`, accès par la commande ou par le lien de l'e-mail
+    - _Exigences : 5.1, 5.4, 5.5_
+  - [ ] 5.4 Écrire les tests du suivi : premier scan, réception, ordre des statuts selon le déclencheur
+    - _Exigences : 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 6. Entrepôts et service client (dépend de 2.1)
-  - [ ] 6.1 Liste prévisionnelle par entrepôt
+- [ ] 6. Contrôle qualité (dépend de 5.2)
+  - [ ] 6.1 Intégrer la réception des notes A / B / C (remontée Hangar ou écran provisoire selon 1.5) et rejeter les résultats invalides
+    - _Exigences : 6.1, 6.2_
+  - [ ] 6.2 Créer le signalement de note C dans Comptoir, suspendre le remboursement non encore parti, enregistrer la décision motivée du conseiller
+    - _Exigences : 6.3, 6.4, 6.5_
+  - [ ] 6.3 Écrire les tests : notes A, B, C, note invalide, note C après remboursement, montant identique quelle que soit la note
+    - _Exigences : 6.1, 6.2, 6.3, 6.4, 6.5_
+
+- [ ] 7. Remboursement (dépend de 1.4, 5 et 6)
+  - [ ] 7.1 Développer le moteur de déclenchement : événement paramétré par catégorie de client, contrôle qualité par défaut
+    - _Exigences : 7.1, 7.2, 7.3_
+  - [ ] 7.2 Calculer le montant remboursé et les frais par motif, retenue activable hors défaut et erreur de préparation
+    - _Exigences : 7.5, 7.6, 7.7_
+  - [ ] 7.3 Appeler le prestataire de paiement avec la clé d'idempotence et passer le retour à `remboursé` à la confirmation
+    - _Exigences : 7.4, 7.8, 7.9_
+  - [ ] 7.4 Gérer les refus et absences de réponse : reprises puis signalement dans Comptoir
+    - _Exigences : 7.10_
+  - [ ] 7.5 Écrire les tests : chaque déclencheur, catégorie Orvanne+ avec un déclencheur différent, frais à 0 puis retenue activée, double appel sans double remboursement, refus du prestataire
+    - _Exigences : 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 7.10_
+
+- [ ] 8. Visibilité des entrepôts (dépend de 4.4 et 1.5)
+  - [ ] 8.1 Implémenter la règle de routage paramétrable vers l'entrepôt de destination
     - _Exigences : 8.1_
-  - [ ] 6.2 Fichier quotidien Hangar et reprise sur échec
+  - [ ] 8.2 Produire le fichier quotidien de la liste prévisionnelle par entrepôt, à l'heure paramétrée
     - _Exigences : 8.2, 8.3_
-  - [ ] 6.3 Extension Comptoir : création et correction de retours
+  - [ ] 8.3 Suivre l'acquittement par Hangar, alerter et permettre le renvoi
+    - _Exigences : 8.4_
+  - [ ] 8.4 Développer la recherche d'un retour par RMA, numéro de suivi ou commande
+    - _Exigences : 8.5_
+  - [ ] 8.5 Écrire les tests de l'export et de la recherche, et faire valider un fichier réel par l'exploitation E2
+    - _Exigences : 8.1, 8.2, 8.3, 8.4, 8.5_
+
+- [ ] 9. Intégration Comptoir (dépend de 1.6, 2.3 et 4)
+  - [ ] 9.1 Permettre la création d'un retour pour le compte d'un client, avec les règles d'éligibilité du portail
     - _Exigences : 9.1_
-  - [ ] 6.4 Journal d'audit et preuve d'exécution
+  - [ ] 9.2 Permettre la correction d'un retour, avec nouvelle étiquette et nouveau RMA tant qu'il est `déclaré`
     - _Exigences : 9.2, 9.3_
-  - [ ] 6.5 Tests d'intégration Hangar et Comptoir
-    - _Exigences : 8.1, 8.3, 9.1, 9.2_
+  - [ ] 9.3 Afficher les retours d'une commande, leur historique et leurs signalements dans Comptoir
+    - _Exigences : 9.4_
+  - [ ] 9.4 Journaliser chaque action du service client comme preuve d'exécution (valeurs avant et après)
+    - _Exigences : 9.5_
+  - [ ] 9.5 Écrire les tests : création, correction avant et après dépôt, invalidation de l'ancienne étiquette, contenu du journal
+    - _Exigences : 9.1, 9.2, 9.3, 9.4, 9.5_
 
-- [ ] 7. Marketplace en V1 : non éligibles (dépend de 3.4)
-  - [ ] 7.1 Affichage de l'inéligibilité et renvoi vers le circuit actuel
-    - _Exigences : 10.1_
+- [ ] 10. Indicateurs et conservation (dépend de 7 et 9)
+  - [ ] 10.1 Produire les indicateurs quotidiens d'usage et de délais, et les exporter vers le Lac
+    - _Exigences : 10.1, 10.2_
+  - [ ] 10.2 Implémenter la purge automatique selon les durées fixées avec la DPO
+    - _Exigences : 11.7_
 
-- [ ] 8. Qualité et recette V1 (dépend de 3, 4, 5, 6, 7)
-  - [ ] 8.1 Test de charge à 300 utilisateurs simultanés, disponibilité et supervision
-    - _Exigences : 12.1, 12.2_
-  - [ ] 8.2 Indicateur mensuel des contacts liés aux retours
-    - _Exigences : 13.2_
-  - [ ] 8.3 Recette de bout en bout sur mobile, étiquette en moins de 3 minutes
-    - _Exigences : 13.1, 13.3_
-  - [ ] 8.4 Mise en service du pilote hors gel
-    - _Exigences : 15.1, 15.2, 15.3_
-
-- [ ] 9. Lot V2 (dépend de 8.4)
-  - [ ] 9.1 Photos jointes (3 maximum), stockage UE, purge
-    - _Exigences : 11.1, 11.3_
-  - [ ] 9.2 Consultation des photos par E2
+- [ ] 11. Recette et mise en service du pilote (dépend de 3 à 10, et de 1.1 pour la date)
+  - [ ] 11.1 Tester la charge : 600 utilisateurs simultanés pendant 1 h, 95e centile sous 2 s
     - _Exigences : 11.2_
-  - [ ] 9.3 Retours marketplace : circuit vendeur et étiquettes distinctes
-    - _Exigences : 10.2_
-  - [ ] 9.4 Suivi des retours et litiges par le vendeur (avec P07)
-    - _Exigences : 10.3_
-  - [ ] 9.5 Tests et recette V2
-    - _Exigences : 10.2, 10.3, 11.1, 11.3_
+  - [ ] 11.2 Mettre en place la supervision de la disponibilité mensuelle et des appels externes
+    - _Exigences : 11.1_
+  - [ ] 11.3 Faire réaliser l'audit RGAA du parcours client sur mobile et corriger les écarts
+    - _Exigences : 11.4_
+  - [ ] 11.4 Conduire les tests utilisateurs : clients non accompagnés, sur mobile, retour standard chronométré sous 3 minutes
+    - _Exigences : 3.5, 11.5_
+  - [ ] 11.5 Activer et tester le mode pilote sur le périmètre fixé en 1.7
+    - _Exigences : 11.9_
+  - [ ] 11.6 Faire la recette métier avec le service client, l'exploitation E2 et la finance, sur données synthétiques
+    - _Exigences : 6.5, 7.1, 7.6, 8.3, 9.1, 9.2, 11.8_
+  - [ ] 11.7 Mettre en service le pilote au plus tôt le 12 janvier 2027, après enregistrement de l'avis de la DPO, dans l'Union européenne
+    - _Exigences : 11.3, 11.6_
+
+- [ ] 12. Photos jointes (lot 2, dépend de 11 et de l'avis de la DPO obtenu en 1.1)
+  - [ ] 12.1 Permettre de joindre jusqu'à 3 photos au motif « article endommagé », avec contrôle de format et de taille
+    - _Exigences : 12.1, 12.2_
+  - [ ] 12.2 Stocker les photos comme données personnelles : accès restreint, conservation paramétrée, suppression avec le retour
+    - _Exigences : 12.4_
+  - [ ] 12.3 Donner à l'entrepôt de destination l'accès aux photos des retours de la liste prévisionnelle
+    - _Exigences : 12.3_
+  - [ ] 12.4 Bloquer l'activation de la fonction tant que l'avis de la DPO n'est pas enregistré
+    - _Exigences : 12.5_
+  - [ ] 12.5 Écrire les tests : 4e photo refusée, format refusé, accès hors rôle refusé, purge, verrou d'activation
+    - _Exigences : 12.1, 12.2, 12.3, 12.4, 12.5_
+
+- [ ] 13. Retours marketplace (lot 2, dépend de 11, de la réponse à Q11 et de P07 pour 13.4)
+  - [ ] 13.1 Rendre éligibles les articles marketplace selon les règles paramétrées pour la marketplace
+    - _Exigences : 13.1_
+  - [ ] 13.2 Obtenir les étiquettes à destination des vendeurs et séparer les retours d'une commande mixte par destinataire
+    - _Exigences : 13.2, 13.4_
+  - [ ] 13.3 Exclure les retours marketplace du fichier Hangar
+    - _Exigences : 13.3_
+  - [ ] 13.4 Exposer à l'espace vendeur les retours déclarés sur les articles du vendeur
+    - _Exigences : 13.5_
+  - [ ] 13.5 Écrire les tests : commande mixte, fichier Hangar sans marketplace, filtrage par vendeur
+    - _Exigences : 13.1, 13.2, 13.3, 13.4, 13.5_
+
+- [ ] 14. Bon d'achat (lot 2, dépend de 7 et de la décision de la finance)
+  - [ ] 14.1 Ajouter l'option désactivée par défaut et le choix du client dans le récapitulatif, avec le taux paramétré
+    - _Exigences : 14.1_
+  - [ ] 14.2 Émettre le bon d'achat au déclencheur du remboursement, sans appel au prestataire de paiement
+    - _Exigences : 14.2_
+  - [ ] 14.3 Vérifier que les e-mails de service ne promeuvent pas le bon d'achat
+    - _Exigences : 14.3_
+  - [ ] 14.4 Écrire les tests : option désactivée, choix du bon, montant majoré, absence d'appel au prestataire
+    - _Exigences : 14.1, 14.2, 14.3_
+
+- [ ] 15. Recette et mise en service du lot 2 (dépend de 12, 13 et 14)
+  - [ ] 15.1 Faire la recette métier avec l'exploitation E2 (photos), la direction marketplace et le service client (retours marketplace), la finance (bon d'achat)
+    - _Exigences : 12.3, 13.4, 13.5, 14.2_
+  - [ ] 15.2 Mettre en service hors période de gel, en activant chaque fonction après sa décision (avis DPO, réponse à Q11, accord de la finance)
+    - _Exigences : 12.5, 13.1, 14.1_

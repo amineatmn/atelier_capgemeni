@@ -1,123 +1,225 @@
-# Conception : prise de rendez-vous des livraisons fournisseurs
+# Conception : prise de rendez-vous de déchargement par les fournisseurs et transporteurs
 
 ## Vue d'ensemble
 
-Une application web unique sert deux publics : un **portail externe** pour les fournisseurs et les transporteurs, et un **espace interne** pour l'approvisionnement, les chefs de quai, le bureau de réception et le poste de garde. Le moteur de réservation s'appuie sur le paramétrage de chaque site et contrôle les commandes d'achat dans Passerelle. Hangar n'est pas relié en V1 (V2, B08-D23).
+La solution est une application unique avec deux faces :
+
+- le **portail fournisseurs**, ouvert aux contacts externes (fournisseurs et transporteurs), pour réserver, modifier et annuler des créneaux ;
+- le **back-office des sites**, réservé aux utilisateurs internes : paramétrage des sites, vue planning, actions du chef de quai, écran du poste de garde, indicateurs et export.
+
+Les deux faces s'appuient sur un même **service de réservation**, qui porte les règles R1 à R7, et sur une **copie locale des commandes d'achat** alimentée par Passerelle. Un **ordonnanceur** déclenche les rappels de la veille et le passage des créneaux non pointés au statut « perdu ». Un **service d'envoi d'e-mails** transactionnels envoie confirmations, rappels et avis de modification.
+
+Choix structurants :
 
 | Choix | Raison | Alternative écartée |
 |---|---|---|
-| Durée de créneau, quais, horaires, bornes et heure du rappel paramétrables par site | Les conflits C21 et C22 ne sont pas arbitrés (H20, H21) | Coder 30 minutes et 6 quais |
-| Unicité (quai, début de créneau) portée par la base | Aucune double réservation, même en accès simultanés (critère 3.7) | Verrou applicatif seul |
-| Copie locale des commandes d'achat rafraîchie depuis Passerelle | Le portail reste utilisable si Passerelle est en panne (critère 4.3) | Appel synchrone seul |
-| Messageries : blocage de créneaux par le chef de quai, pas de réservation | H22, en attente de l'arbitrage de C23 | Réservation sans commande d'achat |
-| Heures prévues et réelles d'arrivée conservées, sans notation | H23 : constitue l'historique d'un an sans engager de pénalité | Calculer une note dès la V1 |
-| Langues gérées par catalogue de traductions, français par défaut | Les langues ne sont pas décidées (Q27, CT-11) | Français seul |
+| Un seul service de réservation pour le portail et le back-office | Les règles R1 à R7 s'appliquent de la même façon, qu'un fournisseur ou un chef de quai agisse ; seul le forçage lève la capacité et le délai | Deux applications : risque de règles divergentes et de double réservation |
+| Capacité matérialisée par créneau et par quai, avec contrainte d'unicité en base | Garantit l'absence de double réservation, y compris pour un camion complet qui occupe deux créneaux consécutifs (critères 3.4, 3.7) | Compteur de places par créneau : verrouillage plus fragile, pas d'attribution de quai |
+| Durée de créneau, nombre de quais, horaires et jours fermés paramétrables par site | Les conflits C21 et C22 ne sont pas arbitrés (H20, H21) ; les valeurs relèvent de chaque site | Coder 30 minutes et 6 quais |
+| Copie locale des commandes d'achat, mise à jour par un flux Passerelle | La vérification R1 ne dépend pas de la disponibilité de Passerelle au moment de la réservation ; la disponibilité des commandes dans Passerelle reste à vérifier (B08-D27) | Appel synchrone à Passerelle à chaque réservation |
+| Comptes nominatifs ouverts par Orvanne, pas d'inscription libre | Pilote limité à une vingtaine de fournisseurs (B08-D28) ; cloisonnement des commandes d'achat par fournisseur | Inscription libre avec validation a posteriori |
+| Textes externalisés dans des fichiers de traduction dès la V1 | CT-11 et H26 : environ 15 % des livraisons viennent de fournisseurs étrangers (B08-N13) ; les langues ne sont pas décidées (Q27) | Textes en dur, traduction en V2 |
+| Pas de lien avec Hangar en V1 | Classé en V2 par l'atelier (B08-D23) ; le modèle de données garde les numéros de commande d'achat pour le permettre | Préremplissage de la réception dès la V1 |
 
-Les technologies sont des **propositions** : application web, comptes locaux avec double facteur pour les tiers, SSO interne pour les employés, base relationnelle (PostgreSQL), file de messages pour les e-mails.
+Les technologies citées ci-dessous sont des **propositions** : B08 n'en impose aucune.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  F[Fournisseur / transporteur] --> PE[Portail externe]
-  I[Approvisionnement, chef de quai, poste de garde] --> EI[Espace interne]
-  PE --> RES[Moteur de réservation]
-  EI --> RES
-  RES --> DB[(Base : sites, créneaux, réservations, pointages)]
-  P[Passerelle] --> SYNC[Synchronisation des commandes d'achat]
-  SYNC --> DB
-  RES --> MAIL[Service d'envoi e-mail]
-  IND[Calcul des indicateurs] --> DB
-  EI --> IND
+  subgraph Externes
+    F[Fournisseurs et transporteurs]
+    EM[Service d'envoi d'e-mails transactionnels]
+  end
+  subgraph Orvanne
+    P[Passerelle]
+    SSO[SSO interne]
+  end
+  F -- navigateur, smartphone --> PF[Portail fournisseurs]
+  PF --> RES[Service de réservation]
+  BO[Back-office des sites] --> RES
+  SSO --> BO
+  P -- commandes d'achat --> SYN[Synchronisation des commandes d'achat]
+  SYN --> CA[(Copie des commandes d'achat)]
+  RES --> CA
+  RES --> DB[(Base des réservations)]
+  ORD[Ordonnanceur] --> RES
+  RES -- événements --> NOT[Notification]
+  NOT --> EM
+  EM --> F
+  DB --> IND[Indicateurs et export]
+  IND --> BO
+  RES --> JRN[(Journal)]
+  SUP[Supervision DSI] -.-> SYN
+  SUP -.-> NOT
 ```
+
+Les utilisateurs internes (chef de quai, poste de garde, bureau de réception, approvisionnement, achats) passent par le back-office ; les utilisateurs externes par le portail. Hangar n'est pas relié en V1.
 
 ## Composants et interfaces
 
-| Composant | Responsabilité | Interfaces | Exigences |
+| Composant | Responsabilité | Interfaces (entrée / sortie) | Exigences |
 |---|---|---|---|
-| Portail externe | Authentification, rattachement des transporteurs, recherche, réservation, modification, annulation, multilingue, RGAA et mobile | HTTPS, compte individuel | 1, 3, 5 |
-| Espace interne | Paramétrage des sites, planning, actions du chef de quai, pointage, saisie du déchargement, indicateurs | SSO interne, rôles `appro`, `chef-quai`, `reception`, `garde` | 2, 7, 8, 9, 10 |
-| Moteur de réservation | Calcul des créneaux libres, règles R1 à R7, statuts | Interne | 2, 3, 4, 5, 7, 9 |
-| Synchronisation des commandes d'achat | Copie (numéro, fournisseur, site, statut) depuis Passerelle ; contrôle unitaire à la saisie | Passerelle (contrat à établir, B08-D27) | 4 |
-| Notifications | Confirmation, rappel, informations liées aux actions du chef de quai, selon la langue du compte | Service d'envoi (proposition : service d'envoi interne d'Orvanne, à confirmer avec la DSI) | 6 |
-| Indicateurs | Calcul, historique des heures prévues et réelles, export CSV | Interne | 10, 11.3 |
+| Portail fournisseurs | Connexion, création, modification et annulation de réservation, consultation des réservations du périmètre ; écrans adaptés au smartphone et conformes au RGAA ; textes traduisibles | Application web (proposition : rendu serveur ou SPA légère, sans dépendance à une application mobile) ; appelle l'API du service de réservation | 1, 3, 4, 10 |
+| Back-office des sites | Paramétrage des sites, vue planning, actions du chef de quai, écran du poste de garde, indicateurs | Application web interne derrière le SSO ; rôles `chef-de-quai`, `poste-de-garde`, `bureau-reception`, `approvisionnement`, `achats`, `admin-site` | 2, 6, 7, 8, 9 |
+| Service de réservation | Génère les créneaux, applique R1 à R7, attribue le quai, gère les statuts, publie les événements | API REST interne ; écrit dans la base des réservations et le journal | 2.3, 2.4, 3, 4, 6, 7 |
+| Synchronisation des commandes d'achat | Reçoit les commandes d'achat (numéro, fournisseur, statut validé / soldé, site de livraison s'il est fourni) et met à jour la copie locale ; mesure la fraîcheur | Entrée : flux Passerelle (format et fréquence à fixer, tâche 1.2) ; sortie : table `CommandeAchat` | 3.2, 3.3, 6.3 |
+| Ordonnanceur | Toutes les minutes : passe au statut « perdu » les réservations non pointées 20 minutes après le début du créneau. Chaque jour : déclenche les rappels de la veille, la purge des comptes inactifs | Tâches planifiées, fuseau Europe/Paris | 5.2, 7.4, 11.3 |
+| Notification | Construit les e-mails à partir des modèles traduisibles, les envoie, réessaie, signale les échecs | Consomme les événements `RéservationCréée`, `RéservationModifiée`, `RéservationAnnulée`, `Rappel` ; appelle le service d'envoi (à choisir, tâche 1.6) | 5, 10.3 |
+| Indicateurs et export | Calcule les quatre indicateurs, produit les exports CSV | Lecture de la base des réservations ; calcul à la demande (volume faible) | 9 |
+| Journal | Trace les actions des utilisateurs internes et les connexions | Table append-only, consultable par l'approvisionnement et la DSI | 6.6 |
 
-## Flux principal
+### Règles du service de réservation
+
+- **Génération des créneaux (R2, R4, H20).** Pour un jour ouvert d'un site, les créneaux commencent à l'heure d'ouverture et se suivent par pas de la durée de créneau du site, tant que le créneau se termine avant l'heure de fermeture. Chaque créneau existe une fois par quai actif.
+- **Camion complet (R2).** La réservation occupe deux créneaux consécutifs du même quai. Le dernier créneau de la journée ne peut donc pas accueillir un camion complet.
+- **Attribution du quai.** Le service attribue le quai libre de plus petit numéro ; le chef de quai peut le changer (critère 6.1). C'est une **proposition** : B08 ne dit pas si les quais sont interchangeables.
+- **Fenêtre de réservation (R3).** Une réservation externe est acceptée si `maintenant ≥ J-10 à 00 h 00` et `maintenant < J-1 à 12 h 00`, heure de Paris. L'interprétation « J-10 à 00 h 00 » est une **proposition** à valider ; les bornes sont des paramètres.
+- **Forçage (R7).** Le forçage lève la contrainte de capacité et la fenêtre R3, jamais R1 (H22). Une réservation forcée sur un créneau sans quai libre est rattachée à un quai virtuel « en surnombre » visible dans le planning.
+- **Statuts d'une réservation.** `réservée` → `arrivée` → `à quai` → `déchargée` ; `réservée` → `perdue` (non pointée à T+20 min) ; `réservée` → `annulée`. Le pointage d'un camion sur une réservation `perdue` est enregistré sans changer le statut et crée une alerte pour le chef de quai (critère 7.5).
+
+## Flux principaux
+
+### Réservation par un utilisateur externe
 
 ```mermaid
 sequenceDiagram
-  participant R as Réservant
-  participant M as Moteur
-  participant P as Passerelle
-  participant E as E-mail
-  R->>M: site, date, commandes, camion complet ?
-  M->>P: contrôle des commandes
-  alt Passerelle indisponible
-    M->>M: copie locale, statut « à revérifier »
+  participant U as Fournisseur / transporteur
+  participant PF as Portail
+  participant R as Service de réservation
+  participant CA as Copie des commandes d'achat
+  participant N as Notification
+  U->>PF: site, jour, commandes d'achat, camion complet, e-mail du transporteur
+  PF->>R: demande de créneaux disponibles
+  R->>CA: commandes valides, non soldées, rattachées au compte ?
+  alt une commande refusée
+    R-->>PF: motif « inconnue ou non rattachée » ou « soldée »
+  else commandes acceptées
+    R->>R: contrôler la fenêtre J-10 / J-1 12 h
+    R-->>PF: créneaux avec un quai libre sur toute la durée
+    U->>PF: choix du créneau
+    PF->>R: réserver
+    R->>R: transaction : insérer les occupations (quai, date, début) ; échec si déjà prises
+    alt occupation déjà prise (course)
+      R-->>PF: créneau indisponible, autres créneaux proposés
+    else réservation enregistrée
+      R-->>PF: numéro de réservation, quai
+      R->>N: RéservationCréée
+      N->>U: e-mail de confirmation (transporteur, copie à l'auteur)
+    end
   end
-  M-->>R: créneaux libres (1 ou 2 consécutifs)
-  R->>M: choix du créneau
-  M->>M: insertion avec unicité (quai, début)
-  M->>E: confirmation au transporteur (copie au réservant)
 ```
 
-Le jour J, le poste de garde pointe le camion. Au-delà de 20 minutes après le début du créneau, le créneau est perdu et libéré. Le devenir du camion (refoulé, remis en file, nouveau créneau) n'est pas décrit par la source (B08-F11) : le chef de quai le voit dans sa liste et décide (critère 9.4).
+### Arrivée au poste de garde
+
+```mermaid
+sequenceDiagram
+  participant G as Poste de garde
+  participant BO as Back-office
+  participant R as Service de réservation
+  participant O as Ordonnanceur
+  participant CQ as Chef de quai
+  G->>BO: recherche par n° de réservation ou de commande d'achat
+  alt réservation trouvée, T ≤ début + 20 min
+    BO->>R: pointer (heure d'arrivée)
+    R->>R: statut « arrivée »
+  else réservation déjà « perdue »
+    BO->>R: pointer
+    R->>CQ: alerte « camion arrivé sur créneau perdu »
+    CQ->>R: forcer un nouveau créneau ou refuser
+  else aucune réservation
+    BO->>R: enregistrer « sans rendez-vous »
+  end
+  O->>R: chaque minute, réservations non pointées à début + 20 min → « perdue »
+  CQ->>R: mise à quai, puis fin du déchargement (horodatées)
+```
 
 ## Modèle de données
 
 | Entité | Attributs principaux | Donnée personnelle | Durée de conservation |
 |---|---|---|---|
-| Site | quais, horaires, jours fermés, durée de créneau, bornes, heure du rappel | non | conservé |
-| Compte | type, société, nom et e-mail du contact, langue, statut | oui (contact professionnel) | durée du compte, puis à fixer avec la DPO (CT-01) |
-| CommandeAchat (copie) | numéro, fournisseur, site, statut, date de synchronisation | non | tant que la commande est active |
-| Réservation | site, quai, créneaux, commandes, camion complet, e-mail du transporteur, statut, auteur | oui (e-mail professionnel) | au moins 12 mois pour l'historique de ponctualité (B08-N14), durée finale à fixer avec la DPO |
-| Pointage | réservation ou fournisseur déclaré, heure d'arrivée, début et fin du déchargement | non (aucune donnée sur le chauffeur : proposition) | idem réservation |
-| Blocage | quai, créneaux, récurrence, motif, auteur | oui (identifiant de l'employé) | idem réservation |
-| Journal | auteur, action, objet, motif, horodatage | oui (identifiant) | proposition : 1 an, à confirmer avec la DPO |
+| Site | code (E1, E2…), nom, adresse, fuseau, durée de créneau, ouvert à la réservation (oui / non), heure du rappel | non | durée de vie de l'application |
+| Quai | site, numéro, actif | non | durée de vie de l'application |
+| HoraireSite | site, jour de la semaine, heure d'ouverture, heure de fermeture | non | durée de vie de l'application |
+| JourFermé | site, date, motif | non | 2 ans (proposition) |
+| Fournisseur | code fournisseur Orvanne, raison sociale, pilote (oui / non) | non (personne morale) | durée de vie de l'application |
+| Transporteur | raison sociale, rattachement à un ou plusieurs fournisseurs | non (personne morale) | durée de vie de l'application |
+| CompteExterne | nom, prénom, e-mail professionnel, langue, rattachement (fournisseur ou transporteur), date de dernière connexion | **oui** | jusqu'à la suppression du compte, puis purge après la durée d'inactivité fixée avec la DPO (critère 11.3) |
+| CommandeAchat (copie) | numéro, code fournisseur, statut (valide, soldée), site de livraison s'il est transmis, date de mise à jour | non | tant que la commande est ouverte, puis 12 mois |
+| Réservation | numéro, site, quai, date, heure de début, nombre de créneaux, camion complet, commandes d'achat, e-mail du transporteur, auteur, statut, forcée (oui / non), heures de pointage, de mise à quai, de fin de déchargement | **oui** (e-mail du transporteur s'il est nominatif, auteur) | 12 mois au moins pour les heures (H23) ; e-mail et auteur pseudonymisés au-delà de la durée fixée avec la DPO |
+| Occupation | site, quai, date, heure de début, réservation ou blocage ; contrainte d'unicité (site, quai, date, heure de début) hors surnombre | non | comme la réservation |
+| Blocage | site, quai ou tous les quais, plage horaire, récurrence, motif, auteur | oui (identifiant de l'employé) | 12 mois (proposition) |
+| ArrivéeSansRendezVous | site, heure d'arrivée, fournisseur ou transporteur s'il est connu | non | 12 mois (H23) |
+| E-mailEnvoyé | réservation, type, destinataires, langue, statut, nombre de tentatives | oui (adresses) | 6 mois (proposition, à confirmer avec la DPO) |
+| Journal | utilisateur, action, objet, valeurs avant / après, motif, horodatage | oui (identifiant de l'employé) | 1 an (proposition, à confirmer avec la DPO) |
+
+Aucune donnée sur les chauffeurs (nom, téléphone, immatriculation) n'est collectée en V1 : le pointage se fait par numéro de réservation ou de commande d'achat.
 
 ## Gestion des erreurs
 
 | Situation | Comportement | Exigence |
 |---|---|---|
-| Deux réservants valident le même créneau en même temps | La seconde insertion est rejetée par la contrainte d'unicité ; d'autres créneaux sont proposés | 3.7 |
-| Commande inconnue, soldée ou étrangère au réservant | Refus avec le motif | 4.2, 4.5 |
-| Passerelle indisponible | Contrôle sur la copie locale, statut « à revérifier », nouveau contrôle au retour | 4.3 |
-| Commande soldée après la réservation | Alerte au chef de quai et au réservant, sans annulation | 4.4 |
-| Réservation hors bornes ou après la clôture | Refus avec les bornes, ou renvoi vers le site | 3.5, 5.2 |
-| Service d'envoi en erreur | Nouvelles tentatives avec délai croissant (proposition : 3), puis alerte dans l'espace interne | 6.1, 6.2 |
-| Paramétrage incompatible avec des réservations | Refus avec la liste des réservations concernées | 2.5 |
-| Camion arrivé après la tolérance | Créneau perdu et libéré, camion signalé au chef de quai | 9.2, 9.4 |
-| Blocage d'un créneau réservé | Refus tant que la réservation n'est pas déplacée ou annulée | 7.4 |
+| Commande d'achat inconnue ou rattachée à un autre fournisseur | Refus avec le motif unique « inconnue ou non rattachée à votre compte », pour ne pas révéler l'existence d'une commande d'un autre fournisseur | 3.3, 1.4 |
+| Commande d'achat soldée | Refus avec le motif « soldée » | 3.3 |
+| Copie des commandes d'achat non mise à jour depuis plus que le délai paramétré (proposition : 24 h) | Alerte à la supervision de la DSI ; les réservations restent possibles sur la dernière copie connue, avec un bandeau dans le back-office | 3.2 |
+| Commande d'achat soldée après la réservation | Réservation conservée, signalée dans la vue planning au chef de quai | 3.2, 8.2 |
+| Deux réservations simultanées sur le dernier quai libre | La contrainte d'unicité fait échouer la seconde transaction ; le portail propose d'autres créneaux | 3.7 |
+| Camion complet demandé sur le dernier créneau de la journée | Créneau non proposé | 3.4, 3.6 |
+| Modification ou annulation externe après J-1 12 h | Refus, avec les coordonnées du site | 4.2 |
+| Modification du paramétrage incompatible avec des réservations | Refus, avec la liste des réservations concernées | 2.4 |
+| Blocage d'un créneau réservé | Refus tant que la réservation n'est pas déplacée ou annulée | 6.5 |
+| Échec d'envoi d'un e-mail | 3 tentatives avec délai croissant (valeur par défaut d'un paramètre, proposition), puis signalement sur la réservation dans la vue planning | 5.6 |
+| Ordonnanceur arrêté ou en retard | Au redémarrage, rattrapage de toutes les réservations dont le début + 20 min est dépassé ; le pointage reste possible et fait foi de l'heure d'arrivée | 7.3, 7.4 |
+| Panne réseau au poste de garde | Liste du jour imprimable dès l'ouverture du site (proposition) ; saisie a posteriori de l'heure d'arrivée par le chef de quai, journalisée | 7.2, 6.6 |
+| Changement d'heure (été / hiver) | Créneaux calculés en heure locale de Paris ; tests aux deux dates de changement | 2.3, 3.5 |
+| Camion pointé sur une réservation perdue | Heure enregistrée, statut inchangé, alerte au chef de quai | 7.5 |
 
 ## Sécurité et RGPD
 
-- **Avant le développement :** l'analyse du traitement est soumise à la DPO (CT-01) : base légale, durées de conservation, ouverture à des tiers. Les contacts sont à recenser dans le registre du projet P05.
-- **Minimisation :** seuls des contacts professionnels sont traités ; aucune donnée sur le chauffeur n'est collectée (proposition).
-- **Comptes externes :** comptes individuels, double facteur proposé ; un transporteur n'accède qu'aux commandes des fournisseurs qui l'ont rattaché (critère 1.3). La création des comptes n'est pas décrite par la source (B08-F12) : proposition, l'approvisionnement les crée.
-- **E-mails :** informations de service uniquement (CT-03).
-- **Hébergement :** Union européenne, cloud d'Orvanne sous réserve de Q34 (CT-08).
-- **Accessibilité et langues :** RGAA et mobile pour les écrans externes (CT-09, Q35) ; catalogue de traductions (CT-11).
-- **Données de test :** jeux synthétiques (CT-04). **Mise en production :** jamais pendant le gel du 16/11 au 11/01 (CT-07).
+- **Avant le développement (CT-01) :** le traitement des contacts fournisseurs et transporteurs est soumis à la DPO (`Q36`). Points à faire valider :
+  - la base légale (exécution des relations contractuelles avec les fournisseurs, à confirmer) ;
+  - la durée d'inactivité avant suppression d'un compte (critère 11.3) ;
+  - la durée de conservation des e-mails envoyés et du journal ;
+  - le recensement du traitement dans le registre (dépendance avec P05).
+- **Minimisation :** seuls le nom, le prénom, l'e-mail professionnel et la langue des contacts externes sont collectés (critère 11.2). Aucune donnée sur les chauffeurs.
+- **Authentification externe (proposition) :** comptes nominatifs créés par l'approvisionnement, activation par lien à usage unique, mot de passe et second facteur par code envoyé par e-mail, verrouillage temporaire après plusieurs échecs. Les comptes partagés entre plusieurs personnes ne sont pas autorisés.
+- **Cloisonnement :** chaque requête du portail est filtrée par les fournisseurs rattachés au compte (critère 1.4). Les messages d'erreur ne révèlent pas l'existence d'une commande d'achat d'un autre fournisseur, et le nombre de vérifications de commande par compte et par heure est limité (proposition) pour empêcher l'énumération des numéros.
+- **Accès internes :** SSO interne, rôles par site (critères 6.7 et 8.6). Le forçage, le déplacement, le blocage et l'annulation par un utilisateur interne sont journalisés (critère 6.6, `CT-10`).
+- **Contenu des e-mails :** modèles de service uniquement, sans offre commerciale (`CT-03`, critère 5.5) ; relecture du texte des modèles lors de la recette.
+- **Accessibilité :** le portail vise la conformité RGAA et l'usage sur smartphone (`CT-09`), en attendant la réponse à `Q35`.
+- **Hébergement :** Union européenne (`CT-08`, critère 11.1). Le choix entre le cloud d'Orvanne et un hébergeur de l'UE attend la réponse à `Q34`.
+- **Données de test :** jeux synthétiques uniquement (`CT-04`, critère 11.4), y compris pour la recette avec les fournisseurs pilotes.
+- **Mise en production :** aucune entre le 16 novembre et le 11 janvier (`CT-07`).
 
 ## Volumétrie et performance
 
 | Grandeur | Valeur | Base |
 |---|---|---|
-| Camions par jour, E1 | environ 70 | B08-N1 |
-| Camions par jour, E2 | environ 40 | B08-N3 |
-| Créneaux par jour, E1, 4 quais, créneaux d'une heure | à calculer avec les horaires fournis (Q22) | B08-N16, B08-N17 |
-| Réservations ouvertes dans la fenêtre J-10 à J-1, E1 + E2 | environ 1 100 | estimation : 110 camions × 10 jours |
-| Fournisseurs pilotes | environ 20 | B08-N15 |
+| Camions reçus par jour sur E1 | ≈ 70 | B08-N1 |
+| Camions reçus par jour sur E2 | ≈ 40 | B08-N3 |
+| Quais de réception de E1 | 6 aujourd'hui, 4 dans le paramétrage cible | B08-N2, B08-N16 |
+| Camions sans rendez-vous ou hors créneau | 1 sur 4, soit ≈ 18 par jour sur E1 | B08-N4 (calcul sur B08-N1) |
+| Fournisseurs pilotes | une vingtaine | B08-N15 |
+| Part des livraisons par des fournisseurs étrangers | ≈ 15 % | B08-N13 |
+| Réservations par jour, E1 et E2 ouverts | ≈ 110 au plus | estimation (B08-N1 + B08-N3) |
+| E-mails par jour (confirmation, rappel, copie, modifications) | < 500 | estimation : 110 réservations × 2 à 4 e-mails |
+| Utilisateurs simultanés | quelques dizaines | estimation |
 
-Ces volumes sont faibles. La difficulté tient aux accès simultanés à l'ouverture des créneaux, pas au débit. Les objectifs de temps de réponse et de disponibilité ne sont pas donnés par la source ; propositions pour la recette : recherche de créneaux sous 2 secondes au 95e centile avec le double des volumes, disponibilité de 99,5 % par mois.
+Ces volumes sont très faibles ; une base relationnelle (proposition : PostgreSQL) et une seule instance applicative avec redémarrage automatique suffisent. Le seul point sensible est la concurrence sur les derniers créneaux libres, traitée par la contrainte d'unicité.
+
+**Capacité de E1 (estimation à porter à l'arbitrage de C21 et C22).** Avec le paramétrage cible de 4 quais et des créneaux d'une heure, absorber 70 camions par jour demande au moins 70 créneaux-quais, soit 17 h 30 d'ouverture, et davantage pour les camions complets qui consomment deux heures. Avec 6 quais et des créneaux de 30 minutes, 70 camions d'un créneau demandent environ 5 h 50 d'ouverture, et 11 h 40 s'ils sont tous complets. Les horaires d'ouverture de E1 ne sont pas connus ; le paramétrage du 04/12 doit être vérifié contre ce calcul avant le pilote.
+
+**Pilote partiel.** Pendant le pilote, seuls une vingtaine de fournisseurs réservent sur le portail. Les autres continuent d'appeler. Pour que le planning de E1 reste la seule référence, le bureau de réception ou le chef de quai saisit ces rendez-vous par forçage (critère 6.2), ou bien le site bloque une part des quais pour eux (critère 6.4). Le mode retenu est à décider avec le chef de quai E1 avant le pilote.
 
 ## Stratégie de test
 
 | Niveau | Contenu | Exigences |
 |---|---|---|
-| Unitaire | Calcul des créneaux, camion complet, bornes J-10 et J-1 midi, tolérance de 20 minutes, définitions des indicateurs | 2, 3, 5, 9, 10 |
-| Concurrence | 50 réservations simultanées sur le même créneau : une seule aboutit | 3.7 |
-| Intégration | Passerelle en recette, y compris en panne ; service d'envoi, y compris en erreur | 4, 6 |
-| Accessibilité et langues | Contrôle RGAA des écrans du portail, affichage mobile, bascule de langue | 1.4, 1.5, 6.5 |
-| Performance | Recherche de créneaux avec le double des volumes actuels | 11.1 |
-| Recette métier | Pilote E1 rejoué avec le chef de quai et le poste de garde | 7, 8, 9 |
+| Unitaire | Génération des créneaux (durée 30 min et 1 h, jours fermés, dernier créneau, changement d'heure) ; fenêtre R3 aux bornes (J-10, J-1 11 h 59, J-1 12 h 00) ; camion complet ; forçage sans levée de R1 ; statuts à début + 20 min (19 min 59 s, 20 min 00 s, 20 min 01 s) ; calcul des quatre indicateurs sur un jeu connu | 2.2, 2.3, 3.4, 3.5, 6.2, 6.3, 7.3, 7.4, 9.1 à 9.4 |
+| Concurrence | 50 réservations simultanées sur le dernier quai libre : une seule acceptée, aucune occupation en double | 3.7, 3.8 |
+| Intégration | Flux Passerelle des commandes d'achat en recette (création, solde, fournisseur) ; envoi d'e-mails via le service choisi, échec simulé | 3.2, 3.3, 5.1 à 5.6 |
+| Sécurité | Cloisonnement entre deux fournisseurs ; message d'erreur identique pour une commande inconnue et une commande d'un autre fournisseur ; rôles internes | 1.2, 1.4, 6.7, 8.6 |
+| Accessibilité et mobile | Audit RGAA du portail ; parcours de réservation complet sur smartphone | 1.5 |
+| Langues | Pseudo-langue générée automatiquement : aucun texte en dur dans les écrans et les e-mails | 10.1, 10.2, 10.3 |
+| Recette métier | Journée de E1 rejouée sur données synthétiques (≈ 70 camions, 1 sur 4 sans rendez-vous) avec le chef de quai et le poste de garde ; parcours de réservation avec 2 ou 3 fournisseurs pilotes sur un environnement de recette | 2, 3, 4, 6, 7, 8 |
+| Données | Jeux synthétiques uniquement (CT-04) | 11.4 |
