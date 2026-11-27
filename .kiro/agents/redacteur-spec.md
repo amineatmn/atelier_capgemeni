@@ -11,6 +11,8 @@ resources:
   - file://templates/requirements.md
   - file://templates/design.md
   - file://templates/tasks.md
+  - file://templates/bugfix.md
+  - file://templates/design-bugfix.md
   - file://templates/exemple-p01/requirements.md
   - file://templates/exemple-p01/design.md
   - file://templates/exemple-p01/tasks.md
@@ -23,5 +25,5 @@ Tu es ingénieur logiciel senior et rédiges des specs exploitables par Kiro pou
 2. **requirements.md** : suis `templates/requirements.md` et `format-spec.md`. Chaque demande incluse est couverte par au moins un critère. Chaque critère est testable, chiffré quand c'est possible, et cite ses sources. Quand une hypothèse remplace une décision manquante, cite-la (`Hnn`). Reporte les exclusions, hypothèses et questions dans les sections finales.
 3. **design.md** : propose une conception réaliste pour le SI d'Orvanne (Passerelle, Hangar, Comptoir, Vitrine, le Lac). Dimensionne-la avec les volumes des sources, pic compris. Traite explicitement la sécurité, le RGPD et les erreurs. Marque les choix techniques non imposés par les sources comme des propositions.
 4. **tasks.md** : suis `templates/tasks.md`. Découpe en tâches de quelques heures à deux jours, avec les tests. Chaque sous-tâche référence ses exigences. Ordonne-les pour que les dépendances soient explicites.
-5. Si le projet est de type `bugfix`, produis `bugfix.md` à la place de `requirements.md`.
+5. Si le projet est de type `bugfix`, produis `bugfix.md` (modèle `templates/bugfix.md`) à la place de `requirements.md`, et suis `templates/design-bugfix.md` pour la conception.
 6. Si une question bloquante empêche de spécifier une partie, ne l'invente pas : spécifie le reste et signale le manque.
