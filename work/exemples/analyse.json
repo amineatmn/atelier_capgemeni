@@ -1,42 +1,281 @@
 {
-  "_commentaire": "Extrait d'exemple limité au projet P01. Les IDs B02-Dn et B05-Dn sont fictifs : ils dépendront des vraies fiches.",
+  "_commentaire": "Extrait d'exemple limité au projet P01, aligné sur les fiches de la branche extraction (B01, B02, B05, B07, version du 27/11 15:25). Les CT-nn suivent .kiro/steering/contraintes-transverses.md.",
   "projets": [
     {
       "id": "P01",
       "slug": "alertes-retards-livraison",
       "titre": "Détection des retards de livraison, information du client et pilotage",
       "type_spec": "feature",
-      "commanditaire": "Direction des opérations logistiques",
-      "parties_prenantes": ["Service client", "DSI", "DPO", "Marketing"],
-      "documents": ["B01", "B02", "B05"],
-      "demandes_incluses": ["B01-D1", "B01-D2", "B01-D3", "B01-D4", "B01-D5", "B01-D6", "B01-D7", "B01-D8", "B01-D9", "B01-D10", "B01-D11", "B02-D3", "B02-D4"],
-      "demandes_exclues": [
-        { "id": "B05-D9", "raison": "Code promo dans un message de service, interdit par CT-03", "renvoi": null }
+      "commanditaire": "Direction des opérations logistiques (détection, tableau de bord) et service client (messages), à confirmer : voir C05",
+      "parties_prenantes": [
+        "Service client",
+        "DSI",
+        "DPO",
+        "Marketing"
       ],
-      "contraintes": ["CT-02", "CT-03", "CT-07"],
-      "conflits": ["C01", "C02", "C03"],
+      "documents": [
+        "B01",
+        "B02",
+        "B05"
+      ],
+      "demandes_incluses": [
+        "B01-D1",
+        "B01-D2",
+        "B01-D3",
+        "B01-D4",
+        "B01-D5",
+        "B01-D6",
+        "B01-D7",
+        "B01-D8",
+        "B01-D9",
+        "B01-D10",
+        "B01-D11",
+        "B01-D12",
+        "B02-D1",
+        "B02-D2",
+        "B02-D3",
+        "B02-D4",
+        "B02-D5",
+        "B02-D6",
+        "B02-D7",
+        "B02-D8",
+        "B02-D9",
+        "B02-D10",
+        "B02-D11",
+        "B02-D12",
+        "B02-D13",
+        "B02-D14",
+        "B02-D15",
+        "B02-D16",
+        "B02-D17",
+        "B02-D18"
+      ],
+      "demandes_exclues": [
+        {
+          "id": "B05-D14",
+          "raison": "Code promo dans un message de service : contraire à CT-03, voir C06",
+          "renvoi": null
+        }
+      ],
+      "contraintes": [
+        "CT-01",
+        "CT-02",
+        "CT-03",
+        "CT-04",
+        "CT-07",
+        "CT-08",
+        "CT-09",
+        "CT-10",
+        "CT-11",
+        "CT-12"
+      ],
+      "conflits": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06"
+      ],
       "dependances": [],
       "decoupage_versions": {
-        "V1": ["B01-D1", "B01-D3", "B01-D7"],
-        "V2": ["B01-D5", "B01-D6"]
+        "V1": [
+          "B01-D1",
+          "B01-D2",
+          "B01-D3",
+          "B01-D4",
+          "B01-D6",
+          "B01-D7",
+          "B01-D8",
+          "B01-D12",
+          "B02-D1",
+          "B02-D2",
+          "B02-D3",
+          "B02-D4",
+          "B02-D5",
+          "B02-D6",
+          "B02-D7",
+          "B02-D8",
+          "B02-D9",
+          "B02-D10",
+          "B02-D11",
+          "B02-D13",
+          "B02-D16",
+          "B02-D17",
+          "B02-D18"
+        ],
+        "V2": [
+          "B01-D5"
+        ]
       }
     }
   ],
   "contraintes_transverses": [
-    { "id": "CT-02", "enonce": "Le numéro de mobile ne sert qu'à la livraison sans analyse préalable de la DPO", "sources": ["B07-D8"], "projets": ["P01", "P04"] },
-    { "id": "CT-03", "enonce": "Un message de service ne contient pas d'offre commerciale", "sources": ["B07-D9", "B02-D9"], "projets": ["P01"] },
-    { "id": "CT-07", "enonce": "Gel des mises en production du 16/11 au 11/01", "sources": ["B02-D12"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07"] }
+    {
+      "id": "CT-01",
+      "enonce": "Tout nouveau traitement de données personnelles est soumis à la DPO avant développement",
+      "sources": [
+        "B07-D15"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-02",
+      "enonce": "Le numéro de mobile est collecté pour la livraison ; tout autre usage, y compris une notification de service par SMS, suppose une analyse préalable de la DPO",
+      "sources": [
+        "B07-D16"
+      ],
+      "projets": [
+        "P01",
+        "P04"
+      ]
+    },
+    {
+      "id": "CT-03",
+      "enonce": "Un message de service ne contient pas d'offre commerciale",
+      "sources": [
+        "B07-D17",
+        "B02-D10"
+      ],
+      "projets": [
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "id": "CT-04",
+      "enonce": "Aucune donnée de production pour des démos ou des tests sans anonymisation",
+      "sources": [
+        "B07-D21"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-07",
+      "enonce": "Gel des mises en production du 16/11/2026 au 11/01/2027 : aucune mise en service dans cette période",
+      "sources": [
+        "B02-D14"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-08",
+      "enonce": "Hébergement dans le cloud d'Orvanne, dans l'UE ; solution intégrée à l'existant préférée à l'achat d'un produit",
+      "sources": [
+        "B01-D9",
+        "B07-D25"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-09",
+      "enonce": "Les échanges avec les systèmes existants passent par Passerelle",
+      "sources": [
+        "B01-D10"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P06"
+      ]
+    },
+    {
+      "id": "CT-10",
+      "enonce": "Tout système qui stocke des données clients peut exporter, effacer ou anonymiser les données d'une personne, isoler les données à conservation légale et prouver l'exécution",
+      "sources": [
+        "B07-D7",
+        "B07-D8",
+        "B07-D11",
+        "B07-D13"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-11",
+      "enonce": "Le service client est informé de tout message envoyé aux clients et modifie lui-même les textes des messages",
+      "sources": [
+        "B02-D9",
+        "B02-D16",
+        "B01-D12"
+      ],
+      "projets": [
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "id": "CT-12",
+      "enonce": "Les actions des utilisateurs internes sur des données client ou sensibles sont journalisées",
+      "sources": [
+        "B07-D2"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P05",
+        "P07"
+      ]
+    }
   ],
   "conflits": [
     {
       "id": "C01",
       "sujet": "Canal de l'alerte client",
       "positions": [
-        { "source": "B01-D5", "position": "SMS uniquement" },
-        { "source": "B02-D4", "position": "E-mail uniquement (budget SMS refusé, mobiles incomplets)" }
+        {
+          "source": "B01-D5",
+          "position": "SMS uniquement"
+        },
+        {
+          "source": "B02-D5",
+          "position": "E-mail uniquement (budget SMS refusé, mobiles incomplets)"
+        },
+        {
+          "source": "B07-D16",
+          "position": "Mobile réservé à la livraison sans analyse préalable (CT-02)"
+        }
       ],
       "gravite": "majeur",
-      "arbitre": "Comité de direction (logistique et service client), avis DPO",
+      "arbitre": "Comité de direction (logistique et service client), après avis de la DPO",
       "hypothese": "H01",
       "question": "Q01"
     },
@@ -44,11 +283,17 @@
       "id": "C02",
       "sujet": "Définition d'une commande en retard",
       "positions": [
-        { "source": "B01-D7", "position": "48 h après la date promise" },
-        { "source": "B02-D5", "position": "J+1 matin après la date promise affichée sur Vitrine" }
+        {
+          "source": "B01-D7",
+          "position": "48 h après la date promise"
+        },
+        {
+          "source": "B02-D6",
+          "position": "J+1 matin après la date promise affichée sur Vitrine"
+        }
       ],
       "gravite": "majeur",
-      "arbitre": "Directrice des opérations logistiques et responsable du service client",
+      "arbitre": "Comité de direction (désaccord entre la logistique et le service client)",
       "hypothese": "H02",
       "question": "Q02"
     },
@@ -56,22 +301,220 @@
       "id": "C03",
       "sujet": "Échéance « pour le pic » contre gel des mises en production",
       "positions": [
-        { "source": "B01-D5", "position": "Opérationnel pour le pic" },
-        { "source": "B02-D12", "position": "Gel du 16/11 au 11/01, mise en service au T1" }
+        {
+          "source": "B01-D1",
+          "position": "Tableau de bord et alertes « opérationnels pour le pic », priorité numéro un de la logistique"
+        },
+        {
+          "source": "B02-D14",
+          "position": "Gel du 16/11 au 11/01 ; mise en service au T1 2027 (B02-D15)"
+        }
       ],
-      "gravite": "bloquant",
-      "arbitre": "DSI",
-      "hypothese": null,
+      "gravite": "majeur",
+      "arbitre": "DSI (calendrier de mise en production) ; comité de direction si une dérogation est demandée",
+      "hypothese": "H03",
       "question": "Q03"
+    },
+    {
+      "id": "C04",
+      "sujet": "Validation humaine avant l'envoi des messages",
+      "positions": [
+        {
+          "source": "B01-D8",
+          "position": "Aucune intervention manuelle"
+        },
+        {
+          "source": "B02-D8",
+          "position": "Message validé par un conseiller pour les clients Premium"
+        }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Comité de direction (logistique et service client)",
+      "hypothese": "H04",
+      "question": "Q04"
+    },
+    {
+      "id": "C05",
+      "sujet": "Propriété du projet et des messages envoyés aux clients",
+      "positions": [
+        {
+          "source": "B01-D12",
+          "position": "La logistique décide des alertes ; le service client est seulement informé"
+        },
+        {
+          "source": "B02-D16",
+          "position": "La relation client appartient au service client ; aucun message sans qu'il le sache"
+        }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Comité de direction",
+      "hypothese": "H05",
+      "question": "Q05"
+    },
+    {
+      "id": "C06",
+      "sujet": "Code promo dans les messages de retard",
+      "positions": [
+        {
+          "source": "B05-D14",
+          "position": "Glisser un code promo dans le message de retard"
+        },
+        {
+          "source": "B02-D10",
+          "position": "Message d'information uniquement, sans contenu commercial"
+        },
+        {
+          "source": "B07-D17",
+          "position": "Un message de service ne contient pas d'offre commerciale (CT-03)"
+        }
+      ],
+      "gravite": "mineur",
+      "arbitre": "DPO (règle déjà en vigueur)",
+      "hypothese": "H06",
+      "question": "Q06"
     }
   ],
   "hypotheses": [
-    { "id": "H01", "enonce": "Le canal est paramétrable ; la V1 envoie des e-mails ; le SMS est activé après validation DPO (CT-02) et budget.", "justification": "Option réversible, conforme à CT-02, qui couvre les clients sans mobile.", "conflit": "C01", "reversible": true },
-    { "id": "H02", "enonce": "Le seuil de retard est un paramètre, avec deux niveaux : « à surveiller » à J+1 (liste service client, tableau de bord) et « en retard » à J+2 (alerte client).", "justification": "Satisfait les deux usages sans trancher à la place des métiers.", "conflit": "C02", "reversible": true }
+    {
+      "id": "H01",
+      "enonce": "Le canal est paramétrable ; la V1 envoie des e-mails ; le SMS est prévu mais désactivé, activable après analyse DPO (CT-02) et décision budgétaire.",
+      "justification": "Option réversible, conforme à CT-02, qui couvre aussi les clients sans mobile.",
+      "conflit": "C01",
+      "reversible": true
+    },
+    {
+      "id": "H02",
+      "enonce": "Deux seuils paramétrables : « date promise dépassée » à J+1 (liste du service client, message au client) et « en retard » à 48 h (alerte du tableau de bord logistique).",
+      "justification": "Satisfait les deux usages sans trancher à la place des métiers ; seules les valeurs par défaut changeront après arbitrage.",
+      "conflit": "C02",
+      "reversible": true
+    },
+    {
+      "id": "H03",
+      "enonce": "Développement pendant le gel, mise en service après le 11/01/2027. Aucune livraison n'est promise pour le pic 2026.",
+      "justification": "Respecte CT-07 ; l'éventuelle dérogation pour un tableau de bord interne est posée en question.",
+      "conflit": "C03",
+      "reversible": true
+    },
+    {
+      "id": "H04",
+      "enonce": "Envoi automatique par défaut ; les messages des clients Premium passent par une file de validation du service client. La règle est un paramètre par segment.",
+      "justification": "Respecte l'automatisme demandé pour la majorité des clients et la demande du service client sur un segment restreint.",
+      "conflit": "C04",
+      "reversible": true
+    },
+    {
+      "id": "H05",
+      "enonce": "Un seul projet : la logistique possède la détection et le tableau de bord, le service client possède les messages, leurs textes et leurs règles d'envoi (CT-11).",
+      "justification": "Évite deux messages contradictoires au même client ; s'appuie sur une contrainte exprimée par le service client.",
+      "conflit": "C05",
+      "reversible": true
+    },
+    {
+      "id": "H06",
+      "enonce": "Aucun contenu commercial dans les messages de retard ; aucun champ promotionnel dans leurs gabarits.",
+      "justification": "Applique CT-03, règle établie par la DPO et demandée par le service client.",
+      "conflit": "C06",
+      "reversible": false
+    },
+    {
+      "id": "H07",
+      "enonce": "« Temps réel » est remplacé par une fraîcheur cible par transporteur, fixée après inventaire des flux reçus par Passerelle ; le tableau de bord affiche l'heure de dernière mise à jour.",
+      "justification": "Une partie des statuts arrive par fichier chaque matin (B01-F1) : un objectif uniforme serait invérifiable.",
+      "conflit": null,
+      "reversible": true
+    }
   ],
   "questions": [
-    { "id": "Q01", "question": "Quel canal pour l'alerte retard : SMS (budget, avis DPO), e-mail, ou les deux selon la disponibilité du mobile ?", "destinataire": "Solène Garrigue, Yanis Mercadier, Hélène Marsac", "projets": ["P01"], "bloquante": false },
-    { "id": "Q02", "question": "À partir de quand une commande est-elle « en retard » : J+1 ou J+2 après la date promise ? Le seuil peut-il différer entre le tableau de bord et l'alerte client ?", "destinataire": "Solène Garrigue, Yanis Mercadier", "projets": ["P01"], "bloquante": false },
-    { "id": "Q03", "question": "Une dérogation au gel du 16/11 est-elle envisageable pour un tableau de bord interne, sans envoi aux clients, avant le pic ?", "destinataire": "DSI (Bertrand Lacassagne)", "projets": ["P01"], "bloquante": true }
+    {
+      "id": "Q01",
+      "question": "Quel canal pour l'alerte retard : e-mail seul, SMS (avec budget et avis DPO), ou SMS quand le mobile est connu et e-mail sinon ?",
+      "destinataire": "Solène Garrigue, Yanis Mercadier, Hélène Marsac",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q02",
+      "question": "À partir de quand une commande est-elle « en retard » : J+1 ou 48 h après la date promise ? Le seuil peut-il différer entre le tableau de bord et le message au client ?",
+      "destinataire": "Solène Garrigue, Yanis Mercadier",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q03",
+      "question": "Une dérogation au gel du 16/11 est-elle envisageable pour un tableau de bord interne, sans envoi aux clients, avant le pic ?",
+      "destinataire": "DSI (Bertrand Lacassagne, fonction à confirmer)",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": true
+    },
+    {
+      "id": "Q04",
+      "question": "Les clients « Premium » sont-ils les membres Orvanne+ ? Combien sont-ils ? Leur message doit-il être validé par un conseiller ?",
+      "destinataire": "Yanis Mercadier, Capucine Lorrain",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q05",
+      "question": "Le comité de direction valide-t-il le partage : détection et tableau de bord à la logistique, messages aux clients au service client ?",
+      "destinataire": "Comité de direction",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q06",
+      "question": "Le marketing confirme-t-il l'abandon du code promo dans les messages de retard ? Une relance commerciale distincte doit-elle être soumise à la DPO ?",
+      "destinataire": "Capucine Lorrain, Hélène Marsac",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q07",
+      "question": "Pour chacun des trois transporteurs : quels statuts Passerelle reçoit-il, par API ou par fichier, et à quelle fréquence ?",
+      "destinataire": "DSI (équipe Passerelle)",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": true
+    },
+    {
+      "id": "Q08",
+      "question": "Que désignent « les rouges » dans le tableau de bord : une ancienneté de retard, un client, une valeur de commande ?",
+      "destinataire": "Solène Garrigue",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    },
+    {
+      "id": "Q09",
+      "question": "D'où vient la nouvelle date de livraison à communiquer : date estimée du transporteur ou calcul interne ?",
+      "destinataire": "Direction des opérations logistiques, DSI",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": true
+    },
+    {
+      "id": "Q10",
+      "question": "Pour une commande en plusieurs colis, le retard s'apprécie-t-il par colis (B01) ou par commande (B02) ?",
+      "destinataire": "Yanis Mercadier, Solène Garrigue",
+      "projets": [
+        "P01"
+      ],
+      "bloquante": false
+    }
   ]
 }
