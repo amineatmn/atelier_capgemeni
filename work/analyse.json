@@ -1,0 +1,628 @@
+{
+  "projets": [
+    {
+      "id": "P01",
+      "slug": "alertes-retards-livraison",
+      "titre": "Détection des retards de livraison, suivi colis dans Comptoir et information du client",
+      "type_spec": "feature",
+      "commanditaire": "Direction des opérations logistiques",
+      "parties_prenantes": ["Service client", "DSI", "Direction juridique et conformité (DPO)", "Marketing"],
+      "documents": ["B01", "B02", "B05"],
+      "demandes_incluses": [
+        "B01-D1", "B01-D2", "B01-D3", "B01-D4", "B01-D5", "B01-D6", "B01-D7", "B01-D8", "B01-D9", "B01-D10", "B01-D11",
+        "B02-D1", "B02-D2", "B02-D3", "B02-D4", "B02-D5", "B02-D6", "B02-D7", "B02-D8", "B02-D9", "B02-D10", "B02-D11", "B02-D12", "B02-D13", "B02-D14", "B02-D15"
+      ],
+      "demandes_exclues": [
+        { "id": "B05-D7", "raison": "Code promo dans un message de retard de livraison : interdit par CT-03 (B07-D12, B02-D10). Une offre commerciale relève d'un message marketing distinct (voir C07, H06).", "renvoi": null }
+      ],
+      "contraintes": ["CT-01", "CT-02", "CT-03", "CT-04", "CT-07", "CT-08", "CT-10"],
+      "conflits": ["C01", "C02", "C03", "C04", "C05", "C06", "C07"],
+      "dependances": [
+        { "projet": "P02", "nature": "Les deux projets lisent les statuts transporteurs reçus dans Passerelle (B01-D10, B03-D15) : un même accès aux statuts est à prévoir." },
+        { "projet": "P05", "nature": "L'historique des alertes envoyées est un nouveau stockage de données clients à intégrer à l'orchestration des droits (B07-D5)." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B01-D1", "B01-D2", "B01-D3", "B01-D4", "B01-D6", "B01-D7", "B01-D8", "B01-D9", "B01-D10", "B01-D11", "B02-D1", "B02-D2", "B02-D3", "B02-D4", "B02-D5", "B02-D6", "B02-D7", "B02-D9", "B02-D10", "B02-D11", "B02-D12", "B02-D13", "B02-D14", "B02-D15"],
+        "V2": ["B01-D5", "B02-D8"]
+      }
+    },
+    {
+      "id": "P02",
+      "slug": "portail-retours",
+      "titre": "Portail de retours en libre-service, remboursement et visibilité des entrepôts",
+      "type_spec": "feature",
+      "commanditaire": "Direction de l'expérience client",
+      "parties_prenantes": ["DSI", "Service client", "Contrôle de gestion et DAF", "Marketing", "Exploitation entrepôt E2", "Direction marketplace", "Direction juridique et conformité (DPO)"],
+      "documents": ["B03", "B04", "B09"],
+      "demandes_incluses": [
+        "B03-D1", "B03-D2", "B03-D3", "B03-D4", "B03-D5", "B03-D6", "B03-D7", "B03-D8", "B03-D9", "B03-D10",
+        "B03-D11", "B03-D12", "B03-D13", "B03-D14", "B03-D15", "B03-D16", "B03-D17", "B03-D18", "B03-D19", "B03-D20",
+        "B03-D21", "B03-D22", "B03-D23", "B03-D24", "B03-D25", "B03-D26", "B03-D27", "B03-D28", "B03-D29", "B03-D30", "B03-D31",
+        "B04-D1", "B04-D2", "B04-D3", "B04-D4", "B04-D5", "B04-D6", "B04-D7", "B04-D8", "B04-D9", "B04-D10", "B04-D11", "B04-D12", "B04-D14", "B04-D15", "B04-D17",
+        "B09-D8"
+      ],
+      "demandes_exclues": [
+        { "id": "B04-D13", "raison": "Application douchette de saisie de la note et de la photo au contrôle qualité : même écran que la déclaration de casse (B06-D10), traitée dans P03.", "renvoi": "P03" },
+        { "id": "B04-D16", "raison": "Suivi du taux de retour par produit : indicateur analytique du Lac, à l'état d'idée, sans porteur identifié (Q32).", "renvoi": null }
+      ],
+      "contraintes": ["CT-01", "CT-03", "CT-04", "CT-06", "CT-07", "CT-08", "CT-09", "CT-10"],
+      "conflits": ["C08", "C09", "C10", "C11", "C12", "C13", "C14", "C15"],
+      "dependances": [
+        { "projet": "P03", "nature": "La grille A / B / C (B04-D11) est définie dans P02 ; P03 fournit l'écran douchette qui saisit la note des retours abîmés (B06-D10, B04-D13). Le déclencheur du remboursement après contrôle (H07) dépend de cette saisie." },
+        { "projet": "P07", "nature": "Les retours marketplace (V2 de P02) alimentent le suivi des retours par le vendeur (MKP-06, B09-D8) dans l'espace vendeur." },
+        { "projet": "P01", "nature": "Lecture partagée des statuts transporteurs dans Passerelle (premier scan, B03-D15)." },
+        { "projet": "P05", "nature": "Photos (CT-06) et retours sont de nouvelles données clients à intégrer à l'orchestration des droits (B07-D5)." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B03-D1", "B03-D2", "B03-D3", "B03-D4", "B03-D5", "B03-D6", "B03-D7", "B03-D8", "B03-D9", "B03-D10", "B03-D11", "B03-D12", "B03-D13", "B03-D14", "B03-D15", "B03-D16", "B03-D18", "B03-D19", "B03-D20", "B03-D21", "B03-D22", "B03-D23", "B03-D24", "B03-D25", "B03-D26", "B03-D27", "B03-D28", "B03-D29", "B03-D30", "B03-D31", "B04-D2", "B04-D3", "B04-D4", "B04-D5", "B04-D6", "B04-D7", "B04-D8", "B04-D11", "B04-D12", "B04-D15", "B04-D17"],
+        "V2": ["B03-D17", "B04-D1", "B04-D9", "B04-D10", "B04-D14", "B09-D8"]
+      }
+    },
+    {
+      "id": "P03",
+      "slug": "declaration-casse-entrepot",
+      "titre": "Déclaration de casse à la douchette, blocage du stock dans Hangar et litiges transporteurs",
+      "type_spec": "feature",
+      "commanditaire": "Exploitation entrepôt E2 (rattachement de direction à confirmer)",
+      "parties_prenantes": ["DSI", "Transport", "Chefs d'équipe E2", "Entrepôts E1 et E3", "Direction juridique et conformité (DPO)"],
+      "documents": ["B06", "B04"],
+      "demandes_incluses": [
+        "B06-D1", "B06-D2", "B06-D3", "B06-D4", "B06-D5", "B06-D6", "B06-D7", "B06-D8", "B06-D9", "B06-D10", "B06-D11", "B06-D12", "B06-D13",
+        "B04-D13"
+      ],
+      "demandes_exclues": [],
+      "contraintes": ["CT-01", "CT-04", "CT-06", "CT-07", "CT-08"],
+      "conflits": ["C12", "C16", "C17"],
+      "dependances": [
+        { "projet": "P02", "nature": "La note A / B / C des retours abîmés (B06-D10) suit la grille définie dans P02 (B04-D11) et conditionne le remboursement après contrôle (H07)." },
+        { "projet": "P05", "nature": "Les photos prises en entrepôt sont des données personnelles si une étiquette est visible (CT-06) : stockage à intégrer à l'orchestration des droits." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B06-D1", "B06-D2", "B06-D3", "B06-D4", "B06-D5", "B06-D6", "B06-D8", "B06-D9", "B06-D11", "B06-D12", "B06-D13"],
+        "V2": ["B06-D7", "B06-D10", "B04-D13"]
+      }
+    },
+    {
+      "id": "P04",
+      "slug": "relance-paniers-abandonnes",
+      "titre": "Relance personnalisée des paniers abandonnés",
+      "type_spec": "feature",
+      "commanditaire": "Marketing (CRM et fidélité)",
+      "parties_prenantes": ["DSI", "Équipe du Lac", "Direction juridique et conformité (DPO)", "Finance", "Comité commerce"],
+      "documents": ["B05"],
+      "demandes_incluses": ["B05-D1", "B05-D2", "B05-D3", "B05-D4", "B05-D5", "B05-D6", "B05-D8", "B05-D9", "B05-D10", "B05-D11", "B05-D12"],
+      "demandes_exclues": [
+        { "id": "B05-D7", "raison": "Le code promo dans les messages de retard relève du projet retards (B05-F6), où il est exclu par CT-03.", "renvoi": "P01" }
+      ],
+      "contraintes": ["CT-01", "CT-02", "CT-04", "CT-05", "CT-07", "CT-08"],
+      "conflits": ["C07", "C18", "C19", "C20"],
+      "dependances": [
+        { "projet": "P05", "nature": "L'opposition à la prospection et la durée de conservation de 3 ans (CT-05) sont gérées par le registre des droits ; la relance doit respecter les oppositions enregistrées." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B05-D1", "B05-D3", "B05-D4", "B05-D5", "B05-D6", "B05-D8", "B05-D9", "B05-D10", "B05-D11", "B05-D12"],
+        "V2": ["B05-D2"]
+      }
+    },
+    {
+      "id": "P05",
+      "slug": "registre-droits-rgpd",
+      "titre": "Registre et traitement des demandes d'exercice de droits RGPD",
+      "type_spec": "feature",
+      "commanditaire": "Direction juridique et conformité (DPO)",
+      "parties_prenantes": ["DSI (comité d'architecture)", "Service client", "Comité des risques"],
+      "documents": ["B07"],
+      "demandes_incluses": ["B07-D1", "B07-D2", "B07-D3", "B07-D4", "B07-D5", "B07-D6", "B07-D7", "B07-D8", "B07-D9", "B07-D17", "B07-D18", "B07-D19", "B07-D20"],
+      "demandes_exclues": [
+        { "id": "B07-D10", "raison": "Règle applicable à tous les projets, portée par CT-01.", "renvoi": null },
+        { "id": "B07-D11", "raison": "Règle applicable aux projets utilisant le mobile, portée par CT-02.", "renvoi": null },
+        { "id": "B07-D12", "raison": "Règle applicable aux messages de service, portée par CT-03.", "renvoi": null },
+        { "id": "B07-D13", "raison": "Règle de conservation des données de prospection, portée par CT-05.", "renvoi": null },
+        { "id": "B07-D14", "raison": "Chantier de purge des historiques de prospection : sans porteur ni échéance, distinct de l'outil de registre (Q31).", "renvoi": null },
+        { "id": "B07-D15", "raison": "Règle sur les photos et pièces jointes, portée par CT-06.", "renvoi": null },
+        { "id": "B07-D16", "raison": "Règle sur les données de démonstration et de test, portée par CT-04.", "renvoi": null }
+      ],
+      "contraintes": ["CT-01", "CT-04", "CT-07", "CT-08", "CT-10"],
+      "conflits": [],
+      "dependances": [
+        { "projet": "P01", "nature": "Nouveau stockage de données clients (alertes) à orchestrer." },
+        { "projet": "P02", "nature": "Nouveau stockage de données clients (retours, photos) à orchestrer." },
+        { "projet": "P03", "nature": "Photos d'entrepôt (CT-06) à orchestrer." },
+        { "projet": "P04", "nature": "Oppositions à la prospection à appliquer par la relance." },
+        { "projet": "P06", "nature": "Contacts des fournisseurs et transporteurs : nouvelles données personnelles à recenser." },
+        { "projet": "P07", "nature": "Échanges vendeurs-clients (MKP-09) : nouvelles données clients à orchestrer." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B07-D1", "B07-D2", "B07-D3", "B07-D4", "B07-D6", "B07-D7", "B07-D8", "B07-D9", "B07-D17", "B07-D18", "B07-D19", "B07-D20"],
+        "V2": ["B07-D5"]
+      }
+    },
+    {
+      "id": "P06",
+      "slug": "rdv-livraisons-fournisseurs",
+      "titre": "Prise de rendez-vous de déchargement par les fournisseurs et transporteurs",
+      "type_spec": "feature",
+      "commanditaire": "Approvisionnement et transport amont",
+      "parties_prenantes": ["Exploitation E1 (chef de quai)", "Exploitation E2", "Achats", "DSI", "Poste de garde"],
+      "documents": ["B08"],
+      "demandes_incluses": [
+        "B08-D1", "B08-D2", "B08-D3", "B08-D4", "B08-D5", "B08-D6", "B08-D7", "B08-D8", "B08-D9", "B08-D10",
+        "B08-D11", "B08-D12", "B08-D13", "B08-D14", "B08-D15", "B08-D16", "B08-D17", "B08-D18", "B08-D19", "B08-D20",
+        "B08-D21", "B08-D22", "B08-D23", "B08-D24", "B08-D25", "B08-D26", "B08-D27", "B08-D28", "B08-D29", "B08-D30"
+      ],
+      "demandes_exclues": [],
+      "contraintes": ["CT-01", "CT-03", "CT-04", "CT-07", "CT-08", "CT-09", "CT-11"],
+      "conflits": ["C21", "C22", "C23", "C24"],
+      "dependances": [
+        { "projet": "P05", "nature": "Les contacts des fournisseurs et transporteurs sont des données personnelles à recenser dans le registre." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B08-D1", "B08-D2", "B08-D3", "B08-D4", "B08-D5", "B08-D6", "B08-D7", "B08-D8", "B08-D9", "B08-D10", "B08-D11", "B08-D12", "B08-D13", "B08-D14", "B08-D15", "B08-D16", "B08-D17", "B08-D20", "B08-D21", "B08-D22", "B08-D25", "B08-D26", "B08-D27", "B08-D28", "B08-D29", "B08-D30"],
+        "V2": ["B08-D18", "B08-D19", "B08-D23", "B08-D24"]
+      }
+    },
+    {
+      "id": "P07",
+      "slug": "espace-vendeur-marketplace",
+      "titre": "Évolutions de l'espace vendeur de la marketplace",
+      "type_spec": "feature",
+      "commanditaire": "Direction marketplace",
+      "parties_prenantes": ["Finance", "Comptabilité", "Chargés de compte", "Service client (Comptoir)", "DSI"],
+      "documents": ["B09"],
+      "demandes_incluses": ["B09-D1", "B09-D2", "B09-D3", "B09-D4", "B09-D5", "B09-D6", "B09-D7", "B09-D12", "B09-D13", "B09-D14", "B09-D15", "B09-D16", "B09-D18", "B09-D19"],
+      "demandes_exclues": [
+        { "id": "B09-D8", "raison": "MKP-06 (suivi des retours par le vendeur) dépend du circuit de retours marketplace, traité en V2 du portail de retours.", "renvoi": "P02" },
+        { "id": "B09-D9", "raison": "MKP-07 décrit un défaut de l'existant (export en erreur au-delà de 50 000 lignes) : spec bugfix séparée.", "renvoi": "P08" },
+        { "id": "B09-D10", "raison": "Solution technique proposée pour MKP-07 : traitée comme piste de conception dans la spec bugfix.", "renvoi": "P08" },
+        { "id": "B09-D11", "raison": "Solution technique proposée pour MKP-07 : traitée comme piste de conception dans la spec bugfix.", "renvoi": "P08" },
+        { "id": "B09-D17", "raison": "MKP-11 « trop lent » décrit un défaut de l'existant, à mesurer puis corriger : spec bugfix séparée.", "renvoi": "P08" }
+      ],
+      "contraintes": ["CT-01", "CT-04", "CT-07", "CT-08", "CT-09", "CT-10", "CT-11"],
+      "conflits": ["C11", "C25", "C26"],
+      "dependances": [
+        { "projet": "P08", "nature": "Les correctifs d'export et de performance portent sur le même espace vendeur ; ils sont à livrer avant les nouvelles vues de ventes (MKP-01, MKP-12) qui s'appuient sur les mêmes données." },
+        { "projet": "P02", "nature": "MKP-06 attend les retours marketplace (V2 de P02)." },
+        { "projet": "P05", "nature": "Les échanges vendeur-client (MKP-09) créent de nouvelles données clients à orchestrer." }
+      ],
+      "decoupage_versions": {
+        "V1": ["B09-D1", "B09-D2", "B09-D3", "B09-D4", "B09-D5", "B09-D6", "B09-D7", "B09-D12", "B09-D13"],
+        "V2": ["B09-D14", "B09-D15", "B09-D16", "B09-D18", "B09-D19"]
+      }
+    },
+    {
+      "id": "P08",
+      "slug": "correctifs-espace-vendeur",
+      "titre": "Correctifs de l'espace vendeur : export des ventes et temps de réponse",
+      "type_spec": "bugfix",
+      "commanditaire": "Direction marketplace",
+      "parties_prenantes": ["DSI", "Vendeurs"],
+      "documents": ["B09"],
+      "demandes_incluses": ["B09-D9", "B09-D10", "B09-D11", "B09-D17"],
+      "demandes_exclues": [],
+      "contraintes": ["CT-04", "CT-07", "CT-08"],
+      "conflits": [],
+      "dependances": [
+        { "projet": "P07", "nature": "Même espace vendeur : les correctifs précèdent les nouvelles fonctions de P07 et ne doivent pas en dépendre." }
+      ]
+    }
+  ],
+  "contraintes_transverses": [
+    { "id": "CT-01", "enonce": "Tout nouveau traitement de données personnelles est soumis à la DPO avant développement.", "sources": ["B07-D10"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07"] },
+    { "id": "CT-02", "enonce": "Le numéro de mobile est collecté pour la livraison ; tout autre usage (alerte, relance) suppose une analyse préalable de la DPO.", "sources": ["B07-D11"], "projets": ["P01", "P04"] },
+    { "id": "CT-03", "enonce": "Un message de service ne contient pas d'offre commerciale.", "sources": ["B07-D12", "B02-D10"], "projets": ["P01", "P02", "P06"] },
+    { "id": "CT-04", "enonce": "Aucune donnée de production ne sert à des démonstrations ou à des tests sans anonymisation.", "sources": ["B07-D16"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"] },
+    { "id": "CT-05", "enonce": "Les données de prospection ne sont pas conservées plus de 3 ans après le dernier contact du client.", "sources": ["B07-D13"], "projets": ["P04"] },
+    { "id": "CT-06", "enonce": "Les photos et pièces jointes, transmises par les clients ou prises en entrepôt, sont des données personnelles dès qu'une étiquette ou une personne y est visible.", "sources": ["B07-D15"], "projets": ["P02", "P03"] },
+    { "id": "CT-07", "enonce": "Aucune mise en production pendant le gel, du 16 novembre au 11 janvier.", "sources": ["B02-D12"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"] },
+    { "id": "CT-08", "enonce": "Hébergement dans l'Union européenne (B03) ; pour P01, dans le cloud d'Orvanne et non chez un éditeur (B01). La généralisation de l'exigence « cloud d'Orvanne » aux autres projets est à confirmer (Q34).", "sources": ["B01-D9", "B03-D21"], "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"] },
+    { "id": "CT-09", "enonce": "Les interfaces utilisées par des personnes extérieures à Orvanne sont conformes au RGAA et utilisables sur mobile. Exigé pour le portail de retours ; extension au portail fournisseurs et à l'espace vendeur à confirmer (Q35).", "sources": ["B03-D22"], "projets": ["P02", "P06", "P07"] },
+    { "id": "CT-10", "enonce": "Les actions réalisées par un collaborateur pour le compte d'un client ou d'un tiers sont journalisées et conservent une preuve d'exécution.", "sources": ["B03-D23", "B07-D1"], "projets": ["P01", "P02", "P05", "P07"] },
+    { "id": "CT-11", "enonce": "Une partie des utilisateurs externes n'est pas francophone (fournisseurs étrangers, vendeurs européens) : les écrans et messages doivent pouvoir être proposés dans d'autres langues.", "sources": ["B08-D21", "B09-D15"], "projets": ["P06", "P07"] }
+  ],
+  "conflits": [
+    {
+      "id": "C01",
+      "sujet": "Canal de l'alerte de retard au client",
+      "positions": [
+        { "source": "B01-D5", "position": "SMS, pas d'e-mail" },
+        { "source": "B02-D5", "position": "E-mail uniquement : SMS refusé pour le budget, mobiles incomplets" },
+        { "source": "B07-D11", "position": "Le mobile est collecté pour la livraison ; tout autre usage suppose une analyse préalable (CT-02)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Directrice des opérations logistiques et responsable du service client conjointement, après avis de la DPO (CT-02) ; à défaut, comité de direction",
+      "hypothese": "H01",
+      "question": "Q01"
+    },
+    {
+      "id": "C02",
+      "sujet": "Définition d'une commande ou d'un colis en retard",
+      "positions": [
+        { "source": "B01-D7", "position": "48 h après la date promise" },
+        { "source": "B02-D6", "position": "Dès que la date promise affichée sur Vitrine est dépassée, soit J+1 matin" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Directrice des opérations logistiques et responsable du service client",
+      "hypothese": "H02",
+      "question": "Q02"
+    },
+    {
+      "id": "C03",
+      "sujet": "Échéance « pour le pic » contre gel des mises en production",
+      "positions": [
+        { "source": "B01-D1", "position": "Tableau de bord opérationnel pour le pic" },
+        { "source": "B01-D5", "position": "Alerte client opérationnelle pour le pic" },
+        { "source": "B02-D12", "position": "Gel des mises en production du 16 novembre au 11 janvier" },
+        { "source": "B02-D13", "position": "Mise en service propre au premier trimestre" }
+      ],
+      "gravite": "bloquant",
+      "arbitre": "DSI (Bertrand Lacassagne, destinataire de B01)",
+      "hypothese": null,
+      "question": "Q03"
+    },
+    {
+      "id": "C04",
+      "sujet": "Envoi automatique contre contrôle du service client",
+      "positions": [
+        { "source": "B01-D8", "position": "Aucune intervention manuelle ; le service client est seulement informé" },
+        { "source": "B02-D8", "position": "Validation par un conseiller avant envoi pour les clients Premium" },
+        { "source": "B02-D14", "position": "Aucun message ne part sans que l'équipe du service client le sache" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Responsable du service client, avec la directrice des opérations logistiques",
+      "hypothese": "H03",
+      "question": "Q04"
+    },
+    {
+      "id": "C05",
+      "sujet": "Tableau de bord « temps réel » contre statuts transporteurs quotidiens",
+      "positions": [
+        { "source": "B01-D2", "position": "Tableau de bord mis à jour en temps réel" },
+        { "source": "B01-D10", "position": "Statuts repris de Passerelle, alimentée par les fichiers que les transporteurs envoient chaque matin (B01-F1)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Directrice des opérations logistiques (besoin) et DSI (capacité de Passerelle)",
+      "hypothese": "H04",
+      "question": "Q05"
+    },
+    {
+      "id": "C06",
+      "sujet": "Granularité du retard : colis ou commande",
+      "positions": [
+        { "source": "B01-D3", "position": "Suivi des retards au niveau du colis" },
+        { "source": "B02-D4", "position": "Message au client quand sa commande est en retard" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "Directrice des opérations logistiques et responsable du service client",
+      "hypothese": "H05",
+      "question": "Q06"
+    },
+    {
+      "id": "C07",
+      "sujet": "Code promo dans les messages de retard",
+      "positions": [
+        { "source": "B05-D7", "position": "Glisser un code promo dans les messages de retard de livraison" },
+        { "source": "B07-D12", "position": "Un message de service ne contient pas d'offre commerciale (CT-03)" },
+        { "source": "B02-D10", "position": "Message d'information uniquement, sans contenu commercial" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "DPO (Hélène Marsac), autrice de la règle CT-03",
+      "hypothese": "H06",
+      "question": "Q07"
+    },
+    {
+      "id": "C08",
+      "sujet": "Moment du remboursement d'un retour",
+      "positions": [
+        { "source": "B03-D15", "position": "Remboursement automatique au premier scan du colis par le transporteur" },
+        { "source": "B04-D2", "position": "Finance : remboursement après contrôle en entrepôt" },
+        { "source": "B04-D3", "position": "Marketing : remboursement au dépôt, au moins pour les bons clients" },
+        { "source": "B03-D14", "position": "Statuts du retour : reçu avant remboursé (contradiction interne au CDC avec EF-07)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DAF, puis codir (renvoi prévu dans B04), sur la base du chiffrage du contrôle de gestion (B04-D17)",
+      "hypothese": "H07",
+      "question": "Q08"
+    },
+    {
+      "id": "C09",
+      "sujet": "Délai d'éligibilité au retour",
+      "positions": [
+        { "source": "B03-D10", "position": "30 jours après livraison pour tous" },
+        { "source": "B04-D4", "position": "14 jours, délai affiché sur le site" },
+        { "source": "B04-D5", "position": "30 jours réservés aux membres Orvanne+" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Direction de l'expérience client (commanditaire), après relecture des CGV par la direction juridique",
+      "hypothese": "H08",
+      "question": "Q09"
+    },
+    {
+      "id": "C10",
+      "sujet": "Gratuité des retours",
+      "positions": [
+        { "source": "B03-D29", "position": "Retours gratuits pour le client" },
+        { "source": "B04-D6", "position": "Gratuit seulement si article défectueux ou erreur de préparation" },
+        { "source": "B04-D7", "position": "Sinon 4,90 retenus sur le remboursement" },
+        { "source": "B04-D8", "position": "Marketing : gratuit pour le lancement" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DAF et direction de l'expérience client ; codir si désaccord",
+      "hypothese": "H09",
+      "question": "Q10"
+    },
+    {
+      "id": "C11",
+      "sujet": "Retours des articles marketplace en V1",
+      "positions": [
+        { "source": "B03-D5", "position": "Articles des vendeurs partenaires exclus du périmètre" },
+        { "source": "B04-D9", "position": "Service client : marketplace dès la V1 (35 % des demandes de retour)" },
+        { "source": "B04-D10", "position": "Circuit distinct : retour chez le vendeur, autres étiquettes" },
+        { "source": "B09-D8", "position": "MKP-06 : le vendeur suit les retours déclarés par les clients" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Direction de l'expérience client (commanditaire), avec la direction marketplace",
+      "hypothese": "H10",
+      "question": "Q11"
+    },
+    {
+      "id": "C12",
+      "sujet": "Montant remboursé selon la note A / B / C",
+      "positions": [
+        { "source": "B04-D12", "position": "Exploitation E2 : remboursement réduit pour une note C" },
+        { "source": "B04-D12", "position": "Service client : une réduction n'est légalement pas possible" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Direction juridique et conformité",
+      "hypothese": "H11",
+      "question": "Q12"
+    },
+    {
+      "id": "C13",
+      "sujet": "Accès au portail sans compte contre client connecté",
+      "positions": [
+        { "source": "B03-D8", "position": "Accès sans création de compte, par numéro de commande et e-mail" },
+        { "source": "B03-D11", "position": "EF-03 : le client connecté à son compte sélectionne les articles" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Direction de l'expérience client, sur proposition de la rédactrice du CDC (Inès Rouvière)",
+      "hypothese": "H12",
+      "question": "Q13"
+    },
+    {
+      "id": "C14",
+      "sujet": "RMA imprimé dans le colis contre étiquette dématérialisée",
+      "positions": [
+        { "source": "B04-D15", "position": "Le RMA doit être imprimé et placé dans le colis" },
+        { "source": "B03-D13", "position": "Étiquette prépayée en PDF et QR code envoyée par e-mail, sans mention du RMA" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "Cheffe de projet digital (Inès Rouvière) avec l'exploitation entrepôt (Karim Benhaddou)",
+      "hypothese": "H13",
+      "question": "Q14"
+    },
+    {
+      "id": "C15",
+      "sujet": "Mise en service « avant les soldes d'hiver » contre gel et consultation DPO",
+      "positions": [
+        { "source": "B03-D30", "position": "Mise en service du pilote avant les soldes d'hiver" },
+        { "source": "B02-D12", "position": "Gel des mises en production du 16 novembre au 11 janvier" },
+        { "source": "B07-D10", "position": "Traitement à soumettre à la DPO avant développement ; elle n'a pas été consultée sur le portail (B07-F14)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DSI (planning et gel), avec la direction de l'expérience client",
+      "hypothese": "H14",
+      "question": "Q15"
+    },
+    {
+      "id": "C16",
+      "sujet": "Photo de la casse contre douchettes sans appareil photo",
+      "positions": [
+        { "source": "B06-D2", "position": "Une ou deux photos par déclaration" },
+        { "source": "B06-D6", "position": "Les anciennes douchettes (deux tiers sur E2) n'ont pas d'appareil photo" },
+        { "source": "B06-D7", "position": "Piste : téléphones des chefs d'équipe, à voir" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Exploitation entrepôt E2 (Karim Benhaddou), avec la DSI pour le parc de terminaux",
+      "hypothese": "H15",
+      "question": "Q16"
+    },
+    {
+      "id": "C17",
+      "sujet": "Échéance « inventaire de janvier » contre gel des mises en production",
+      "positions": [
+        { "source": "B06-D13", "position": "Disponible pour l'inventaire de janvier" },
+        { "source": "B02-D12", "position": "Gel jusqu'au 11 janvier" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DSI, avec l'exploitation entrepôt E2",
+      "hypothese": "H16",
+      "question": "Q17"
+    },
+    {
+      "id": "C18",
+      "sujet": "Base légale et canaux de la relance des paniers abandonnés",
+      "positions": [
+        { "source": "B05-D9", "position": "Le consentement newsletter suffit, la question est reportée" },
+        { "source": "B05-D4", "position": "E-mail, notifications, SMS, messageries mobiles" },
+        { "source": "B07-D10", "position": "Tout nouveau traitement est soumis à la DPO avant développement (CT-01)" },
+        { "source": "B07-D11", "position": "Le mobile ne sert qu'à la livraison sans analyse préalable (CT-02)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DPO (Hélène Marsac)",
+      "hypothese": "H17",
+      "question": "Q18"
+    },
+    {
+      "id": "C19",
+      "sujet": "Profondeur d'historique exploitée par la relance",
+      "positions": [
+        { "source": "B05-D3", "position": "Historique d'achats depuis 2014 et navigation" },
+        { "source": "B07-D13", "position": "Données de prospection conservées au plus 3 ans après le dernier contact (CT-05)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DPO (Hélène Marsac)",
+      "hypothese": "H18",
+      "question": "Q19"
+    },
+    {
+      "id": "C20",
+      "sujet": "Démo sur données de vrais clients",
+      "positions": [
+        { "source": "B05-D11", "position": "Démo sur les vrais clients" },
+        { "source": "B07-D16", "position": "Aucune donnée de production pour une démo sans anonymisation (CT-04)" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "DPO (Hélène Marsac)",
+      "hypothese": "H19",
+      "question": "Q20"
+    },
+    {
+      "id": "C21",
+      "sujet": "Durée des créneaux de déchargement",
+      "positions": [
+        { "source": "B08-D3", "position": "R2 : créneaux de 30 minutes (le chef de quai E1 y tient)" },
+        { "source": "B08-D20", "position": "Créneaux d'une heure sur E2 (palettes hétérogènes)" },
+        { "source": "B08-D26", "position": "Paramétrage cible de E1 avec des créneaux d'une heure" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Approvisionnement et transport amont (Grégory Thibaudeau), avec les chefs de site E1 et E2",
+      "hypothese": "H20",
+      "question": "Q21"
+    },
+    {
+      "id": "C22",
+      "sujet": "Nombre de quais de réception de E1",
+      "positions": [
+        { "source": "B08-N2", "position": "6 quais de réception aujourd'hui" },
+        { "source": "B08-D26", "position": "4 quais dans le paramétrage cible" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "Chef de quai E1 (Rémi Vasseur)",
+      "hypothese": "H21",
+      "question": "Q22"
+    },
+    {
+      "id": "C23",
+      "sujet": "Messageries et petits colis sans commande d'achat",
+      "positions": [
+        { "source": "B08-D2", "position": "R1 : une réservation porte sur une commande d'achat valide ; hors périmètre pour l'approvisionnement" },
+        { "source": "B08-D22", "position": "Indispensable pour le chef de quai E1 : elles occupent un quai chaque matin" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Approvisionnement et transport amont (Grégory Thibaudeau), escalade à la direction des opérations logistiques si désaccord (rattachement à confirmer)",
+      "hypothese": "H22",
+      "question": "Q23"
+    },
+    {
+      "id": "C24",
+      "sujet": "Notation et pénalités des fournisseurs",
+      "positions": [
+        { "source": "B08-D18", "position": "Achats : la ponctualité alimente la notation des fournisseurs" },
+        { "source": "B08-D19", "position": "Achats : à terme, des pénalités" },
+        { "source": "B08-N14", "position": "Approvisionnement : attendre une année d'historique" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "Achats (Nadège Courtois) et approvisionnement (Grégory Thibaudeau)",
+      "hypothese": "H23",
+      "question": "Q24"
+    },
+    {
+      "id": "C25",
+      "sujet": "Modification de l'IBAN par le vendeur",
+      "positions": [
+        { "source": "B09-D6", "position": "MKP-04 : le vendeur modifie son IBAN lui-même (urgent)" },
+        { "source": "B09-D7", "position": "MKP-05 : aucune modification sans double validation interne" }
+      ],
+      "gravite": "majeur",
+      "arbitre": "Finance (émettrice de MKP-05), avec la direction marketplace",
+      "hypothese": "H24",
+      "question": "Q25"
+    },
+    {
+      "id": "C26",
+      "sujet": "Seuils et fenêtres des alertes de retard vendeur",
+      "positions": [
+        { "source": "B09-D4", "position": "MKP-03 : alerte aux chargés de compte au-delà de 2 % sur 30 jours glissants" },
+        { "source": "B09-D12", "position": "MKP-08 : alerte au vendeur au-delà de 5 % sur 7 jours" }
+      ],
+      "gravite": "mineur",
+      "arbitre": "Direction marketplace",
+      "hypothese": "H25",
+      "question": "Q26"
+    }
+  ],
+  "hypotheses": [
+    { "id": "H01", "enonce": "Le canal de l'alerte est un paramètre. La V1 envoie un e-mail à tous les clients concernés. Le SMS n'est activé qu'après analyse de la DPO (CT-02) et accord budgétaire, pour les seuls clients dont le mobile est connu.", "justification": "Couvre les clients sans mobile (B02-D5), respecte CT-02, et le passage au SMS ne demande pas de refonte.", "conflit": "C01", "reversible": true },
+    { "id": "H02", "enonce": "Le seuil de retard est un paramètre calculé à partir de la date promise affichée sur Vitrine, avec deux niveaux : « à surveiller » à J+1 matin (liste du service client, tableau de bord) et « en retard » à J+2, soit 48 h (alerte au client). La signification des « rouges » (B01-D4) reste à définir.", "justification": "Répond aux deux usages sans trancher à la place des métiers ; l'alerte client à J+2 limite les messages pour des colis livrés le lendemain.", "conflit": "C02", "reversible": true },
+    { "id": "H03", "enonce": "L'alerte part automatiquement (B01-D8). Le service client reçoit chaque matin, avant les envois du jour, la liste des commandes concernées (B02-D15), ce qui répond à B02-D14. Aucune alerte si un dossier est ouvert dans Comptoir (B02-D7). La validation préalable pour les clients Premium (B02-D8) est une option paramétrable, désactivée tant que la catégorie Premium n'est pas définie.", "justification": "Concilie l'automatisation et l'information du service client ; la catégorie Premium n'existe dans aucune source (B02-F1).", "conflit": "C04", "reversible": true },
+    { "id": "H04", "enonce": "Le tableau de bord est rafraîchi à chaque arrivée de statuts dans Passerelle et affiche l'heure de la dernière mise à jour. La fréquence cible est fixée après mesure de la fraîcheur des statuts des 3 transporteurs.", "justification": "Évite de promettre un temps réel que la source quotidienne ne permet pas (B01-F1, B01-F4).", "conflit": "C05", "reversible": true },
+    { "id": "H05", "enonce": "Le retard est évalué par colis. Le client reçoit au plus un message par commande, qui liste les colis en retard.", "justification": "Conserve la descente jusqu'au colis (B01-D3) sans multiplier les messages pour une même commande.", "conflit": "C06", "reversible": true },
+    { "id": "H06", "enonce": "L'alerte de retard ne contient ni code promo ni offre commerciale. Une éventuelle offre relève d'un message marketing distinct, hors P01, soumis aux règles de consentement.", "justification": "CT-03 est une règle de conformité émise par la DPO et reprise par le service client (B02-D10).", "conflit": "C07", "reversible": true },
+    { "id": "H07", "enonce": "Le déclencheur du remboursement est un paramètre (premier scan transporteur, réception en entrepôt, contrôle qualité). La V1 rembourse après le contrôle qualité en entrepôt ; le statut « reçu » précède « remboursé ».", "justification": "Option la plus prudente financièrement (1 retour sur 5 non conforme, cartons vides : B04-N2, B04-N3), cohérente avec EF-06 ; le remboursement anticipé s'active par paramètre si le codir le décide.", "conflit": "C08", "reversible": true },
+    { "id": "H08", "enonce": "Le délai d'éligibilité est un paramètre par catégorie de client : 14 jours après livraison pour tous, 30 jours pour les membres Orvanne+.", "justification": "Aligné sur l'engagement affiché aujourd'hui sur le site (B04-D4) en attendant la relecture des CGV ; passer à 30 jours pour tous est un changement de paramètre.", "conflit": "C09", "reversible": true },
+    { "id": "H09", "enonce": "Les frais de retour sont un paramètre par motif, avec une valeur initiale de 0 pour tous les motifs. La retenue de 4,90 hors défaut ou erreur de préparation (B04-D7, unité supposée en euros) s'active sans développement si elle est décidée et inscrite dans les CGV.", "justification": "Une retenue absente des CGV exposerait Orvanne ; la gratuité est la position du CDC et du marketing pour le lancement.", "conflit": "C10", "reversible": true },
+    { "id": "H10", "enonce": "La V1 exclut les articles marketplace : le portail les affiche comme non éligibles avec un renvoi vers le circuit actuel. Les retours marketplace (circuit vendeur, étiquettes distinctes) et leur suivi par le vendeur (MKP-06) forment la V2.", "justification": "Respecte le périmètre du CDC et le circuit distinct (B04-D10) ; l'enjeu de 35 % des demandes (B04-N7) justifie une V2 planifiée.", "conflit": "C11", "reversible": true },
+    { "id": "H11", "enonce": "En V1, le montant remboursé ne dépend pas de la note A / B / C. Une note C déclenche un signalement pour traitement manuel par le service client, sans réduction automatique.", "justification": "La légalité d'une réduction est contestée (B04-D12) ; une réduction automatique non fondée serait difficile à rattraper auprès du client.", "conflit": "C12", "reversible": true },
+    { "id": "H12", "enonce": "Le portail est accessible sans compte, par numéro de commande et adresse e-mail d'achat ; un client connecté y accède aussi depuis son compte. EF-03 s'applique aux deux parcours, et l'accès sans compte ne donne accès qu'à la commande saisie.", "justification": "Préserve l'objectif O1 (moins de 3 minutes) et lève la contradiction interne du CDC (B03-F1) sans supprimer de parcours.", "conflit": "C13", "reversible": true },
+    { "id": "H13", "enonce": "Le portail produit, avec l'étiquette, un RMA en PDF à imprimer et placer dans le colis. Le cas du client sans imprimante reste ouvert.", "justification": "Répond au besoin de l'entrepôt de retrouver la commande (B04-D15) sans modifier l'étiquette transporteur.", "conflit": "C14", "reversible": true },
+    { "id": "H14", "enonce": "Le pilote est mis en service au plus tôt le 12 janvier, après le gel et après consultation de la DPO (CT-01). Si la date des soldes d'hiver ne laisse pas de fenêtre suffisante, le pilote est décalé après les soldes plutôt que mis en production pendant le gel.", "justification": "Le CDC est en relecture (v0.3) et plusieurs règles attendent le codir ; aucune mise en production n'est possible pendant le gel.", "conflit": "C15", "reversible": true },
+    { "id": "H15", "enonce": "La photo est facultative : une déclaration est valide sans photo. Les douchettes équipées proposent la photo ; l'ajout d'une photo depuis un autre terminal (téléphone de chef d'équipe) est prévu en V2.", "justification": "Deux tiers des douchettes de E2 n'ont pas d'appareil photo (B06-N5) ; rendre la photo obligatoire bloquerait la déclaration.", "conflit": "C16", "reversible": true },
+    { "id": "H16", "enonce": "Le déploiement sur E2 a lieu au plus tôt le 12 janvier, après le gel et l'avis de la DPO sur les photos (CT-06). Si l'inventaire de janvier a lieu avant, il se fait avec la fiche papier actuelle.", "justification": "Respecte CT-07 ; la date de l'inventaire n'est pas connue (B06-F12).", "conflit": "C17", "reversible": true },
+    { "id": "H17", "enonce": "La V1 de la relance n'utilise que l'e-mail, pour les clients ayant consenti aux communications commerciales, sous réserve que la DPO confirme la portée du consentement newsletter. SMS, notifications et messageries mobiles sont ajoutés après analyse de la DPO (CT-01, CT-02).", "justification": "Seul canal déjà utilisé pour la relance (B05-N1) ; les autres canaux supposent une analyse que le marketing a reportée (B05-F7).", "conflit": "C18", "reversible": true },
+    { "id": "H18", "enonce": "La personnalisation n'utilise que les commandes du Lac et, pour les clients connectés, la navigation disponible, limitées aux 3 ans précédant le dernier contact du client. L'historique depuis 2014 n'est pas exploité.", "justification": "Conforme à CT-05 et aux données réellement disponibles selon l'équipe du Lac (B05-F2).", "conflit": "C19", "reversible": true },
+    { "id": "H19", "enonce": "La démo du comité commerce du 8 décembre utilise des données anonymisées ou synthétiques, sur un environnement hors production. Une démo n'étant pas une mise en production, le gel ne s'y applique pas.", "justification": "CT-04 interdit les données de production non anonymisées pour une démo.", "conflit": "C20", "reversible": true },
+    { "id": "H20", "enonce": "La durée de créneau est un paramètre par site, ajouté aux paramètres de R4, avec 30 minutes par défaut (R2). Chaque site fixe sa valeur lors du paramétrage ; un camion complet consomme deux créneaux.", "justification": "Couvre les trois positions sans trancher la valeur, qui relève de chaque site.", "conflit": "C21", "reversible": true },
+    { "id": "H21", "enonce": "Le nombre de quais est saisi par site (R4) ; la valeur de E1 est celle que le chef de quai fournira pour le 04/12.", "justification": "L'écart 6 / 4 n'est pas expliqué (B08-F1) ; un paramètre évite de le figer dans la spec.", "conflit": "C22", "reversible": true },
+    { "id": "H22", "enonce": "R1 s'applique en V1 : toute réservation exige une commande d'achat. Pour les messageries et petits colis sans commande, le chef de quai bloque un quai sur une plage fixe (R7). Leur prise en charge dans le portail est reportée.", "justification": "Utilise une fonction déjà retenue (R7) pour libérer le quai occupé chaque matin, sans élargir le périmètre contesté.", "conflit": "C23", "reversible": true },
+    { "id": "H23", "enonce": "La V1 enregistre les heures prévues et réelles d'arrivée, qui alimentent l'indicateur de ponctualité. La notation des fournisseurs est en V2 ; les pénalités restent hors périmètre tant qu'elles ne sont pas décidées.", "justification": "Constitue l'année d'historique demandée par l'approvisionnement sans engager de pénalité.", "conflit": "C24", "reversible": true },
+    { "id": "H24", "enonce": "Le vendeur saisit son nouvel IBAN dans l'espace vendeur. Le changement ne prend effet qu'après une double validation interne ; d'ici là, l'ancien IBAN reste utilisé et le vendeur voit l'état de sa demande.", "justification": "Supprime l'échange par e-mail (MKP-04) tout en respectant la règle de la finance née de l'incident de juin (MKP-05).", "conflit": "C25", "reversible": true },
+    { "id": "H25", "enonce": "Deux règles d'alerte distinctes et paramétrables (seuil, fenêtre, destinataire) : 2 % sur 30 jours glissants pour les chargés de compte, 5 % sur 7 jours pour le vendeur. Elles reposent sur une même définition du retard d'expédition, à fournir par la direction marketplace.", "justification": "Les deux demandes visent des destinataires différents et peuvent coexister ; seule la définition du retard doit être commune.", "conflit": "C26", "reversible": true },
+    { "id": "H26", "enonce": "Les textes du portail fournisseurs et de l'espace vendeur (écrans, e-mails) sont externalisés pour qu'une langue s'ajoute sans développement. La V1 est en français.", "justification": "CT-11 : 15 % des livraisons viennent de fournisseurs étrangers (B08-N13) et l'espace vendeur s'ouvre à l'Allemagne et à l'Espagne ; les langues ne sont pas décidées.", "conflit": null, "reversible": true },
+    { "id": "H27", "enonce": "Pour MKP-11, la spec bugfix commence par mesurer les temps de réponse des pages de l'espace vendeur ; le comportement attendu (seuil chiffré) est fixé avec la direction marketplace à partir de cette mesure. Les solutions de la DSI pour MKP-07 (index, export asynchrone) sont des pistes de conception, pas des exigences.", "justification": "« Trop lent » n'est ni chiffré ni localisé (B09-F8) ; une spec bugfix exige un comportement attendu vérifiable.", "conflit": null, "reversible": true },
+    { "id": "H28", "enonce": "Le délai de déclaration des litiges transporteurs est un paramètre, avec 7 jours comme valeur provisoire ; le dossier de casse affiche la date limite de déclaration.", "justification": "Le délai n'est pas confirmé (B06-F6) et la moitié des litiges est déclarée hors délai (B06-N2).", "conflit": null, "reversible": true },
+    { "id": "H29", "enonce": "Le compte à rebours d'une demande de droits part de sa date de réception, en jours calendaires ; les seuils d'alerte (J+15, J+25) et l'échéance après prolongation sont des paramètres.", "justification": "Le point de départ et le traitement de la prolongation ne sont pas précisés (B07-F5, B07-F6).", "conflit": null, "reversible": true },
+    { "id": "H30", "enonce": "La V1 de la relance choisit le message, le moment et la remise par des règles paramétrables et explicables ; un modèle d'IA (B05-D2) vient en V2, une fois les données confirmées et l'avis de la DPO rendu.", "justification": "La nature de « l'intelligence » n'est pas tranchée (B05-F1), les données disponibles sont incertaines (B05-F2) et la démo doit être prête pour le 8 décembre.", "conflit": null, "reversible": true },
+    { "id": "H31", "enonce": "La V1 du registre, attendue avant le prochain contrôle interne, couvre le registre, le compte à rebours, la saisie par le service client, la preuve de clôture, l'export d'accès et le tableau de bord ; les actions dans chaque système sont tracées manuellement. L'orchestration automatisée dans Vitrine, Comptoir, Hangar, le Lac et l'outil d'e-mailing (B07-D5) vient en V2.", "justification": "L'échéance est rapprochée et le budget n'est pas arrêté (B07-F13) ; la traçabilité manuelle corrige déjà l'absence de preuve d'exécution.", "conflit": null, "reversible": true }
+  ],
+  "questions": [
+    { "id": "Q01", "question": "Quel canal pour l'alerte de retard : e-mail, SMS (budget, avis DPO sur l'usage du mobile), ou les deux selon la disponibilité du mobile ?", "destinataire": "Solène Garrigue, Yanis Mercadier ; avis d'Hélène Marsac", "projets": ["P01"], "bloquante": false },
+    { "id": "Q02", "question": "À partir de quand une commande est-elle « en retard » : J+1 matin ou 48 h après la date promise ? Le seuil peut-il différer entre la liste du service client, le tableau de bord et l'alerte client ? Que signifient les « rouges » du tableau de bord ?", "destinataire": "Solène Garrigue, Yanis Mercadier", "projets": ["P01"], "bloquante": false },
+    { "id": "Q03", "question": "Le pic tombe pendant le gel du 16/11 au 11/01. Une dérogation est-elle envisageable pour un tableau de bord interne, sans envoi aux clients, avant le 16/11 ? Sinon, confirmez-vous une mise en service au T1 2027 ?", "destinataire": "DSI (Bertrand Lacassagne)", "projets": ["P01"], "bloquante": true },
+    { "id": "Q04", "question": "Qu'est-ce qu'un client Premium (lien avec Orvanne+) ? La liste du matin suffit-elle à « savoir » qu'un message part, ou faut-il une validation ? Quel délai de validation pour les Premium, et que se passe-t-il sans validation ?", "destinataire": "Yanis Mercadier ; Capucine Lorrain pour le lien avec Orvanne+", "projets": ["P01"], "bloquante": false },
+    { "id": "Q05", "question": "À quelle fréquence Passerelle reçoit-elle les statuts des 3 transporteurs ? Quel délai de rafraîchissement du tableau de bord est acceptable pour la logistique ?", "destinataire": "Solène Garrigue ; DSI (équipe Passerelle)", "projets": ["P01"], "bloquante": false },
+    { "id": "Q06", "question": "Pour une commande à plusieurs colis, le client reçoit-il un message par colis en retard ou un seul message par commande ?", "destinataire": "Solène Garrigue, Yanis Mercadier", "projets": ["P01"], "bloquante": false },
+    { "id": "Q07", "question": "Confirmez-vous l'abandon du code promo dans les messages de retard (CT-03) ? Souhaitez-vous à la place un message commercial distinct, soumis au consentement ?", "destinataire": "Capucine Lorrain ; Hélène Marsac", "projets": ["P01", "P04"], "bloquante": false },
+    { "id": "Q08", "question": "À quel moment rembourser un retour : premier scan transporteur, réception ou contrôle en entrepôt ? Un remboursement anticipé est-il prévu pour certains clients, lesquels ?", "destinataire": "DAF, puis codir ; chiffrage par Odile (contrôle de gestion)", "projets": ["P02"], "bloquante": false },
+    { "id": "Q09", "question": "Quel délai de retour s'applique : 14 jours pour tous et 30 jours pour Orvanne+, ou 30 jours pour tous ? Que disent les CGV ?", "destinataire": "Direction de l'expérience client ; direction juridique et conformité", "projets": ["P02"], "bloquante": false },
+    { "id": "Q10", "question": "Les retours sont-ils gratuits pour tous, ou 4,90 € sont-ils retenus hors défaut et erreur de préparation ? Si la gratuité vaut « pour le lancement », jusqu'à quand ?", "destinataire": "DAF ; direction de l'expérience client ; Capucine Lorrain", "projets": ["P02"], "bloquante": false },
+    { "id": "Q11", "question": "Les retours marketplace (35 % des demandes) entrent-ils en V1 ou en V2 du portail ? Qui fournit les étiquettes et le circuit vers les vendeurs ?", "destinataire": "Direction de l'expérience client ; direction marketplace ; Yanis Mercadier", "projets": ["P02", "P07"], "bloquante": false },
+    { "id": "Q12", "question": "Est-il légal de réduire le montant remboursé selon la note de contrôle qualité (C, voire B) ? Si oui, quels montants pour A, B et C ?", "destinataire": "Direction juridique et conformité", "projets": ["P02", "P03"], "bloquante": false },
+    { "id": "Q13", "question": "Le portail doit-il fonctionner sans compte (§3) ou pour un client connecté (EF-03), ou les deux ? Quelle vérification pour l'accès sans compte ?", "destinataire": "Inès Rouvière ; direction de l'expérience client", "projets": ["P02"], "bloquante": false },
+    { "id": "Q14", "question": "Le RMA doit-il être imprimé par le client ? Que faire pour un client sans imprimante qui dépose avec un QR code ?", "destinataire": "Karim Benhaddou ; Inès Rouvière", "projets": ["P02"], "bloquante": false },
+    { "id": "Q15", "question": "Quelle est la date des soldes d'hiver visée, et quel est le périmètre du pilote ? Une mise en service entre le 12 janvier et les soldes est-elle réaliste après consultation de la DPO ?", "destinataire": "Inès Rouvière ; direction de l'expérience client ; DSI", "projets": ["P02"], "bloquante": false },
+    { "id": "Q16", "question": "La photo est-elle obligatoire pour une déclaration de casse ? Faut-il équiper les chefs d'équipe de téléphones ou renouveler des douchettes ?", "destinataire": "Karim Benhaddou ; DSI", "projets": ["P03"], "bloquante": false },
+    { "id": "Q17", "question": "À quelle date a lieu l'inventaire de janvier sur E2 ?", "destinataire": "Karim Benhaddou", "projets": ["P03"], "bloquante": false },
+    { "id": "Q18", "question": "Le consentement newsletter couvre-t-il une relance personnalisée des paniers abandonnés, les remises ciblées et chaque canal (e-mail, notifications, SMS, messageries) ? Quelle analyse faut-il avant le développement ?", "destinataire": "Hélène Marsac", "projets": ["P04"], "bloquante": false },
+    { "id": "Q19", "question": "Quelles données la relance peut-elle utiliser (commandes, navigation des clients connectés) et sur quelle profondeur, compte tenu de la limite de 3 ans ? Que contient réellement le Lac ?", "destinataire": "Hélène Marsac ; équipe du Lac (Théo Bazin)", "projets": ["P04"], "bloquante": false },
+    { "id": "Q20", "question": "Une démo sur données anonymisées ou synthétiques convient-elle au comité commerce du 8 décembre ? Qu'attendez-vous précisément de la démo ?", "destinataire": "Capucine Lorrain ; Hélène Marsac", "projets": ["P04"], "bloquante": false },
+    { "id": "Q21", "question": "La durée de créneau peut-elle être fixée par site ? Quelle valeur pour E1 (30 minutes ou une heure) et pour E2 ?", "destinataire": "Grégory Thibaudeau ; Rémi Vasseur ; Karim Benhaddou", "projets": ["P06"], "bloquante": false },
+    { "id": "Q22", "question": "E1 a 6 quais de réception aujourd'hui, le paramétrage cible en indique 4 : pourquoi cet écart ?", "destinataire": "Rémi Vasseur", "projets": ["P06"], "bloquante": false },
+    { "id": "Q23", "question": "Les messageries et petits colis sans commande d'achat entrent-ils dans le périmètre ? Un quai réservé sur une plage fixe suffit-il en V1 ?", "destinataire": "Grégory Thibaudeau ; Rémi Vasseur", "projets": ["P06"], "bloquante": false },
+    { "id": "Q24", "question": "À partir de quand la ponctualité alimente-t-elle la notation des fournisseurs ? Les pénalités sont-elles envisagées, et sur quelle base contractuelle ?", "destinataire": "Nadège Courtois ; Grégory Thibaudeau", "projets": ["P06"], "bloquante": false },
+    { "id": "Q25", "question": "Un IBAN saisi par le vendeur puis validé par deux personnes en interne respecte-t-il MKP-05 ? Qui sont les deux valideurs ?", "destinataire": "Finance (DAF) ; direction marketplace", "projets": ["P07"], "bloquante": false },
+    { "id": "Q26", "question": "Qu'est-ce qu'une commande « expédiée en retard » pour un vendeur ? Les deux alertes (2 % sur 30 jours, 5 % sur 7 jours) doivent-elles coexister ?", "destinataire": "Direction marketplace", "projets": ["P07"], "bloquante": false },
+    { "id": "Q27", "question": "Dans quelles langues proposer le portail fournisseurs et l'espace vendeur (anglais, allemand, espagnol) ? Pour quelle version ?", "destinataire": "Grégory Thibaudeau ; direction marketplace", "projets": ["P06", "P07"], "bloquante": false },
+    { "id": "Q28", "question": "Quelles pages de l'espace vendeur sont jugées lentes, et quel temps de réponse est attendu ? Combien de vendeurs se plaignent ?", "destinataire": "Direction marketplace ; DSI", "projets": ["P08"], "bloquante": false },
+    { "id": "Q29", "question": "Quel est le délai contractuel de déclaration d'un litige à chaque transporteur (7 jours ?) ? Qui est « le transport » à prévenir ?", "destinataire": "Service transport (à identifier via Karim Benhaddou)", "projets": ["P03"], "bloquante": false },
+    { "id": "Q30", "question": "Quelle est la date du prochain contrôle interne ? Le compte à rebours part-il de la réception ou de la vérification d'identité ? Comment traiter le Lac et les sauvegardes lors d'un effacement ?", "destinataire": "Hélène Marsac", "projets": ["P05"], "bloquante": false },
+    { "id": "Q31", "question": "Qui porte la purge des historiques de prospection de plus de 3 ans, et pour quelle échéance ?", "destinataire": "Hélène Marsac ; Capucine Lorrain", "projets": ["P04", "P05"], "bloquante": false },
+    { "id": "Q32", "question": "Qui doit suivre le taux de retour par produit, et le Lac peut-il le produire ?", "destinataire": "Odile (contrôle de gestion) ; équipe du Lac", "projets": ["P02"], "bloquante": false },
+    { "id": "Q33", "question": "La relance doit-elle reposer sur un modèle d'IA dès la V1, ou des règles suffisent-elles ? Les plafonds de remise (10 %, 15 % pour Orvanne+) sont-ils validés par la finance ?", "destinataire": "Capucine Lorrain ; finance", "projets": ["P04"], "bloquante": false },
+    { "id": "Q34", "question": "L'exigence d'hébergement dans le cloud d'Orvanne (B01) s'applique-t-elle à tous les projets, ou un hébergement dans l'UE chez un éditeur est-il admis (B03, B07-D20) ?", "destinataire": "DSI (comité d'architecture)", "projets": ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08"], "bloquante": false },
+    { "id": "Q35", "question": "La conformité RGAA s'applique-t-elle au portail fournisseurs et à l'espace vendeur ?", "destinataire": "DSI (comité d'architecture)", "projets": ["P02", "P06", "P07"], "bloquante": false },
+    { "id": "Q36", "question": "Quand pouvez-vous examiner les traitements des projets P01, P02, P03, P04, P06 et P07 (CT-01) ? Lesquels exigent une analyse d'impact ?", "destinataire": "Hélène Marsac", "projets": ["P01", "P02", "P03", "P04", "P06", "P07"], "bloquante": false },
+    { "id": "Q37", "question": "La saisie de la note A / B / C des retours se fait-elle sur la même application douchette que la casse ? En V1 du portail de retours ou plus tard ?", "destinataire": "Karim Benhaddou ; Inès Rouvière", "projets": ["P02", "P03"], "bloquante": false },
+    { "id": "Q38", "question": "L'entrepôt E3 entre-t-il dans le périmètre de la prise de rendez-vous ?", "destinataire": "Grégory Thibaudeau", "projets": ["P06"], "bloquante": false },
+    { "id": "Q39", "question": "Quelle base de référence et quelle période de mesure pour la baisse de 30 % des contacts WISMO et la baisse de 60 % des contacts liés aux retours ?", "destinataire": "Yanis Mercadier ; direction de l'expérience client", "projets": ["P01", "P02"], "bloquante": false }
+  ]
+}
