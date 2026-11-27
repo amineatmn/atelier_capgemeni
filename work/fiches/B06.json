@@ -1,0 +1,244 @@
+{
+  "doc_id": "B06",
+  "fichier": "B06_message-vocal_exploitation-entrepot.txt",
+  "format": "transcription_vocale",
+  "emetteur": {
+    "nom": "Karim Benhaddou",
+    "fonction": "Exploitation de l'entrepôt E2",
+    "direction": null
+  },
+  "autres_parties": [
+    { "nom": "Inès Rouvière", "fonction": "Cheffe de projet digital, DSI", "role": "destinataire" }
+  ],
+  "date": "2026-11-05",
+  "resume": "Karim Benhaddou (exploitation E2) demande à la DSI de remplacer la fiche papier de déclaration de casse par une déclaration à la douchette (scan, photos, type de dégât) qui crée le dossier, prévient le chef d'équipe et le transport, fonctionne sans réseau et bloque le stock dans Hangar. Le but est de ne plus déclarer les litiges transporteurs hors délai, ce qui arrive aujourd'hui une fois sur deux. Il souhaite commencer par E2 et l'avoir pour l'inventaire de janvier.",
+  "demandes": [
+    {
+      "id": "B06-D1",
+      "type": "echeance",
+      "enonce": "Karim (E2) demande à Inès Rouvière de vérifier auprès du transport le délai de déclaration des litiges transporteurs (sept jours selon lui).",
+      "citation": "vérifie avec le transport",
+      "acteurs": ["Inès Rouvière (DSI)", "Transport"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D2",
+      "type": "fonctionnelle",
+      "enonce": "Le préparateur ou le cariste qui trouve un colis abîmé le scanne avec sa douchette pour déclarer la casse.",
+      "citation": "le gars il scanne le colis avec sa douchette",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D3",
+      "type": "fonctionnelle",
+      "enonce": "La déclaration de casse permet de joindre une ou deux photos du colis abîmé.",
+      "citation": "il prend une photo ou deux",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D4",
+      "type": "fonctionnelle",
+      "enonce": "Le déclarant choisit le type de dégât dans une liste.",
+      "citation": "il choisit le type de dégât dans une liste",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D5",
+      "type": "fonctionnelle",
+      "enonce": "La validation de la déclaration crée automatiquement le dossier de casse, sans ressaisie.",
+      "citation": "ça crée le dossier tout seul",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D6",
+      "type": "fonctionnelle",
+      "enonce": "La déclaration de casse prévient automatiquement le chef d'équipe.",
+      "citation": "ça prévient le chef d'équipe",
+      "acteurs": ["Chef d'équipe E2"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D7",
+      "type": "fonctionnelle",
+      "enonce": "La déclaration de casse prévient automatiquement le transport.",
+      "citation": "ça prévient le chef d'équipe et le transport",
+      "acteurs": ["Transport"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D8",
+      "type": "fonctionnelle",
+      "enonce": "Karim (E2) propose, à confirmer, que la déclaration (au moins la photo) se fasse plutôt sur les téléphones des chefs d'équipe, faute d'appareil photo sur les anciennes douchettes.",
+      "citation": "peut-être sur les téléphones des chefs d'équipe plutôt enfin à voir",
+      "acteurs": ["Chef d'équipe E2"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "idee"
+    },
+    {
+      "id": "B06-D9",
+      "type": "non_fonctionnelle",
+      "enonce": "La déclaration de casse fonctionne sans réseau, notamment dans les allées du fond de l'entrepôt où le réseau ne passe pas.",
+      "citation": "il faut que ça marche quand même sans réseau",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D10",
+      "type": "fonctionnelle",
+      "enonce": "Les déclarations faites hors réseau se synchronisent une fois le réseau retrouvé.",
+      "citation": "que ça se synchronise après",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D11",
+      "type": "contrainte",
+      "enonce": "Les déclarations de casse remontent dans Hangar.",
+      "citation": "il faut que ça remonte dans hangar évidemment",
+      "acteurs": [],
+      "systemes": ["Hangar"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D12",
+      "type": "regle_metier",
+      "enonce": "Un colis déclaré abîmé voit son stock bloqué dans Hangar, pour éviter de revendre un article cassé.",
+      "citation": "pour bloquer le stock sinon on revend un truc cassé",
+      "acteurs": [],
+      "systemes": ["Hangar"],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D13",
+      "type": "fonctionnelle",
+      "enonce": "Les retours abîmés se déclarent sur le même écran que la casse.",
+      "citation": "tant qu'à faire les retours abîmés aussi ce serait le même écran",
+      "acteurs": ["Préparateur", "Cariste"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D14",
+      "type": "fonctionnelle",
+      "enonce": "L'écran de déclaration des retours abîmés permet de saisir la note de contrôle qualité A, B ou C.",
+      "citation": "avec la note A B C",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D15",
+      "type": "fonctionnelle",
+      "enonce": "Extension de la déclaration de casse aux autres entrepôts, qui sont intéressés, après E2.",
+      "citation": "les autres sites ils sont intéressés aussi",
+      "acteurs": ["Autres entrepôts (E1, E3)"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "v2"
+    },
+    {
+      "id": "B06-D16",
+      "type": "contrainte",
+      "enonce": "Le premier déploiement concerne l'entrepôt E2.",
+      "citation": "mais commence par nous",
+      "acteurs": ["Exploitation E2"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D17",
+      "type": "echeance",
+      "enonce": "La déclaration de casse est souhaitée pour l'inventaire de janvier.",
+      "citation": "si on pouvait avoir ça pour l'inventaire de janvier ce serait bien",
+      "acteurs": ["DSI"],
+      "systemes": [],
+      "priorite_exprimee": "c'est important",
+      "echeance_exprimee": "pour l'inventaire de janvier",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B06-D18",
+      "type": "echeance",
+      "enonce": "Karim (E2) demande à Inès Rouvière de le rappeler.",
+      "citation": "rappelle-moi quand tu peux",
+      "acteurs": ["Inès Rouvière (DSI)"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "quand tu peux",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B06-N1", "libelle": "Délai d'arrivée de la fiche papier au bureau (le soir, le lendemain, ou jamais)", "valeur": "0-1", "unite": "jours", "citation": "la fiche elle arrive au bureau le soir ou le lendemain ou jamais" },
+    { "id": "B06-N2", "libelle": "Part des litiges transporteurs déclarés hors délai (une fois sur deux)", "valeur": "50", "unite": "%", "citation": "on les déclare hors délai une fois sur deux" },
+    { "id": "B06-N3", "libelle": "Délai de déclaration d'un litige transporteur, selon Karim (à vérifier)", "valeur": "7", "unite": "jours", "citation": "je crois que c'est sept jours le délai" },
+    { "id": "B06-N4", "libelle": "Nombre de photos par déclaration (une ou deux)", "valeur": "1-2", "unite": "photos", "citation": "il prend une photo ou deux" },
+    { "id": "B06-N5", "libelle": "Nombre de douchettes sur E2 (environ une soixantaine)", "valeur": "60", "unite": "douchettes", "citation": "une soixantaine en tout sur E deux" },
+    { "id": "B06-N6", "libelle": "Part d'anciennes douchettes, sans appareil photo, sur E2 (deux tiers)", "valeur": "0.67", "unite": "part", "citation": "dont les deux tiers d'anciennes" },
+    { "id": "B06-N7", "libelle": "Cas de casse déclarés par jour sur E2 (à peu près quarante)", "valeur": "40", "unite": "cas/jour", "citation": "on a à peu près quarante cas par jour" },
+    { "id": "B06-N8", "libelle": "Cas de casse réels estimés par jour sur E2 (sûrement le double des déclarés)", "valeur": "80", "unite": "cas/jour (≈ double)", "citation": "en vrai c'est sûrement le double" },
+    { "id": "B06-N9", "libelle": "Échéance souhaitée : inventaire de janvier (année non précisée)", "valeur": "01", "unite": "mois", "citation": "pour l'inventaire de janvier" }
+  ],
+  "systemes_cites": ["Hangar", "Tableurs de site"],
+  "points_flous": [
+    { "id": "B06-F1", "description": "La date retenue est celle de réception du message vocal (5 novembre 2026), seule date du document.", "citation": "Reçu le jeudi 5 novembre 2026 à 07:48." },
+    { "id": "B06-F2", "description": "Un passage inaudible suit la description du circuit de la fiche papier, juste avant le constat sur les litiges hors délai : une information peut manquer.", "citation": "[inaudible]" },
+    { "id": "B06-F3", "description": "Le délai de déclaration des litiges transporteurs n'est pas sûr (« je crois ») et reste à vérifier auprès du transport.", "citation": "je crois que c'est sept jours le délai mais vérifie avec le transport" },
+    { "id": "B06-F4", "description": "Le devenir de la fiche papier et de la palette rouge dans le nouveau circuit n'est pas dit (suppression, maintien en secours ?).", "citation": "il le met de côté sur la palette rouge et il remplit la fiche papier" },
+    { "id": "B06-F5", "description": "« Le dossier » n'est pas défini : dossier de litige transporteur, dossier interne, et dans quel système il est créé.", "citation": "ça crée le dossier tout seul" },
+    { "id": "B06-F6", "description": "« Le transport » n'est pas identifié : équipe transport d'Orvanne ou transporteur concerné ; le canal de notification (et celui du chef d'équipe) n'est pas précisé.", "citation": "ça prévient le chef d'équipe et le transport" },
+    { "id": "B06-F7", "description": "La liste des types de dégât n'est pas fournie.", "citation": "il choisit le type de dégât dans une liste" },
+    { "id": "B06-F8", "description": "Contradiction interne : la photo est demandée à la douchette, mais deux tiers des douchettes n'ont pas d'appareil photo ; le support de saisie (douchette ou téléphone des chefs d'équipe) reste « à voir ».", "citation": "les douchettes elles ont pas toutes un appareil photo les nouvelles oui les anciennes non" },
+    { "id": "B06-F9", "description": "Le nombre de douchettes est approximatif et incertain (« je sais pas une soixantaine »).", "citation": "je sais pas une soixantaine" },
+    { "id": "B06-F10", "description": "La zone sans réseau est mal transcrite (« en zone c'est ça capte pas », peut-être « zone C ») : son étendue n'est pas précise, ni le délai acceptable de synchronisation.", "citation": "dans les allées du fond en zone c'est ça capte pas" },
+    { "id": "B06-F11", "description": "Le périmètre des « retours abîmés » (retours clients ?) et l'usage de la note A B C (retours seulement ou aussi casse) ne sont pas précisés ; la demande est formulée au conditionnel (« ce serait »).", "citation": "tant qu'à faire les retours abîmés aussi ce serait le même écran avec la note A B C" },
+    { "id": "B06-F12", "description": "La volumétrie réelle est incertaine : 40 cas déclarés par jour, sans doute le double en réalité (estimation non mesurée).", "citation": "quarante déclarés en vrai c'est sûrement le double" },
+    { "id": "B06-F13", "description": "E1 a un processus différent, suivi dans son propre tableur : rien n'est dit sur sa reprise ou son intégration lors de l'extension ; la date d'extension aux autres sites n'est pas donnée.", "citation": "E un ils font pas pareil ils ont leur tableur à eux" },
+    { "id": "B06-F14", "description": "L'échéance et la priorité sont hésitantes (« ce serait bien sinon tant pis enfin non pas tant pis ») ; l'inventaire de janvier n'a pas de date précise.", "citation": "ce serait bien sinon tant pis enfin non pas tant pis c'est important" },
+    { "id": "B06-F15", "description": "Aucun indicateur de succès n'est fixé (par exemple part de litiges déclarés dans le délai), alors que le problème de départ est chiffré (une fois sur deux hors délai).", "citation": "on perd de l'argent" }
+  ]
+}

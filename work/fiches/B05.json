@@ -1,0 +1,256 @@
+{
+  "doc_id": "B05",
+  "fichier": "B05_messagerie_marketing.txt",
+  "format": "messagerie",
+  "emetteur": {
+    "nom": "Capucine Lorrain",
+    "fonction": "Marketing (CRM et fidélité)",
+    "direction": "Marketing"
+  },
+  "autres_parties": [
+    { "nom": "Théo Bazin", "fonction": null, "role": "destinataire" },
+    { "nom": "Hélène Marsac", "fonction": "DPO, direction juridique et conformité", "role": "mentionne" }
+  ],
+  "date": "2026-11-03",
+  "resume": "Capucine Lorrain (marketing, CRM et fidélité) demande à Théo Bazin une relance « intelligente » des paniers abandonnés, fondée sur l'IA, qui choisit pour chaque client le message, le moment, le canal et une remise plafonnée, alors que l'e-mail unique actuel convertit à un peu plus de 2 %. Elle veut une démo sur de vrais clients pour le comité commerce du 8 décembre, avec un tableau du CA incrémental. En passant, elle demande aussi d'ajouter un code promo dans les messages de retard de livraison préparés par la logistique.",
+  "demandes": [
+    {
+      "id": "B05-D1",
+      "type": "fonctionnelle",
+      "enonce": "Capucine (marketing) demande que la relance des paniers abandonnés choisisse, pour chaque client, le message à envoyer, au lieu du même e-mail pour tous.",
+      "citation": "je voudrais un truc intelligent qui choisit le bon message",
+      "acteurs": ["Client", "Marketing (CRM et fidélité)"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D2",
+      "type": "fonctionnelle",
+      "enonce": "La relance des paniers abandonnés choisit, pour chaque client, le moment d'envoi (aujourd'hui fixé à 24 h après l'abandon).",
+      "citation": "le bon moment",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D3",
+      "type": "fonctionnelle",
+      "enonce": "La relance des paniers abandonnés choisit, pour chaque client, le canal d'envoi.",
+      "citation": "le bon canal pour chaque client",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D4",
+      "type": "contrainte",
+      "enonce": "Capucine (marketing) demande que les choix de la relance reposent sur de l'intelligence artificielle (modèle) plutôt que sur des règles.",
+      "citation": "de l'IA évidemment",
+      "acteurs": ["Marketing (CRM et fidélité)"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D5",
+      "type": "fonctionnelle",
+      "enonce": "La relance exploite l'historique d'achats des clients depuis 2014.",
+      "citation": "on a tout l'historique d'achats depuis 2014",
+      "acteurs": ["Client"],
+      "systemes": ["le Lac"],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D6",
+      "type": "fonctionnelle",
+      "enonce": "La relance exploite les données de navigation des clients.",
+      "citation": "et la navigation, autant s'en servir",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D7",
+      "type": "fonctionnelle",
+      "enonce": "La relance peut être envoyée par e-mail, par notification de l'application mobile et par SMS.",
+      "citation": "mail, notifs de l'appli, SMS",
+      "acteurs": ["Client"],
+      "systemes": ["Outil d'e-mailing", "Vitrine"],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D8",
+      "type": "fonctionnelle",
+      "enonce": "La relance peut aussi passer par les messageries mobiles, si c'est possible.",
+      "citation": "et les messageries mobiles si on peut",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "idee"
+    },
+    {
+      "id": "B05-D9",
+      "type": "fonctionnelle",
+      "enonce": "La relance propose une remise au client quand il hésite.",
+      "citation": "il faudrait que ça propose une remise quand le client hésite",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D10",
+      "type": "regle_metier",
+      "enonce": "Aucune remise n'est proposée aux clients qui auraient acheté de toute façon.",
+      "citation": "mais pas à ceux qui auraient acheté de toute façon",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D11",
+      "type": "regle_metier",
+      "enonce": "La remise proposée dans la relance est plafonnée à 10 %, à titre provisoire.",
+      "citation": "mets 10 % max pour l'instant",
+      "acteurs": ["Client"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D12",
+      "type": "regle_metier",
+      "enonce": "Pour les membres d'Orvanne+, la remise proposée dans la relance est plafonnée à 15 %.",
+      "citation": "15 pour les Orvanne+",
+      "acteurs": ["Client Orvanne+"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D13",
+      "type": "echeance",
+      "enonce": "Capucine (marketing) demande à Théo Bazin d'estimer la volumétrie de la relance des paniers abandonnés.",
+      "citation": "tu peux regarder ?",
+      "acteurs": ["Théo Bazin"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D14",
+      "type": "fonctionnelle",
+      "enonce": "Capucine (marketing) demande qu'un code promo soit ajouté dans les messages de retard de livraison préparés par la logistique.",
+      "citation": "dans les messages de retard de livraison que prépare la logistique, je voudrais qu'on glisse un code promo",
+      "acteurs": ["Client", "Direction des opérations logistiques"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D15",
+      "type": "contrainte",
+      "enonce": "Capucine (marketing) s'appuie sur le consentement newsletter déjà recueilli pour utiliser les données personnelles des clients.",
+      "citation": "on a le consentement newsletter de toute façon",
+      "acteurs": ["Client", "DPO"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D16",
+      "type": "echeance",
+      "enonce": "Une démo de la relance des paniers abandonnés est présentée au comité commerce du 8 décembre ; une version sommaire suffit.",
+      "citation": "il me faut une démo pour le comité commerce du 8 décembre. même un truc moche",
+      "acteurs": ["Comité commerce", "Théo Bazin"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": "pour le comité commerce du 8 décembre",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D17",
+      "type": "contrainte",
+      "enonce": "La démo utilise les données des vrais clients.",
+      "citation": "oui sur les vrais clients",
+      "acteurs": ["Client", "Comité commerce"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": "pour le comité commerce du 8 décembre",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D18",
+      "type": "indicateur",
+      "enonce": "Un tableau présente le chiffre d'affaires incrémental généré par la relance.",
+      "citation": "et un tableau avec le CA incrémental",
+      "acteurs": ["Marketing (CRM et fidélité)", "Comité commerce"],
+      "systemes": [],
+      "priorite_exprimee": "LE sujet de l'année prochaine",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B05-D19",
+      "type": "echeance",
+      "enonce": "Théo Bazin étudie ce qu'il peut faire, pas avant la semaine suivant l'échange.",
+      "citation": "je regarde ce que je peux faire. pas avant la semaine prochaine",
+      "acteurs": ["Théo Bazin"],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "pas avant la semaine prochaine",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    { "id": "B05-N1", "libelle": "Délai d'envoi de l'e-mail de relance actuel après l'abandon du panier", "valeur": "24", "unite": "heures", "citation": "on envoie le même mail de relance à tout le monde 24h après" },
+    { "id": "B05-N2", "libelle": "Taux de conversion de la relance actuelle (un peu plus de 2 %)", "valeur": "2", "unite": "%", "citation": "ça convertit à 2 et quelques %" },
+    { "id": "B05-N3", "libelle": "Début de l'historique d'achats disponible", "valeur": "2014", "unite": "année", "citation": "l'historique d'achats depuis 2014" },
+    { "id": "B05-N4", "libelle": "Début des données de navigation disponibles, clients connectés seulement (incertain)", "valeur": "2023", "unite": "année", "citation": "pas avant 2023 je crois" },
+    { "id": "B05-N5", "libelle": "Plafond provisoire de la remise", "valeur": "10", "unite": "%", "citation": "mets 10 % max pour l'instant" },
+    { "id": "B05-N6", "libelle": "Plafond de la remise pour les membres Orvanne+", "valeur": "15", "unite": "%", "citation": "15 pour les Orvanne+" },
+    { "id": "B05-N7", "libelle": "Date du comité commerce où la démo est attendue", "valeur": "2026-12-08", "unite": "date", "citation": "comité commerce du 8 décembre" }
+  ],
+  "systemes_cites": ["le Lac", "Outil d'e-mailing", "Vitrine"],
+  "points_flous": [
+    { "id": "B05-F1", "description": "Le taux de conversion actuel n'est donné qu'approximativement (« 2 et quelques % »), alors qu'il sert de référence pour mesurer le CA incrémental.", "citation": "ça convertit à 2 et quelques %" },
+    { "id": "B05-F2", "description": "« Intelligent » et « de l'IA » ne sont pas définis : Théo demande s'il s'agit de règles ou d'un modèle, et la réponse ne précise ni le type de modèle ni ce qu'il doit optimiser.", "citation": "intelligent comment ? des règles ou un modèle ?" },
+    { "id": "B05-F3", "description": "Capucine suppose que le Lac contient toutes les données nécessaires ; Théo indique seulement qu'il contient les commandes. La source des données de navigation n'est pas identifiée.", "citation": "et le Lac a déjà tout, non ?" },
+    { "id": "B05-F4", "description": "Contradiction interne : Capucine veut exploiter l'historique depuis 2014 et la navigation, mais la navigation ne concerne que les clients connectés et ne remonte pas avant 2023, ce que Théo avance avec une incertitude (« je crois »).", "citation": "le Lac a les commandes. la navigation c'est seulement pour les clients connectés, et pas avant 2023 je crois" },
+    { "id": "B05-F5", "description": "Les « messageries mobiles » ne sont pas précisées (lesquelles ?) et leur usage est conditionnel (« si on peut »).", "citation": "les messageries mobiles si on peut" },
+    { "id": "B05-F6", "description": "Le signal qui indique qu'un client « hésite » n'est pas défini.", "citation": "quand le client hésite" },
+    { "id": "B05-F7", "description": "La manière d'identifier les clients « qui auraient acheté de toute façon » n'est pas définie.", "citation": "ceux qui auraient acheté de toute façon" },
+    { "id": "B05-F8", "description": "Théo reformule le besoin en « score + choix du message + choix de la remise » : le score n'est pas demandé explicitement par Capucine, et la reformulation omet le choix du moment et du canal. Capucine ne confirme pas.", "citation": "ok donc un score + le choix du message + le choix de la remise" },
+    { "id": "B05-F9", "description": "Le valideur des remises n'est pas désigné : Capucine renvoie à une discussion future avec la finance (« je verrai avec la finance »).", "citation": "qui valide les remises ?" },
+    { "id": "B05-F10", "description": "Les plafonds de remise sont provisoires (« pour l'instant ») ; le plafond Orvanne+ est donné sans unité (« 15 », pourcentage supposé).", "citation": "mets 10 % max pour l'instant, 15 pour les Orvanne+" },
+    { "id": "B05-F11", "description": "La volumétrie n'est pas connue (« aucune idée, beaucoup ») : nombre de paniers abandonnés et de messages à envoyer non chiffrés.", "citation": "aucune idée, beaucoup" },
+    { "id": "B05-F12", "description": "Le code promo dans les messages de retard relève, selon Théo, d'un autre projet (« le projet retards ») : porteur et périmètre à confirmer. Montant et conditions du code promo non précisés.", "citation": "ça c'est pas chez moi, c'est le projet retards." },
+    { "id": "B05-F13", "description": "Désaccord sur les données personnelles : Théo propose de consulter Hélène (DPO), Capucine reporte (« on verra après ») en invoquant le consentement newsletter. On ne sait pas si ce consentement couvre les SMS, les notifications, les messageries, la navigation et la démo sur de vrais clients, ni si la question porte sur le code promo seul ou sur toute la relance.", "citation": "il faut voir avec Hélène pour les données perso, non ?" },
+    { "id": "B05-F14", "description": "L'année du comité commerce n'est pas écrite : 2026 est déduite de la date du fil (3 novembre 2026).", "citation": "comité commerce du 8 décembre" },
+    { "id": "B05-F15", "description": "Le contenu de la démo n'est pas défini : Capucine répond sur les données (vrais clients) mais pas sur les fonctions à montrer.", "citation": "une démo de quoi exactement ?" },
+    { "id": "B05-F16", "description": "Le mode de calcul du CA incrémental n'est pas défini (groupe témoin, période de référence), et on ne sait pas si le tableau fait partie de la démo ou du produit final.", "citation": "un tableau avec le CA incrémental" },
+    { "id": "B05-F17", "description": "Aucune échéance de mise en service n'est donnée : « LE sujet de l'année prochaine » suggère 2027, sans date, alors qu'une démo est attendue dès le 8 décembre 2026.", "citation": "c'est LE sujet de l'année prochaine" }
+  ]
+}
