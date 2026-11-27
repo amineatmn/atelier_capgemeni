@@ -64,10 +64,10 @@
         "CT-04",
         "CT-07",
         "CT-08",
-        "CT-09",
         "CT-10",
-        "CT-11",
-        "CT-12"
+        "CT-12",
+        "CT-13",
+        "CT-14"
       ],
       "conflits": [
         "C01",
@@ -200,7 +200,20 @@
       ]
     },
     {
-      "id": "CT-09",
+      "id": "CT-10",
+      "enonce": "Les actions des utilisateurs internes sur des données client ou sensibles sont journalisées",
+      "sources": [
+        "B07-D2"
+      ],
+      "projets": [
+        "P01",
+        "P02",
+        "P05",
+        "P07"
+      ]
+    },
+    {
+      "id": "CT-12",
       "enonce": "Les échanges avec les systèmes existants passent par Passerelle",
       "sources": [
         "B01-D10"
@@ -212,7 +225,7 @@
       ]
     },
     {
-      "id": "CT-10",
+      "id": "CT-13",
       "enonce": "Tout système qui stocke des données clients peut exporter, effacer ou anonymiser les données d'une personne, isoler les données à conservation légale et prouver l'exécution",
       "sources": [
         "B07-D7",
@@ -230,7 +243,7 @@
       ]
     },
     {
-      "id": "CT-11",
+      "id": "CT-14",
       "enonce": "Le service client est informé de tout message envoyé aux clients et modifie lui-même les textes des messages",
       "sources": [
         "B02-D9",
@@ -240,19 +253,6 @@
       "projets": [
         "P01",
         "P02"
-      ]
-    },
-    {
-      "id": "CT-12",
-      "enonce": "Les actions des utilisateurs internes sur des données client ou sensibles sont journalisées",
-      "sources": [
-        "B07-D2"
-      ],
-      "projets": [
-        "P01",
-        "P02",
-        "P05",
-        "P07"
       ]
     }
   ],
@@ -405,7 +405,7 @@
     },
     {
       "id": "H05",
-      "enonce": "Un seul projet : la logistique possède la détection et le tableau de bord, le service client possède les messages, leurs textes et leurs règles d'envoi (CT-11).",
+      "enonce": "Un seul projet : la logistique possède la détection et le tableau de bord, le service client possède les messages, leurs textes et leurs règles d'envoi (CT-14).",
       "justification": "Évite deux messages contradictoires au même client ; s'appuie sur une contrainte exprimée par le service client.",
       "conflit": "C05",
       "reversible": true
