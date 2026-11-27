@@ -1,0 +1,653 @@
+{
+  "doc_id": "B08",
+  "fichier": "B08_compte-rendu-atelier_approvisionnement.md",
+  "format": "compte_rendu",
+  "emetteur": {
+    "nom": "Inès Rouvière",
+    "fonction": "Cheffe de projet digital",
+    "direction": "DSI"
+  },
+  "autres_parties": [
+    {
+      "nom": "Grégory Thibaudeau",
+      "fonction": "Approvisionnement et transport amont",
+      "role": "participant"
+    },
+    {
+      "nom": "Karim Benhaddou",
+      "fonction": "Exploitation entrepôt E2",
+      "role": "participant"
+    },
+    {
+      "nom": "Nadège Courtois",
+      "fonction": "Achats",
+      "role": "participant"
+    },
+    {
+      "nom": "Rémi Vasseur",
+      "fonction": "Chef de quai E1",
+      "role": "participant"
+    }
+  ],
+  "date": "2026-11-12",
+  "resume": "Compte rendu de l'atelier du 12/11/2026 sur la prise de rendez-vous des livraisons fournisseurs. La cible retenue est un portail web de réservation de créneaux de déchargement régi par sept règles (R1 à R7), avec une vue planning et un export d'indicateurs en V1. Le pilote est souhaité sur E1 au printemps ; plusieurs points restent en désaccord (durée des créneaux, messageries, notation des fournisseurs).",
+  "demandes": [
+    {
+      "id": "B08-D1",
+      "type": "fonctionnelle",
+      "enonce": "Le bureau de réception a, dès la veille, une visibilité sur la charge de réception du lendemain (besoin tiré d'un constat partagé).",
+      "citation": "personne n'a de visibilité, la veille, sur la charge du lendemain.",
+      "acteurs": [
+        "Bureau de réception"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D2",
+      "type": "fonctionnelle",
+      "enonce": "Un portail web permet au fournisseur ou à son transporteur de réserver un créneau de déchargement.",
+      "citation": "Un portail web sur lequel le fournisseur ou son transporteur réserve un créneau de déchargement.",
+      "acteurs": [
+        "Fournisseur",
+        "Transporteur"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D3",
+      "type": "regle_metier",
+      "enonce": "R1 : une réservation porte sur un ou plusieurs numéros de commande d'achat Orvanne, valides et non soldés.",
+      "citation": "R1 : une réservation porte sur un ou plusieurs numéros de commande d'achat Orvanne, valides et non soldés.",
+      "acteurs": [
+        "Fournisseur",
+        "Transporteur"
+      ],
+      "systemes": [
+        "Passerelle"
+      ],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D4",
+      "type": "regle_metier",
+      "enonce": "R2 : un créneau de déchargement dure 30 minutes.",
+      "citation": "R2 : les créneaux durent 30 minutes",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D5",
+      "type": "regle_metier",
+      "enonce": "R2 : un camion complet consomme deux créneaux.",
+      "citation": "un camion complet consomme deux créneaux.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D6",
+      "type": "regle_metier",
+      "enonce": "R3 : la réservation est possible de J-10 à J-1 midi.",
+      "citation": "R3 : la réservation est possible de J-10 à J-1 midi",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D7",
+      "type": "regle_metier",
+      "enonce": "R3 : la modification et l'annulation d'une réservation sont possibles jusqu'à J-1 midi.",
+      "citation": "la modification ou l'annulation aussi, jusqu'à J-1 midi.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D8",
+      "type": "fonctionnelle",
+      "enonce": "R4 : chaque site paramètre ses quais, ses horaires d'ouverture et ses jours fermés.",
+      "citation": "R4 : chaque site paramètre ses quais, ses horaires d'ouverture et ses jours fermés.",
+      "acteurs": [
+        "Chef de quai"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D9",
+      "type": "fonctionnelle",
+      "enonce": "R5 : à l'arrivée, le poste de garde pointe le camion.",
+      "citation": "R5 : à l'arrivée, le poste de garde pointe le camion",
+      "acteurs": [
+        "Poste de garde"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D10",
+      "type": "regle_metier",
+      "enonce": "R5 : le retard toléré à l'arrivée est de 20 minutes ; au-delà, le créneau est perdu.",
+      "citation": "le retard toléré est de 20 minutes, au-delà le créneau est perdu.",
+      "acteurs": [
+        "Poste de garde"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D11",
+      "type": "fonctionnelle",
+      "enonce": "R6 : une confirmation, puis un rappel la veille, sont envoyés par e-mail au transporteur.",
+      "citation": "R6 : une confirmation puis un rappel la veille sont envoyés par e-mail au transporteur.",
+      "acteurs": [
+        "Transporteur"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D12",
+      "type": "fonctionnelle",
+      "enonce": "R7 : le chef de quai peut forcer, déplacer ou bloquer un créneau.",
+      "citation": "R7 : le chef de quai peut forcer, déplacer ou bloquer un créneau.",
+      "acteurs": [
+        "Chef de quai"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D13",
+      "type": "indicateur",
+      "enonce": "Indicateur attendu : part des camions sans rendez-vous.",
+      "citation": "Indicateurs attendus : part des camions sans rendez-vous",
+      "acteurs": [
+        "Approvisionnement"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D14",
+      "type": "indicateur",
+      "enonce": "Indicateur attendu : attente moyenne des camions.",
+      "citation": "attente moyenne, taux d'occupation des quais",
+      "acteurs": [
+        "Approvisionnement"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D15",
+      "type": "indicateur",
+      "enonce": "Indicateur attendu : taux d'occupation des quais.",
+      "citation": "taux d'occupation des quais, ponctualité par fournisseur",
+      "acteurs": [
+        "Approvisionnement"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D16",
+      "type": "indicateur",
+      "enonce": "Indicateur attendu : ponctualité par fournisseur.",
+      "citation": "ponctualité par fournisseur.",
+      "acteurs": [
+        "Approvisionnement",
+        "Achats"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D17",
+      "type": "fonctionnelle",
+      "enonce": "Les achats (Nadège Courtois) souhaitent que la ponctualité alimente la notation des fournisseurs ; renvoyé en V2.",
+      "citation": "Les achats souhaitent que la ponctualité alimente la notation des fournisseurs",
+      "acteurs": [
+        "Achats"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "v2"
+    },
+    {
+      "id": "B08-D18",
+      "type": "regle_metier",
+      "enonce": "Les achats souhaitent, à terme, des pénalités liées à la ponctualité des fournisseurs.",
+      "citation": "et, à terme, des pénalités.",
+      "acteurs": [
+        "Achats"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "à terme",
+      "statut_source": "v2"
+    },
+    {
+      "id": "B08-D19",
+      "type": "contrainte",
+      "enonce": "L'approvisionnement (Grégory Thibaudeau) préfère attendre une année d'historique avant d'utiliser la ponctualité pour noter ou pénaliser les fournisseurs.",
+      "citation": "L'approvisionnement préfère attendre une année d'historique.",
+      "acteurs": [
+        "Approvisionnement"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D20",
+      "type": "regle_metier",
+      "enonce": "Karim (E2) demande des créneaux d'une heure sur E2, où les livraisons sont surtout des palettes hétérogènes à contrôler.",
+      "citation": "Karim demande des créneaux d'une heure sur E2",
+      "acteurs": [
+        "Exploitation E2"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D21",
+      "type": "contrainte",
+      "enonce": "Environ 15 % des livraisons viennent de fournisseurs étrangers qui n'ont pas tous un interlocuteur francophone.",
+      "citation": "Les fournisseurs étrangers (environ 15 % des livraisons) n'ont pas tous un interlocuteur francophone.",
+      "acteurs": [
+        "Fournisseur"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D22",
+      "type": "fonctionnelle",
+      "enonce": "Prise en compte des messageries et petits colis qui livrent sans commande d'achat identifiable : hors périmètre pour Grégory, indispensable pour Rémi (chef de quai E1).",
+      "citation": "Les messageries et petits colis livrent sans commande d'achat identifiable",
+      "acteurs": [
+        "Chef de quai"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D23",
+      "type": "fonctionnelle",
+      "enonce": "Lien avec Hangar pour préremplir la réception attendue, jugé « bien mais pas vital » et renvoyé en V2.",
+      "citation": "Un lien avec Hangar pour préremplir la réception attendue",
+      "acteurs": [],
+      "systemes": [
+        "Hangar"
+      ],
+      "priorite_exprimee": null,
+      "echeance_exprimee": null,
+      "statut_source": "v2"
+    },
+    {
+      "id": "B08-D24",
+      "type": "fonctionnelle",
+      "enonce": "V1 : vue planning par site.",
+      "citation": "vue planning par site",
+      "acteurs": [
+        "Chef de quai",
+        "Bureau de réception"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D25",
+      "type": "fonctionnelle",
+      "enonce": "V1 : export des indicateurs.",
+      "citation": "export des indicateurs.",
+      "acteurs": [
+        "Approvisionnement"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V1",
+      "echeance_exprimee": null,
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D26",
+      "type": "fonctionnelle",
+      "enonce": "V2 : application mobile pour les chauffeurs.",
+      "citation": "application mobile pour les chauffeurs.",
+      "acteurs": [
+        "Chauffeur"
+      ],
+      "systemes": [],
+      "priorite_exprimee": "V2",
+      "echeance_exprimee": null,
+      "statut_source": "v2"
+    },
+    {
+      "id": "B08-D27",
+      "type": "echeance",
+      "enonce": "Tout ce qui concerne le poste de garde est à faire en V1 si possible.",
+      "citation": "Tout ce qui concerne le poste de garde est à faire en V1 si possible.",
+      "acteurs": [
+        "Poste de garde"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "V1 si possible",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D28",
+      "type": "echeance",
+      "enonce": "Action (Nadège Courtois) : lister les fournisseurs pilotes, une vingtaine.",
+      "citation": "Lister les fournisseurs pilotes (une vingtaine)",
+      "acteurs": [
+        "Achats"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "27/11",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D29",
+      "type": "echeance",
+      "enonce": "Action (Rémi Vasseur) : paramétrage cible de E1 avec 4 quais de réception et des créneaux d'une heure.",
+      "citation": "Paramétrage cible de E1 : 4 quais de réception, créneaux d'une heure",
+      "acteurs": [
+        "Chef de quai"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "04/12",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D30",
+      "type": "echeance",
+      "enonce": "Action (Inès Rouvière) : vérifier la disponibilité des commandes d'achat dans Passerelle.",
+      "citation": "Vérifier la disponibilité des commandes d'achat dans Passerelle",
+      "acteurs": [
+        "DSI"
+      ],
+      "systemes": [
+        "Passerelle"
+      ],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "27/11",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D31",
+      "type": "echeance",
+      "enonce": "Action (DSI) : chiffrage et planning.",
+      "citation": "Chiffrage et planning",
+      "acteurs": [
+        "DSI"
+      ],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "décembre",
+      "statut_source": "demande"
+    },
+    {
+      "id": "B08-D32",
+      "type": "echeance",
+      "enonce": "Démarrage du pilote souhaité sur E1 au printemps.",
+      "citation": "Démarrage du pilote souhaité sur E1 au printemps.",
+      "acteurs": [],
+      "systemes": [],
+      "priorite_exprimee": null,
+      "echeance_exprimee": "au printemps",
+      "statut_source": "demande"
+    }
+  ],
+  "chiffres": [
+    {
+      "id": "B08-N1",
+      "libelle": "Camions reçus par jour à E1 (environ)",
+      "valeur": "70",
+      "unite": "camions/jour",
+      "citation": "E1 reçoit environ 70 camions par jour"
+    },
+    {
+      "id": "B08-N2",
+      "libelle": "Quais de réception à E1 aujourd'hui",
+      "valeur": "6",
+      "unite": "quais",
+      "citation": "sur 6 quais de réception"
+    },
+    {
+      "id": "B08-N3",
+      "libelle": "Camions reçus par jour à E2 (une quarantaine)",
+      "valeur": "40",
+      "unite": "camions/jour",
+      "citation": "E2 une quarantaine"
+    },
+    {
+      "id": "B08-N4",
+      "libelle": "Camions sans rendez-vous ou hors créneau",
+      "valeur": "0.25",
+      "unite": "part",
+      "citation": "un camion sur quatre se présente sans rendez-vous ou hors créneau"
+    },
+    {
+      "id": "B08-N5",
+      "libelle": "Attente moyenne le lundi matin (plus de)",
+      "valeur": "1.5",
+      "unite": "heures",
+      "citation": "l'attente moyenne dépasse 1 h 30 le lundi matin"
+    },
+    {
+      "id": "B08-N6",
+      "libelle": "Temps passé au téléphone par le bureau de réception (environ)",
+      "valeur": "3",
+      "unite": "heures/jour",
+      "citation": "le bureau de réception passe environ 3 heures par jour au téléphone"
+    },
+    {
+      "id": "B08-N7",
+      "libelle": "Durée d'un créneau (R2)",
+      "valeur": "30",
+      "unite": "minutes",
+      "citation": "les créneaux durent 30 minutes"
+    },
+    {
+      "id": "B08-N8",
+      "libelle": "Créneaux consommés par un camion complet",
+      "valeur": "2",
+      "unite": "créneaux",
+      "citation": "un camion complet consomme deux créneaux"
+    },
+    {
+      "id": "B08-N9",
+      "libelle": "Ouverture de la réservation",
+      "valeur": "J-10",
+      "unite": "jour relatif",
+      "citation": "la réservation est possible de J-10 à J-1 midi"
+    },
+    {
+      "id": "B08-N10",
+      "libelle": "Clôture de la réservation, de la modification et de l'annulation",
+      "valeur": "J-1 12:00",
+      "unite": "jour relatif et heure",
+      "citation": "jusqu'à J-1 midi"
+    },
+    {
+      "id": "B08-N11",
+      "libelle": "Retard toléré à l'arrivée",
+      "valeur": "20",
+      "unite": "minutes",
+      "citation": "le retard toléré est de 20 minutes"
+    },
+    {
+      "id": "B08-N12",
+      "libelle": "Durée de créneau demandée sur E2",
+      "valeur": "1",
+      "unite": "heure",
+      "citation": "créneaux d'une heure sur E2"
+    },
+    {
+      "id": "B08-N13",
+      "libelle": "Part des livraisons de fournisseurs étrangers (environ)",
+      "valeur": "15",
+      "unite": "%",
+      "citation": "environ 15 % des livraisons"
+    },
+    {
+      "id": "B08-N14",
+      "libelle": "Fournisseurs pilotes (une vingtaine)",
+      "valeur": "20",
+      "unite": "fournisseurs",
+      "citation": "Lister les fournisseurs pilotes (une vingtaine)"
+    },
+    {
+      "id": "B08-N15",
+      "libelle": "Échéance de la liste des fournisseurs pilotes et de la vérification Passerelle",
+      "valeur": "2026-11-27",
+      "unite": "date",
+      "citation": "27/11"
+    },
+    {
+      "id": "B08-N16",
+      "libelle": "Quais de réception du paramétrage cible de E1",
+      "valeur": "4",
+      "unite": "quais",
+      "citation": "Paramétrage cible de E1 : 4 quais de réception"
+    },
+    {
+      "id": "B08-N17",
+      "libelle": "Échéance du paramétrage cible de E1",
+      "valeur": "2026-12-04",
+      "unite": "date",
+      "citation": "04/12"
+    }
+  ],
+  "systemes_cites": [
+    "Tableurs de site",
+    "Hangar",
+    "Passerelle"
+  ],
+  "points_flous": [
+    {
+      "id": "B08-F1",
+      "description": "Le constat sur l'absence de visibilité n'est accompagné d'aucune demande explicite ; la vue planning (V1) y répond peut-être.",
+      "citation": "personne n'a de visibilité, la veille, sur la charge du lendemain."
+    },
+    {
+      "id": "B08-F2",
+      "description": "Seul le transporteur reçoit les e-mails, alors que le fournisseur peut aussi réserver.",
+      "citation": "sont envoyés par e-mail au transporteur."
+    },
+    {
+      "id": "B08-F3",
+      "description": "Rien n'indique comment savoir qu'un camion est « complet ».",
+      "citation": "un camion complet consomme deux créneaux."
+    },
+    {
+      "id": "B08-F4",
+      "description": "« J-1 midi » : veille calendaire ou jour ouvré (livraison du lundi) ? Fuseau horaire pour les fournisseurs étrangers ?",
+      "citation": "de J-10 à J-1 midi"
+    },
+    {
+      "id": "B08-F5",
+      "description": "Le sort d'un camion dont le créneau est perdu n'est pas décrit.",
+      "citation": "au-delà le créneau est perdu."
+    },
+    {
+      "id": "B08-F6",
+      "description": "« Forcer » un créneau n'est pas défini.",
+      "citation": "le chef de quai peut forcer, déplacer ou bloquer un créneau."
+    },
+    {
+      "id": "B08-F7",
+      "description": "Les indicateurs ne sont pas définis (début et fin de l'attente, base de l'occupation, critère de ponctualité) et aucun objectif n'est fixé.",
+      "citation": "Indicateurs attendus"
+    },
+    {
+      "id": "B08-F8",
+      "description": "Mesurer la part des camions sans rendez-vous suppose de pointer aussi les camions sans réservation, ce que R5 ne décrit pas.",
+      "citation": "le poste de garde pointe le camion"
+    },
+    {
+      "id": "B08-F9",
+      "description": "Désaccord entre achats et approvisionnement sur l'usage de la ponctualité (notation, pénalités) ; renvoyé en V2 sans arbitrage.",
+      "citation": "L'approvisionnement préfère attendre une année d'historique."
+    },
+    {
+      "id": "B08-F10",
+      "description": "Désaccord sur la durée des créneaux : R2 fixe 30 minutes, Karim demande 1 heure sur E2, Rémi tient aux 30 minutes.",
+      "citation": "Rémi tient aux 30 minutes."
+    },
+    {
+      "id": "B08-F11",
+      "description": "Désaccord non tranché sur les messageries et petits colis : hors périmètre pour Grégory, indispensable pour Rémi.",
+      "citation": "hors périmètre pour Grégory, indispensable pour Rémi"
+    },
+    {
+      "id": "B08-F12",
+      "description": "R5 fait partie de la V1 (« R1 à R7 »), mais le poste de garde n'est en V1 que « si possible ».",
+      "citation": "Tout ce qui concerne le poste de garde est à faire en V1 si possible."
+    },
+    {
+      "id": "B08-F13",
+      "description": "Le paramétrage cible de E1 (créneaux d'une heure) contredit R2 (30 minutes) et la position de Rémi, à qui l'action est confiée.",
+      "citation": "Paramétrage cible de E1 : 4 quais de réception, créneaux d'une heure"
+    },
+    {
+      "id": "B08-F14",
+      "description": "Le paramétrage cible de E1 prévoit 4 quais alors que E1 en a 6 ; avec des créneaux d'une heure, 4 quais offrent 4 camions par heure pour environ 70 camions par jour.",
+      "citation": "4 quais de réception"
+    },
+    {
+      "id": "B08-F15",
+      "description": "E3 n'est pas mentionné ; le format, la périodicité et les destinataires de l'export des indicateurs ne sont pas précisés ; l'accès des fournisseurs au portail n'est pas décrit.",
+      "citation": "export des indicateurs."
+    }
+  ]
+}
