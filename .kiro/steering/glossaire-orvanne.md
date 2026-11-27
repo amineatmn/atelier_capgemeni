@@ -9,7 +9,7 @@ inclusion: always
 
 | Nom | Rôle (tel que décrit dans les sources) | Variantes | Sources |
 |---|---|---|---|
-| Vitrine | Site marchand et application mobile ; affiche la date de livraison promise | site, appli, application | B02, B03, B07 |
+| Vitrine | Site marchand et application mobile ; affiche la date de livraison promise | | B02, B03, B07 |
 | Comptoir | Outil du service client (fiches commande, dossiers, création de retours) | | B02, B03, B07, B09 |
 | Hangar | Système de gestion des entrepôts (stock, réceptions, extractions) | hangar | B01, B03, B06, B07, B08 |
 | Passerelle | Plateforme d'échange de flux (statuts transporteurs, commandes, commandes d'achat) | | B01, B03, B08 |
