@@ -1,9 +1,8 @@
 # Identifiants provisoires utilisés par la spec étalon P01
 
-La spec `templates/exemple-p01/` a été écrite avant les fiches B02 et B05. Elle utilise la numérotation ci-dessous, qui suit l'ordre d'apparition dans le document.
+La spec étalon `templates/exemple-p01/` a été écrite avant les fiches B02 et B05. Elle utilise la numérotation ci-dessous, qui suit l'ordre d'apparition dans chaque document.
 
-- **A (extraction)** : si l'extracteur numérote autrement, prévenir C, qui remettra la spec étalon à jour.
-- **B (analyse)** : `work/exemples/analyse.json` utilise les mêmes identifiants.
+Cette numérotation ne sert qu'à l'étalon. Les specs générées par le pipeline utilisent les identifiants des vraies fiches (`work/fiches/`) ; il n'est pas nécessaire que les deux numérotations coïncident.
 
 ## B02 : ticket EVOL-2291 (service client)
 

@@ -80,7 +80,7 @@ Le projet est livré en deux lots, pour tenir compte du gel des mises en product
 #### Critères d'acceptation
 
 1. QUAND un conseiller ouvre une fiche commande dans Comptoir, LE SYSTÈME DOIT afficher, pour chaque colis de la commande, le dernier statut, son horodatage, le niveau de retard et l'historique complet des statuts. _Source : B02-D1_
-2. LE SYSTÈME DOIT afficher le suivi en moins de 2 secondes pour 95 % des ouvertures de fiche, y compris pendant le pic. _Source : B02-D2, B01-N2_
+2. LE SYSTÈME DOIT afficher le suivi en moins de 2 secondes pour 95 % des ouvertures de fiche, y compris pendant le pic (environ 70 000 colis expédiés par jour). _Source : B02-D2, B01-D2_
 3. LE SYSTÈME DOIT afficher le suivi pour les colis des trois transporteurs. _Source : B02-D10_
 4. SI le service de suivi ne répond pas dans le délai, ALORS LE SYSTÈME DOIT afficher la fiche commande sans le suivi, avec un message indiquant que le suivi est momentanément indisponible. _Source : B02-D2_
 
@@ -140,7 +140,7 @@ Le projet est livré en deux lots, pour tenir compte du gel des mises en product
 
 #### Critères d'acceptation
 
-1. LE SYSTÈME DOIT traiter les statuts de 70 000 colis expédiés par jour, soit le volume du pic, sans dépasser le délai du critère 1.4. _Source : B01-N1, B01-N2, B01-D2_
+1. LE SYSTÈME DOIT traiter les statuts de 70 000 colis expédiés par jour, soit le volume du pic d'après B01 (35 000 colis par jour en temps normal, à peu près le double pendant le pic), sans dépasser le délai du critère 1.4. _Source : B01-D2, B01-D10_
 2. LE SYSTÈME DOIT être hébergé dans le cloud d'Orvanne, dans l'Union européenne. _Source : B01-D9, CT-08_
 3. LE SYSTÈME DOIT utiliser le numéro de mobile du client uniquement après l'avis favorable de la DPO sur cet usage, l'activation du canal SMS étant bloquée tant que cet avis n'est pas enregistré. _Source : CT-02, CT-01_
 4. LE SYSTÈME DOIT conserver les historiques de statuts et de messages pendant une durée paramétrable, fixée avec la DPO, puis les supprimer. _Source : CT-01, H10_
