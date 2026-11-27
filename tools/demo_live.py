@@ -28,6 +28,7 @@ AGENTS = {
     "analyste": ("Analyste", "analyste.md", "#ffb74d"),
     "redacteur": ("Rédacteur", "redacteur-spec.md", "#81c784"),
     "controleur": ("Contrôleur", "controleur.md", "#e57373"),
+    "humain": ("Responsable métier", None, "#ffd54f"),
 }
 
 TOURS = [
@@ -53,7 +54,7 @@ TOURS = [
                    "un point que les agents ne peuvent pas trancher). Puis la conclusion commune en 4 puces : Projet ; "
                    "Décisions ; Hypothèses retenues ; Questions restantes."),
 ]
-NOMS = {**{k: v[0] for k, v in AGENTS.items()}, "humain": "Humain (responsable métier)"}
+NOMS = {k: v[0] for k, v in AGENTS.items()}
 
 
 def prompt(agent: str, consigne: str, besoin: str, transcript: list) -> str:
@@ -100,13 +101,22 @@ def lancer_agent(debat: dict, agent: str, texte_prompt: str) -> str:
     return final or "".join(morceaux)
 
 
-def attendre_humain(debat: dict, motif: str, questions: list) -> str:
-    debat["reponse"], debat["signal"] = None, threading.Event()
+def attendre_humain(debat: dict, motif: str, questions: list, transcript: list) -> str:
+    """Pause pour décision humaine, jouée par un responsable métier simulé (aucune saisie dans la page)."""
     evenement(debat, type="attente", motif=motif, questions=questions)
-    debat["signal"].wait(timeout=900)
-    reponse = (debat["reponse"] or "").strip()
-    texte = reponse or "Pas de réponse : je laisse les agents décider avec leurs hypothèses."
-    evenement(debat, type="humain", texte=texte)
+    histoire = "\n\n".join(f"[{NOMS[a]}] {t}" for a, t in transcript)
+    consigne = (
+        "Tu joues les responsables métier d'Orvanne sollicités par les agents (l'émetteur du besoin, la DPO, la DSI, "
+        "selon les destinataires des questions). Les agents t'ont demandé de trancher : "
+        + ("; ".join(questions) if questions else "ils ne parviennent pas à se mettre d'accord.")
+        + " Réponds à chaque point en une phrase réaliste et pragmatique, en commençant par le nom ou la fonction de la "
+        "personne qui répond (par exemple « Yanis (service client) : … »). Respecte les contraintes RGPD et le gel des "
+        "mises en production. 90 mots au plus, ton oral, sans titre. Ne lis aucun fichier."
+    )
+    evenement(debat, type="debut", agent="humain", tour=0, total=0)
+    texte = lancer_agent(debat, "humain", (
+        f"NOUVELLE EXPRESSION DE BESOIN :\n<<<\n{debat['besoin']}\n>>>\n\nDÉBAT DES AGENTS :\n{histoire}\n\n{consigne}")).strip()
+    evenement(debat, type="fin", agent="humain", texte=texte)
     return texte
 
 
@@ -121,7 +131,7 @@ def derouler(debat: dict) -> None:
         for i, (agent, consigne) in enumerate(TOURS):
             if agent == "humain":
                 qs = questions_de(transcript[-1][1])
-                transcript.append(("humain", attendre_humain(debat, "Les agents ont besoin d'une décision métier", qs)))
+                transcript.append(("humain", attendre_humain(debat, "Les agents ont besoin d'une décision métier", qs, transcript)))
                 continue
             evenement(debat, type="debut", agent=agent, tour=i + 1, total=len(TOURS))
             texte = lancer_agent(debat, agent, prompt(agent, consigne, debat["besoin"], transcript)).strip()
@@ -130,7 +140,7 @@ def derouler(debat: dict) -> None:
         dernier = transcript[-1][1]
         if "DÉSACCORD" in dernier.upper().split("\n")[0]:
             evenement(debat, type="conclusion", accord=False, provisoire=True, texte=dernier)
-            transcript.append(("humain", attendre_humain(debat, "Désaccord : les agents demandent un arbitrage", [])))
+            transcript.append(("humain", attendre_humain(debat, "Désaccord : les agents demandent un arbitrage", [], transcript)))
             evenement(debat, type="debut", agent="controleur", tour=len(TOURS), total=len(TOURS))
             dernier = lancer_agent(debat, "controleur", prompt("controleur", "L'humain vient d'arbitrer. Applique sa décision "
                      "et rends le verdict final : première ligne « VERDICT : ACCORD », puis la conclusion en 4 puces.",
@@ -242,11 +252,10 @@ button:disabled{opacity:.5;cursor:wait}
   <div id="fil"><div class="vide">Les agents attendent le besoin à traiter…</div></div><div id="conclusion"></div></div>
 </div>
 <script>
-const AG = __AGENTS__, ICO = {extracteur:"🔎", analyste:"🧭", redacteur:"✍️", controleur:"🛡️"};
+const AG = __AGENTS__, ICO = {extracteur:"🔎", analyste:"🧭", redacteur:"✍️", controleur:"🛡️", humain:"👤"};
 document.getElementById("besoin").value = __EXEMPLE__;
 const table = document.getElementById("table"), fil = document.getElementById("fil");
-table.innerHTML = Object.entries(AG).map(([k,[n,c]]) => `<div class="agent" id="a-${k}" style="--c:${c}"><div class="avatar" style="border-color:${c}">${ICO[k]}</div><b>${n}</b><small id="s-${k}"></small></div>`).join("")
-  + `<div class="agent" id="a-humain" style="--c:#ffd54f"><div class="avatar">👤</div><b>Vous</b><small id="s-humain"></small></div>`;
+table.innerHTML = Object.entries(AG).map(([k,[n,c]]) => `<div class="agent" id="a-${k}" style="--c:${c}"><div class="avatar" style="border-color:${c}">${ICO[k]}</div><b>${n}</b><small id="s-${k}"></small></div>`).join("");
 let id = null, n = 0, bulle = null, t0 = 0, timer = null;
 const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 const deco = s => esc(s).replace(/@(Extracteur|Analyste|Rédacteur|Contrôleur)/g,'<span class="mention">@$1</span>').replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/VERDICT : (ACCORD|DÉSACCORD)/g,'<b style="font-size:17px">VERDICT : $1</b>');
@@ -261,7 +270,7 @@ async function suivre(){ const r = await fetch(`api/flux?id=${id}&depuis=${n}`);
   for (const e of d.evenements) {
     if (e.type === "debut") { etat(e.agent, "actif", "réfléchit…"); document.getElementById("barre").style.width = ((e.tour-1)/e.total*100)+"%";
       const [nom, coul] = AG[e.agent]; const m = document.createElement("div"); m.className = "msg";
-      m.innerHTML = `<div class="pastille" style="border-color:${coul}">${ICO[e.agent]}</div><div class="bulle" style="border-left-color:${coul}"><b class="nom" style="color:${coul}">${nom} · tour ${e.tour}/${e.total}</b><div class="outils"></div><span class="texte curseur"></span></div>`;
+      m.innerHTML = `<div class="pastille" style="border-color:${coul}">${ICO[e.agent]}</div><div class="bulle" style="border-left-color:${coul}"><b class="nom" style="color:${coul}">${nom}${e.total ? ` · tour ${e.tour}/${e.total}` : " · décision humaine (simulée)"}</b><div class="outils"></div><span class="texte curseur"></span></div>`;
       fil.appendChild(m); bulle = m; bulle.dataset.brut = ""; }
     else if (e.type === "outil" && bulle) { document.getElementById("s-"+e.agent).textContent = "lit des fichiers…"; bulle.querySelector(".outils").insertAdjacentHTML("beforeend", `<span class="outil">📄 ${esc(e.texte)}</span>`); }
     else if (e.type === "chunk" && bulle) { document.getElementById("s-"+e.agent).textContent = "écrit…"; bulle.dataset.brut += e.texte; bulle.querySelector(".texte").innerHTML = deco(bulle.dataset.brut); }
@@ -271,9 +280,7 @@ async function suivre(){ const r = await fetch(`api/flux?id=${id}&depuis=${n}`);
       c.className = e.accord ? "" : "desaccord"; c.innerHTML = `<h2>${e.accord ? "🤝 Les agents sont d'accord" : "⚠️ Désaccord : arbitrage humain requis"}</h2>${deco(e.texte)}`; c.style.display = "block"; c.scrollIntoView({behavior:"smooth"}); }
     else if (e.type === "attente") { etat("humain", "actif", "à vous !");
       const qs = e.questions.length ? `<ul>${e.questions.map(q=>`<li>${deco(q)}</li>`).join("")}</ul>` : "<p>Les agents ne parviennent pas à trancher. Donnez votre décision.</p>";
-      fil.insertAdjacentHTML("beforeend", `<div class="main" id="main"><h3>✋ ${esc(e.motif)}</h3>${qs}<textarea id="rep" placeholder="Votre réponse, par exemple : oui pour l'e-mail, non au code promo…"></textarea>
-        <div class="btns"><button onclick="repondre(true)">Répondre aux agents</button><button class="sec" onclick="repondre(false)">Laisser les agents décider</button></div></div>`);
-      document.getElementById("rep").focus(); }
+      fil.insertAdjacentHTML("beforeend", `<div class="main"><h3>✋ ${esc(e.motif)}</h3>${qs}<p style="margin:6px 0 0;color:#ffd54f">→ Les agents s'arrêtent et sollicitent le responsable métier.</p></div>`); }
     else if (e.type === "humain") { const m = document.getElementById("main"); if (m) m.remove(); etat(null);
       fil.insertAdjacentHTML("beforeend", `<div class="msg"><div class="pastille" style="border-color:#ffd54f">👤</div><div class="bulle" style="border-left-color:#ffd54f"><b class="nom" style="color:#ffd54f">Vous · décision humaine</b>${deco(e.texte)}</div></div>`);
       document.getElementById("s-humain").textContent = "a tranché"; }
